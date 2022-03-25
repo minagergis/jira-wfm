@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Teams\Providers;
+namespace App\Modules\Teams\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
