@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('teammembers')->group(function() {
+Route::prefix('team-members')->group(function() {
     Route::get('/', 'TeamMembersController@index');
 });

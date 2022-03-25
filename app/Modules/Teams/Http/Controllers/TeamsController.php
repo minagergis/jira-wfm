@@ -13,7 +13,7 @@ class TeamsController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function index(): Renderable
     {
         $teams = Team::get();
         return view('teams::index',compact('teams'));
@@ -23,7 +23,7 @@ class TeamsController extends Controller
      * Show the form for creating a new resource.
      * @return Renderable
      */
-    public function create()
+    public function create(): Renderable
     {
         return view('teams::create');
     }
@@ -33,7 +33,7 @@ class TeamsController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function store(Request $request)
+    public function store(Request $request): Renderable
     {
         //
     }
@@ -43,7 +43,7 @@ class TeamsController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function show($id)
+    public function show($id): Renderable
     {
         return view('teams::show');
     }
@@ -53,7 +53,7 @@ class TeamsController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function edit($id)
+    public function edit($id): Renderable
     {
         return view('teams::edit');
     }
@@ -64,7 +64,7 @@ class TeamsController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): Renderable
     {
         //
     }
@@ -74,7 +74,7 @@ class TeamsController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function destroy($id)
+    public function destroy($id): Renderable
     {
         //
     }
