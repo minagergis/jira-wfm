@@ -12,5 +12,7 @@
 */
 
 Route::prefix('teams')->group(function() {
-    Route::get('/', 'TeamsController@index');
+    Route::get('/', 'TeamsController@index')->name('get.teams.list');
+    Route::get('/create', 'TeamsController@create')->name('get.teams.create');
+    Route::post('/create', 'TeamsController@store')->name('post.teams.create');
 });
