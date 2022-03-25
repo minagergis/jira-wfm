@@ -59,10 +59,10 @@
                         <div class="collapse" id="navbar-forms">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
-                                    <a href="" class="nav-link">Add Team</a>
+                                    <a href="{{route('get.teams.create')}}" class="nav-link">Add Team</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="" class="nav-link">List Teams</a>
+                                    <a href="{{route('get.teams.list')}}" class="nav-link">List Teams</a>
                                 </li>
                             </ul>
                         </div>

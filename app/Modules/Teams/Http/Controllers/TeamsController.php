@@ -2,6 +2,7 @@
 
 namespace App\Modules\Teams\Http\Controllers;
 
+use App\Modules\Teams\Entities\Team;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -14,7 +15,8 @@ class TeamsController extends Controller
      */
     public function index()
     {
-        return view('teams::index');
+        $teams = Team::get();
+        return view('teams::index',compact('teams'));
     }
 
     /**
