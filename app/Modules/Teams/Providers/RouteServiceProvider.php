@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Teams\Providers;
+namespace App\Modules\Teams\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -12,7 +12,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $moduleNamespace = 'Modules\Teams\Http\Controllers';
+    protected $moduleNamespace = 'App\Modules\Teams\Http\Controllers';
 
     /**
      * Called before routes are registered.

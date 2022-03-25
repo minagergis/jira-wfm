@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Teams\Http\Controllers;
+namespace App\Modules\Teams\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
