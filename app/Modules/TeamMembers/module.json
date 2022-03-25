@@ -1,0 +1,13 @@
+{
+    "name": "TeamMembers",
+    "alias": "teammembers",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "App\\Modules\\TeamMembers\\Providers\\TeamMembersServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
