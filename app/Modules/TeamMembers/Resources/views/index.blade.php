@@ -42,8 +42,8 @@
                                 <thead class="thead-light">
                                 <tr>
                                     <th>Name</th>
-                                    <th>Team Name</th>
                                     <th>Weight</th>
+                                    <th>Team Name</th>
                                     <th>Created At</th>
                                 </tr>
                                 </thead>
