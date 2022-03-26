@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Team extends Model
 {
-   protected $table = 'teams';
+    protected $table = 'teams';
 
     protected $fillable = [
         'name',
@@ -22,5 +22,4 @@ class Team extends Model
     {
         return $this->belongsToMany(TeamMember::class, 'team_members_team');
     }
-
 }
