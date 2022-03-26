@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modules\TeamMembers\Http\Requests;
+namespace App\Modules\Tasks\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class CreateTeamMemberRequest extends FormRequest
+class CreateTaskRequest  extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -19,22 +19,19 @@ class CreateTeamMemberRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'jira_integration_id' => [
-                'required',
-            ],
-            'is_active' => [
+            'is_automatic' => [
                 'required',
                 'boolean',
             ],
-            'is_in_shift_now' => [
+            'points' => [
                 'required',
-                'boolean',
+                'integer'
             ],
-            'weight' => [
+            'frequency' => [
                 'required',
-                'integer',
+                'string'
             ],
-            'team' => [
+            'team_id' => [
                 'required',
                 'integer',
                 Rule::exists('teams', 'id'),

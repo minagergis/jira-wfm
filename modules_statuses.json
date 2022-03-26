@@ -1,5 +1,6 @@
 {
     "Teams": true,
     "TeamMembers": true,
-    "Core": true
+    "Core": true,
+    "Tasks": true
 }

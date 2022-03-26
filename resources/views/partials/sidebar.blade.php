@@ -75,10 +75,10 @@
                         <div class="collapse" id="navbar-components">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
-                                    <a href="" class="nav-link">Add Task</a>
+                                    <a href="{{route('get.tasks.create')}}" class="nav-link">Add Task</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="" class="nav-link">List Tasks</a>
+                                    <a href="{{route('get.tasks.list')}}" class="nav-link">List Tasks</a>
                                 </li>
                             </ul>
                         </div>
