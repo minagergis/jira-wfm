@@ -2,80 +2,79 @@
 
 namespace App\Modules\Teams\Http\Controllers;
 
-use App\Modules\Teams\Entities\Team;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\RedirectResponse;
+use App\Modules\Teams\Services\TeamService;
+use Illuminate\Contracts\Support\Renderable;
+use App\Modules\Teams\Http\Requests\CreateTeamRequest;
+use App\Modules\Teams\Http\Requests\UpdateTeamRequest;
 
 class TeamsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
-    public function index(): Renderable
+    private $teamService;
+
+    public function __construct(TeamService $teamService)
     {
-        $teams = Team::get();
-        return view('teams::index',compact('teams'));
+        $this->teamService = $teamService;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
-    public function create(): Renderable
+    public function index()
+    {
+        $teams = $this->teamService->index();
+
+        return view('teams::index', compact('teams'));
+    }
+
+    public function create()
     {
         return view('teams::create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request): Renderable
+    public function store(CreateTeamRequest $request)
     {
-        //
+        $this->teamService->create($request->all());
+
+        return redirect()->route('get.teams.list')->with(['status' => 'Team has been created successfully']);
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id): Renderable
+    public function show(int $id)
     {
-        return view('teams::show');
+        $team = $this->teamService->read($id);
+        if (! $team) {
+            return $this->showErrorMessage();
+        }
+
+        return view('teams::show', compact('team'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id): Renderable
+    public function edit(int $id)
     {
-        return view('teams::edit');
+        $team = $this->teamService->read($id);
+
+        if (! $team) {
+            return $this->showErrorMessage();
+        }
+
+        return view('teams::edit', compact('team'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id): Renderable
+    public function update(UpdateTeamRequest $request, $id)
     {
-        //
+        $this->teamService->update($request->all(), $id);
+
+        return redirect()->route('get.teams.list')->with(['status' => 'Team has been edited successfully']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id): Renderable
+
+    public function destroy($id)
     {
-        //
+        $this->teamService->delete($id);
+
+        return redirect()->route('get.teams.list')->with(['status' => 'Team has been deleted successfully']);
+    }
+
+    private function showErrorMessage($message = 'Something Went Wrong'): RedirectResponse
+    {
+        return redirect()->route('get.teams.list')->with(['status' => $message]);
     }
 }

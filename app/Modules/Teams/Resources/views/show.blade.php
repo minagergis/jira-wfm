@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    {!! config('teams.name') !!}
+    {!! config('teams.name') !!} - {{ $team->name }}
 @endsection
 @section('content')
 
@@ -34,33 +34,33 @@
             <div class="card mb-4">
                 <!-- Card header -->
                 <div class="card-header">
-                    <h3 class="mb-0">Add Team Form</h3>
+                    <h3 class="mb-0">Show Team Data</h3>
                 </div>
                 <!-- Card body -->
                 <div class="card-body">
-                    <form role="form" method="POST" action="{{ route('post.teams.create') }}">
-                    @csrf
+                    <form role="form">
+
                     <!-- Form groups used in grid -->
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-control-label" for="name">Name</label>
-                                <input required type="text" class="form-control" id="name"  name="name" placeholder="Name of team">
+                                <input disabled type="text" class="form-control" id="name"  name="name" value="{{$team->name}}">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-control-label" for="description">Description</label>
-                                <input required type="text" class="form-control" id="description" name="description" placeholder="Description of team">
+                                <input disabled type="text" class="form-control" id="description" name="description" value="{{$team->description}}">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <button class="btn btn-icon btn-primary" type="submit">
+                                <button disabled class="btn btn-icon btn-primary" type="submit">
                                     <span class="btn-inner--icon"><i class="ni ni-bag-17"></i></span>
-                                    <span class="btn-inner--text">Add</span>
+                                    <span class="btn-inner--text">Print</span>
                                 </button>
                             </div>
                         </div>

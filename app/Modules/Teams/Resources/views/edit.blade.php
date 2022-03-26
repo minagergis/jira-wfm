@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    {!! config('teams.name') !!}
+    {!! config('teams.name') !!} - Edit {{$team->name}}
 @endsection
 @section('content')
 
@@ -15,9 +15,9 @@
                             <h6 class="h2 text-white d-inline-block mb-0">Teams </h6>
                             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                                    <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="#">Teams</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Add Team Item</li>
+                                    <li class="breadcrumb-item"><a href="{{route('home')}}"><i class="fas fa-home"></i></a></li>
+                                    <li class="breadcrumb-item"><a href="{{route('get.teams.list')}}">Teams</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Edit Team {{$team->name}}</li>
                                 </ol>
                             </nav>
                         </div>
@@ -34,24 +34,24 @@
             <div class="card mb-4">
                 <!-- Card header -->
                 <div class="card-header">
-                    <h3 class="mb-0">Add Team Form</h3>
+                    <h3 class="mb-0">Edit {{$team->name}} Team Form</h3>
                 </div>
                 <!-- Card body -->
                 <div class="card-body">
-                    <form role="form" method="POST" action="{{ route('post.teams.create') }}">
+                    <form role="form" method="POST" action="{{ route('post.teams.edit',$team->id) }}">
                     @csrf
                     <!-- Form groups used in grid -->
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-control-label" for="name">Name</label>
-                                <input required type="text" class="form-control" id="name"  name="name" placeholder="Name of team">
+                                <input required type="text" class="form-control" id="name"  name="name" value="{{$team->name}}">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-control-label" for="description">Description</label>
-                                <input required type="text" class="form-control" id="description" name="description" placeholder="Description of team">
+                                <input required type="text" class="form-control" id="description" name="description"  value="{{$team->description}}">
                             </div>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                             <div class="form-group">
                                 <button class="btn btn-icon btn-primary" type="submit">
                                     <span class="btn-inner--icon"><i class="ni ni-bag-17"></i></span>
-                                    <span class="btn-inner--text">Add</span>
+                                    <span class="btn-inner--text">Update</span>
                                 </button>
                             </div>
                         </div>
