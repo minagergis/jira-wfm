@@ -11,8 +11,12 @@
 |
 */
 
-Route::prefix('teams')->group(function() {
+Route::prefix('teams')->middleware('auth')->group(function () {
     Route::get('/', 'TeamsController@index')->name('get.teams.list');
     Route::get('/create', 'TeamsController@create')->name('get.teams.create');
     Route::post('/create', 'TeamsController@store')->name('post.teams.create');
+    Route::get('/edit/{id}', 'TeamsController@edit')->name('get.teams.edit');
+    Route::post('/edit/{id}', 'TeamsController@update')->name('post.teams.edit');
+    Route::get('/show/{id}', 'TeamsController@show')->name('get.teams.show');
+    Route::get('/delete/{id}', 'TeamsController@destroy')->name('get.teams.delete');
 });

@@ -1,4 +1,5 @@
 {
     "Teams": true,
-    "TeamMembers": true
+    "TeamMembers": true,
+    "Core": true
 }
