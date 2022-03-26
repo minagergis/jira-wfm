@@ -3,7 +3,6 @@
 namespace App\Modules\TeamMembers\Http\Controllers;
 
 use App\Modules\TeamMembers\Http\Requests\UpdateTeamMemberRequest;
-use Illuminate\Http\Request;
 use App\Modules\Teams\Services\TeamService;
 use Illuminate\Contracts\Support\Renderable;
 use App\Modules\TeamMembers\Services\TeamMemberService;
@@ -53,17 +52,19 @@ class TeamMembersController extends AbstractCoreController
     {
         $this->teamMemberService->create($request->all());
 
-        return redirect()->route('get.team-member.list')->with(['status' => 'Team has been created successfully']);
+        return redirect()->route('get.team-member.list')->with(['status' => 'Team member has been created successfully']);
     }
 
     public function show($id)
     {
         $teamMember = $this->teamMemberService->read($id);
+        $teams      = $this->teamService->index();
+
         if (!$teamMember) {
             return $this->showErrorMessage('get.team-member.list');
         }
 
-        return view('teammembers::show', compact('teamMember'));
+        return view('teammembers::show', compact('teamMember','teams'));
     }
 
 

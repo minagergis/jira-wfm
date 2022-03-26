@@ -30,6 +30,10 @@ class UpdateTeamMemberRequest extends FormRequest
                 'required',
                 'boolean',
             ],
+            'weight' => [
+                'required',
+                'integer',
+            ],
             'team' => [
                 'required',
                 'integer',
