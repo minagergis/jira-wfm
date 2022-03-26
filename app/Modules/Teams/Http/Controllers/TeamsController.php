@@ -2,14 +2,12 @@
 
 namespace App\Modules\Teams\Http\Controllers;
 
-use Illuminate\Routing\Controller;
-use Illuminate\Http\RedirectResponse;
 use App\Modules\Teams\Services\TeamService;
-use Illuminate\Contracts\Support\Renderable;
 use App\Modules\Teams\Http\Requests\CreateTeamRequest;
 use App\Modules\Teams\Http\Requests\UpdateTeamRequest;
+use App\Modules\Core\Http\Controllers\AbstractCoreController;
 
-class TeamsController extends Controller
+class TeamsController extends AbstractCoreController
 {
     private $teamService;
 
@@ -41,7 +39,7 @@ class TeamsController extends Controller
     {
         $team = $this->teamService->read($id);
         if (! $team) {
-            return $this->showErrorMessage();
+            return $this->showErrorMessage('get.teams.list');
         }
 
         return view('teams::show', compact('team'));
@@ -52,7 +50,7 @@ class TeamsController extends Controller
         $team = $this->teamService->read($id);
 
         if (! $team) {
-            return $this->showErrorMessage();
+            return $this->showErrorMessage('get.teams.list');
         }
 
         return view('teams::edit', compact('team'));
@@ -65,16 +63,10 @@ class TeamsController extends Controller
         return redirect()->route('get.teams.list')->with(['status' => 'Team has been edited successfully']);
     }
 
-
     public function destroy($id)
     {
         $this->teamService->delete($id);
 
         return redirect()->route('get.teams.list')->with(['status' => 'Team has been deleted successfully']);
-    }
-
-    private function showErrorMessage($message = 'Something Went Wrong'): RedirectResponse
-    {
-        return redirect()->route('get.teams.list')->with(['status' => $message]);
     }
 }

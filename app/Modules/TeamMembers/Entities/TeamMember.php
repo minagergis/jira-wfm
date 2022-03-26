@@ -2,7 +2,6 @@
 
 namespace App\Modules\TeamMembers\Entities;
 
-
 use App\Modules\Teams\Entities\Team;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -16,7 +15,7 @@ class TeamMember extends Model
         'is_active',
         'jira_integration_id',
         'weight',
-        'is_in_shift_now'
+        'is_in_shift_now',
     ];
 
     public function teams(): BelongsToMany

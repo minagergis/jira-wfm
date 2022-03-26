@@ -2,17 +2,17 @@
 
 namespace App\Modules\TeamMembers\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class CreateTeamMemberRequest extends FormRequest
+class UpdateTeamMemberRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
      *
      * @return array
      */
-    public function rules(): array
+    public function rules()
     {
         return [
             'name' => [
@@ -43,7 +43,7 @@ class CreateTeamMemberRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize(): bool
+    public function authorize()
     {
         return true;
     }

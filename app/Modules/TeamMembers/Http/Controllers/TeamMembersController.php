@@ -2,23 +2,26 @@
 
 namespace App\Modules\TeamMembers\Http\Controllers;
 
-use App\Modules\TeamMembers\Http\Requests\CreateTeamMemberRequest;
-use App\Modules\TeamMembers\Services\TeamMemberService;
+use App\Modules\TeamMembers\Http\Requests\UpdateTeamMemberRequest;
+use Illuminate\Http\Request;
 use App\Modules\Teams\Services\TeamService;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use App\Modules\TeamMembers\Services\TeamMemberService;
+use App\Modules\Core\Http\Controllers\AbstractCoreController;
+use App\Modules\TeamMembers\Http\Requests\CreateTeamMemberRequest;
 
-class TeamMembersController extends Controller
+class TeamMembersController extends AbstractCoreController
 {
     private $teamMemberService;
+
     private $teamService;
 
-    public function __construct(TeamMemberService $teamMemberService,TeamService $teamService)
+    public function __construct(TeamMemberService $teamMemberService, TeamService $teamService)
     {
         $this->teamMemberService = $teamMemberService;
-        $this->teamService = $teamService;
+        $this->teamService       = $teamService;
     }
+
     /**
      * Display a listing of the resource.
      * @return Renderable
@@ -27,7 +30,7 @@ class TeamMembersController extends Controller
     {
         $teamMembers = $this->teamMemberService->index();
 
-        return view('teammembers::index',compact('teamMembers'));
+        return view('teammembers::index', compact('teamMembers'));
     }
 
     /**
@@ -38,7 +41,7 @@ class TeamMembersController extends Controller
     {
         $teams = $this->teamService->index();
 
-        return view('teammembers::create',compact('teams'));
+        return view('teammembers::create', compact('teams'));
     }
 
     /**
@@ -51,38 +54,35 @@ class TeamMembersController extends Controller
         $this->teamMemberService->create($request->all());
 
         return redirect()->route('get.team-member.list')->with(['status' => 'Team has been created successfully']);
-
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
     public function show($id)
     {
-        return view('teammembers::show');
+        $teamMember = $this->teamMemberService->read($id);
+        if (!$teamMember) {
+            return $this->showErrorMessage('get.team-member.list');
+        }
+
+        return view('teammembers::show', compact('teamMember'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
+
     public function edit($id)
     {
-        return view('teammembers::edit');
+        $teams      = $this->teamService->index();
+        $teamMember = $this->teamMemberService->read($id);
+        if (!$teamMember) {
+            return $this->showErrorMessage('get.team-member.list');
+        }
+
+        return view('teammembers::edit', compact('teamMember', 'teams'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
+    public function update(UpdateTeamMemberRequest $request, $id)
     {
-        //
+        $this->teamMemberService->update($request->all(), $id);
+
+        return redirect()->route('get.team-member.list')->with(['status' => 'Team member has been edited successfully']);
     }
 
     /**

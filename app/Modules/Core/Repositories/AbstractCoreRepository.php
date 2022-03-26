@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Modules\Core\Repositories;
 
-abstract class AbstractCoreRepository{
-
+abstract class AbstractCoreRepository
+{
     protected $model;
 
     public function create($attributes)
@@ -28,7 +29,6 @@ abstract class AbstractCoreRepository{
     public function update($id, array $attributes)
     {
         return $this->model->find($id)->update($attributes);
-
     }
 
     public function delete($id)

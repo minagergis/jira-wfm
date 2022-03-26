@@ -2,8 +2,8 @@
 
 namespace App\Modules\Core\Services;
 
-abstract class AbstractCoreService{
-
+abstract class AbstractCoreService
+{
     protected $repository;
 
     public function index()
@@ -13,7 +13,6 @@ abstract class AbstractCoreService{
 
     public function create($attributes)
     {
-
         return $this->repository->create($attributes);
     }
 
