@@ -43,10 +43,10 @@
                         <div class="collapse" id="navbar-examples">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
-                                    <a href="" class="nav-link">Add Team Member</a>
+                                    <a href="{{route('get.team-member.create')}}" class="nav-link">Add Team Member</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="" class="nav-link">List Team Members</a>
+                                    <a href="{{route('get.team-member.list')}}" class="nav-link">List Team Members</a>
                                 </li>
                             </ul>
                         </div>
