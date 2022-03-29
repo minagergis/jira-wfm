@@ -2,5 +2,6 @@
     "Teams": true,
     "TeamMembers": true,
     "Core": true,
-    "Tasks": true
+    "Tasks": true,
+    "Shifts": true
 }
