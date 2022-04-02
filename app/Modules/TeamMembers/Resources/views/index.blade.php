@@ -43,7 +43,7 @@
                                     <th>Name</th>
                                     <th>Weight</th>
                                     <th>Team Name</th>
-                                    <th>Created At</th>
+                                    <th>Controls ⌘</th>
                                 </tr>
                                 </thead>
 
@@ -53,7 +53,12 @@
                                         <td>{{$member->name}}</td>
                                         <td>{{$member->weight}}</td>
                                         <td>{{$member->teams[0]->name ?? 'N/A'}}</td>
-                                        <td>{{$member->created_at}}</td>
+                                        <td>
+                                            <a href="{{route('get.team-member.assign-shift',$member->id)}}" class="btn btn-icon btn-primary" type="button">
+                                                <span class="btn-inner--icon"><i class="ni ni-watch-time"></i></span>
+                                                <span class="btn-inner--text">Assign shift</span>
+                                            </a>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
