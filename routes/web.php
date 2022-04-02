@@ -17,4 +17,4 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/home', [DashboardController::class, 'getDashboard'])->name('home');
+Route::get('/', [DashboardController::class, 'getDashboard'])->name('home');

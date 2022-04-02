@@ -2,12 +2,14 @@
 
 namespace App\Modules\TeamMembers\Http\Controllers;
 
-use App\Modules\TeamMembers\Http\Requests\UpdateTeamMemberRequest;
+use Illuminate\Http\RedirectResponse;
 use App\Modules\Teams\Services\TeamService;
 use Illuminate\Contracts\Support\Renderable;
 use App\Modules\TeamMembers\Services\TeamMemberService;
 use App\Modules\Core\Http\Controllers\AbstractCoreController;
 use App\Modules\TeamMembers\Http\Requests\CreateTeamMemberRequest;
+use App\Modules\TeamMembers\Http\Requests\UpdateTeamMemberRequest;
+use App\Modules\TeamMembers\Http\Requests\AssignShiftToMemberRequest;
 
 class TeamMembersController extends AbstractCoreController
 {
@@ -46,7 +48,7 @@ class TeamMembersController extends AbstractCoreController
     /**
      * Store a newly created resource in storage.
      * @param CreateTeamMemberRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function store(CreateTeamMemberRequest $request)
     {
@@ -64,9 +66,8 @@ class TeamMembersController extends AbstractCoreController
             return $this->showErrorMessage('get.team-member.list');
         }
 
-        return view('teammembers::show', compact('teamMember','teams'));
+        return view('teammembers::show', compact('teamMember', 'teams'));
     }
-
 
     public function edit($id)
     {
@@ -84,6 +85,20 @@ class TeamMembersController extends AbstractCoreController
         $this->teamMemberService->update($request->all(), $id);
 
         return redirect()->route('get.team-member.list')->with(['status' => 'Team member has been edited successfully']);
+    }
+
+    public function getAssignShift($id)
+    {
+        $teamMember      = $this->teamMemberService->read($id);
+
+        return view('teammembers::assign_shift', compact('teamMember'));
+    }
+
+    public function postAssignShift($id, AssignShiftToMemberRequest $request): RedirectResponse
+    {
+        $this->teamMemberService->assignShift($id, $request->all());
+
+        return redirect()->route('get.team-member.list')->with(['status' => 'Shift has been assigned successfully']);
     }
 
     /**

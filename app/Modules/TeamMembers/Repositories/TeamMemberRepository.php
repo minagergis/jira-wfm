@@ -30,4 +30,9 @@ class TeamMemberRepository extends AbstractCoreRepository
 
         return $teamMember;
     }
+
+    public function assignShifts($id, array $attributes)
+    {
+        return $this->model->find($id)->shifts()->sync($attributes['shifts'] ?? []);
+    }
 }
