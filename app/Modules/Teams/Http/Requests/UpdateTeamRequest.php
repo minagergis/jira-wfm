@@ -22,6 +22,10 @@ class UpdateTeamRequest extends FormRequest
                 'required',
                 'string',
             ],
+            'jira_project_key' => [
+                'required',
+                'string',
+            ],
         ];
     }
 

@@ -58,6 +58,14 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label class="form-control-label" for="name">Jira Project Key</label>
+                                <input disabled type="text" class="form-control" id="jira_project_key"  name="jira_project_key" value="{{$team->jira_project_key}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <button disabled class="btn btn-icon btn-primary" type="submit">
                                     <span class="btn-inner--icon"><i class="ni ni-bag-17"></i></span>
                                     <span class="btn-inner--text">Print</span>

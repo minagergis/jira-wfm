@@ -18,6 +18,7 @@ class CreateTasksTable extends Migration
             $table->string('name');
             $table->string('frequency');
             $table->integer('points');
+            $table->string('description')->nullable();
             $table->boolean('is_automatic');
             $table->bigInteger('team_id')->unsigned();
             $table->foreign('team_id')->references('id')->on('teams')

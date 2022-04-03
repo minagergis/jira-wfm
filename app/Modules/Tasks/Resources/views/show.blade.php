@@ -48,21 +48,18 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="active">Frequency</label>
-                                    <select disabled class="form-control" name="frequency" data-toggle="select">
-                                        <option @if($task->frequency == 'daily') selected @endif value="daily">Daily</option>
-                                        <option @if($task->frequency == 'weekly') selected @endif value="weekly">Weekly</option>
-                                    </select>
+                                    <label class="form-control-label" for="name">Description</label>
+                                    <input disabled type="text" class="form-control" id="description"  name="description" placeholder="Description of task" value="{{$task->description}}">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="is_automatic">Is Automatic</label>
-                                    <select disabled class="form-control" name="is_automatic" data-toggle="select">
-                                        <option  @if($task->is_automatic == 1) selected @endif  value="1">Yes</option>
-                                        <option  @if($task->is_automatic == 1) selected @endif  value="0">No</option>
+                                    <label class="form-control-label" for="active">Frequency</label>
+                                    <select disabled class="form-control" name="frequency" data-toggle="select">
+                                        <option @if($task->frequency == 'daily') selected @endif value="daily">Daily</option>
+                                        <option @if($task->frequency == 'weekly') selected @endif value="weekly">Weekly</option>
                                     </select>
                                 </div>
                             </div>
@@ -85,6 +82,15 @@
                                         @foreach ($teams as $team)
                                             <option @if($task->team_id == $team->id) selected @endif value="{{$team->id}}">{{$team->name}}</option>
                                         @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="is_automatic">Is Automatic</label>
+                                    <select disabled class="form-control" name="is_automatic" data-toggle="select">
+                                        <option  @if($task->is_automatic == 1) selected @endif  value="1">Yes</option>
+                                        <option  @if($task->is_automatic == 1) selected @endif  value="0">No</option>
                                     </select>
                                 </div>
                             </div>
