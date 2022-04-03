@@ -4,7 +4,6 @@ namespace App\Modules\Tasks\Entities;
 
 use App\Modules\Teams\Entities\Team;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Task extends Model
 {
@@ -14,10 +13,10 @@ class Task extends Model
         'name',
         'frequency',
         'points',
+        'description',
         'is_automatic',
-        'team_id'
+        'team_id',
     ];
-
 
     public function team(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

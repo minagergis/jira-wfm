@@ -17,6 +17,7 @@ class CreateTeamsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
+            $table->string('jira_project_key')->nullable();
             $table->timestamps();
         });
     }

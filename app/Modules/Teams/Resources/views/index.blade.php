@@ -43,21 +43,16 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>description</th>
+                                    <th>jira project key</th>
                                     <th>Created At</th>
                                 </tr>
                                 </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>description</th>
-                                    <th>Created At</th>
-                                </tr>
-                                </tfoot>
                                 <tbody>
                                 @foreach($teams as $team)
                                 <tr>
                                     <td>{{$team->name}}</td>
                                     <td>{{$team->description}}</td>
+                                    <td>{{$team->jira_project_key ?? 'N/A'}}</td>
                                     <td>{{$team->created_at}}</td>
                                 </tr>
                                 @endforeach

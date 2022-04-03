@@ -2,10 +2,10 @@
 
 namespace App\Modules\Tasks\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Http\FormRequest;
 
-class CreateTaskRequest  extends FormRequest
+class CreateTaskRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -19,17 +19,21 @@ class CreateTaskRequest  extends FormRequest
                 'required',
                 'string',
             ],
+            'description' => [
+                'required',
+                'string',
+            ],
             'is_automatic' => [
                 'required',
                 'boolean',
             ],
             'points' => [
                 'required',
-                'integer'
+                'integer',
             ],
             'frequency' => [
                 'required',
-                'string'
+                'string',
             ],
             'team_id' => [
                 'required',

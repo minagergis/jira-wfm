@@ -2,15 +2,16 @@
 
 namespace App\Modules\Distribution\Jobs;
 
-use App\Modules\Tasks\Services\TaskService;
-use App\Modules\TeamMembers\Services\TeamMemberService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
+use App\Modules\Tasks\Services\TaskService;
 use App\Modules\Teams\Services\TeamService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Modules\Shifts\Services\ShiftService;
+use Facades\App\Modules\JiraIntegration\Facades\JIRA;
+use App\Modules\TeamMembers\Services\TeamMemberService;
 
 class DailyTaskDistribution implements ShouldQueue
 {
@@ -34,10 +35,10 @@ class DailyTaskDistribution implements ShouldQueue
      */
     public function __construct()
     {
-        $this->shiftService = resolve(ShiftService::class);
-        $this->teamService  = resolve(TeamService::class);
+        $this->shiftService      = resolve(ShiftService::class);
+        $this->teamService       = resolve(TeamService::class);
         $this->teamMemberService = resolve(TeamMemberService::class);
-        $this->taskService = resolve(TaskService::class);
+        $this->taskService       = resolve(TaskService::class);
     }
 
     /**
@@ -57,7 +58,9 @@ class DailyTaskDistribution implements ShouldQueue
                     $teamMember = $this->teamMemberService->read($teamMemberId);
                     foreach ($tasks as $taskId) {
                         $task = $this->taskService->read($taskId);
-
+                        if ($team->jira_project_key) {
+                            JIRA::createIssue($team->jira_project_key, $task->name, $task->description, $teamMember->jira_integration_id);
+                        }
                     }
                 }
             }
