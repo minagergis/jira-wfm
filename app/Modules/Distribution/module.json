@@ -1,0 +1,13 @@
+{
+    "name": "Distribution",
+    "alias": "distribution",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "App\\Modules\\Distribution\\Providers\\DistributionServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

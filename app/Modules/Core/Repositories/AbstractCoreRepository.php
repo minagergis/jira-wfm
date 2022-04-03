@@ -18,7 +18,7 @@ abstract class AbstractCoreRepository
 
     public function withScope($scopeName)
     {
-        return $this->model->$scopeName()->get();
+        return $this->model->{$scopeName}()->get();
     }
 
     public function find($id)
