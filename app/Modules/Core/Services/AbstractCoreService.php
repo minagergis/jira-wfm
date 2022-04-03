@@ -30,4 +30,9 @@ abstract class AbstractCoreService
     {
         return $this->repository->delete($id);
     }
+
+    public function withScope($scopeName)
+    {
+        return $this->repository->withScope($scopeName);
+    }
 }

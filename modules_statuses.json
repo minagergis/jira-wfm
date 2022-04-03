@@ -3,5 +3,6 @@
     "TeamMembers": true,
     "Core": true,
     "Tasks": true,
-    "Shifts": true
+    "Shifts": true,
+    "Distribution": true
 }

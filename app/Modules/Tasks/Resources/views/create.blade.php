@@ -52,6 +52,7 @@
                                 <div class="form-group">
                                     <label class="form-control-label" for="active">Frequency</label>
                                     <select required class="form-control" name="frequency" data-toggle="select">
+                                        <option value="per_shift">Every shift</option>
                                         <option value="daily">Daily</option>
                                         <option value="weekly">Weekly</option>
                                     </select>
