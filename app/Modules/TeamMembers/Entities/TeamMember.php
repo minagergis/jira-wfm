@@ -2,6 +2,7 @@
 
 namespace App\Modules\TeamMembers\Entities;
 
+use App\Modules\Shifts\Entities\Shift;
 use App\Modules\Teams\Entities\Team;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -21,6 +22,11 @@ class TeamMember extends Model
     public function teams(): BelongsToMany
     {
         return $this->belongsToMany(Team::class, 'team_members_team');
+    }
+
+    public function shifts(): BelongsToMany
+    {
+        return $this->belongsToMany(Shift::class, 'team_members_shifts');
     }
 
     public function scopeActive($query)

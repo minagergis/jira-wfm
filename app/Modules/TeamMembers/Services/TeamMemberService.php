@@ -13,4 +13,9 @@ class TeamMemberService extends AbstractCoreService
     {
         $this->repository = $repository;
     }
+
+    public function assignShift($id, $attributes)
+    {
+        return $this->repository->assignShifts($id, $attributes);
+    }
 }

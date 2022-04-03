@@ -3,5 +3,7 @@
     "TeamMembers": true,
     "Core": true,
     "Tasks": true,
-    "JiraIntegration": true
+    "JiraIntegration": true,
+    "Shifts": true,
+    "Distribution": true
 }
