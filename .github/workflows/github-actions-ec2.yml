@@ -28,4 +28,4 @@ jobs:
         run: |
           composer install --no-interaction \
           composer require laravel/envoy --dev \
-          php ./vendor/bin/envoy run deploy --branch=master \
+          php ./vendor/bin/envoy run deploy \
