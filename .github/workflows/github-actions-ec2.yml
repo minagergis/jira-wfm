@@ -22,3 +22,7 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
+        run: |
+          composer install --no-interaction \
+          composer require laravel/envoy --dev \
+          php ./vendor/bin/envoy run deploy --branch=master \
