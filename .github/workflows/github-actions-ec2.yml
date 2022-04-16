@@ -26,6 +26,6 @@ jobs:
 
       - name: Run post deployment scripts
         run: |
-          composer install --no-interaction \
-          composer require laravel/envoy --dev \
+          composer install --no-interaction && \
+          composer require laravel/envoy --dev && \
           php ./vendor/bin/envoy run deploy \
