@@ -103,7 +103,7 @@
                                 <div class="form-group">
                                     <label for="example-time-input" class="col-md-2 col-form-label form-control-label">Shift starts at</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" name="time_from" type="time" value="08:30:00" id="example-time-input">
+                                        <input class="form-control" name="time_from" type="time" value="08:30:00">
                                     </div>
                                 </div>
                             </div>
@@ -111,7 +111,7 @@
                                 <div class="form-group">
                                     <label for="example-time-input" class="col-md-2 col-form-label form-control-label">Shift ends at</label>
                                     <div class="col-md-10">
-                                        <input class="form-control" type="time"  name="time_to" value="16:30:00" id="example-time-input">
+                                        <input class="form-control" type="time"  name="time_to" value="16:30:00">
                                     </div>
                                 </div>
                             </div>
