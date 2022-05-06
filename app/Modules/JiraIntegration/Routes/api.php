@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/jiraintegration', function (Request $request) {
-    return $request->user();
+Route::post('/jiraintegration', function (Request $request) {
+    Log::info($request->toArray());
 });

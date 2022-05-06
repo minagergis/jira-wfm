@@ -2,10 +2,12 @@
 
 namespace App\Modules\Distribution\Http\Controllers;
 
-use App\Modules\Distribution\Jobs\DailyTaskDistribution;
 use App\Modules\Teams\Services\TeamService;
 use App\Modules\Shifts\Services\ShiftService;
+use App\Modules\Distribution\Jobs\DailyTaskDistribution;
 use App\Modules\Core\Http\Controllers\AbstractCoreController;
+use Facades\App\Modules\Distribution\Facades\NormalTasksDistributionFacade;
+use Facades\App\Modules\Distribution\Facades\CreateDistributedTasksOnJiraFacade;
 
 class DistributionController extends AbstractCoreController
 {
@@ -54,5 +56,35 @@ class DistributionController extends AbstractCoreController
         return $newArray;
     }
 
+    public function testing()
+    {
+        $teams = $this->teamService->index();
 
+        foreach ($teams as $team) {
+            if (! $team->shifts or ! $team->tasks or ! $team->teamMembers) {
+                continue;
+            }
+
+            if ($team->perShiftTasks) {
+                foreach ($team->shifts as $shift) {
+                    $shiftTasks      = $team->perShiftTasks->toArray();
+                    $shiftMembers    = $shift->teamMembersForCertainTeam($team->id, $shift->id)->get()->toArray();
+                    foreach ($shiftMembers as $member) {
+                        $tasksForMember =  NormalTasksDistributionFacade::distributeTasksForTeamMember($member, $shiftTasks, $shift->id);
+
+                        foreach ($tasksForMember as $task) {
+                            CreateDistributedTasksOnJiraFacade::createTaskForATeamMember($task, $member, $team, $shift);
+                        }
+                    }
+                    //dd($shiftTasks);
+                }
+            }
+
+            // If have daily tasks
+
+            //
+            //dd($team);
+
+        }
+    }
 }
