@@ -66,6 +66,19 @@ class TaskDistributionLog extends Model
     }
 
     /**
+     * Scope a query to only include logs for a certain shift.
+     *
+     * @param Builder $query
+     * @param         $shiftId
+     *
+     * @return Builder
+     */
+    public function scopeShift(Builder $query, $shiftId): Builder
+    {
+        return $query->where('shift_id', $shiftId);
+    }
+
+    /**
      * Scope a query to only include logs for latest log.
      *
      * @param Builder $query

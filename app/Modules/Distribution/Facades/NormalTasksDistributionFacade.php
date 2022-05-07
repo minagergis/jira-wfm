@@ -4,9 +4,12 @@ namespace App\Modules\Distribution\Facades;
 
 use App\Modules\Distribution\Entities\TaskDistributionLog;
 use App\Modules\Distribution\Enums\TaskDistributionRatiosEnum;
+use App\Modules\Distribution\Traits\MemberCapacityCalculationTrait;
 
 class NormalTasksDistributionFacade
 {
+    use MemberCapacityCalculationTrait;
+
     /**
      * @param array $teamMember     Team member data
      * @param array $availableTasks Available tasks for this team member
@@ -19,15 +22,16 @@ class NormalTasksDistributionFacade
         $distributedTasks = [];
 
         $logsForThisShift = TaskDistributionLog::today()
-            ->shiftAndTeam($shiftId, $teamMember['team_id'])
+            ->shift($shiftId)
             ->taskType(TaskDistributionRatiosEnum::PER_SHIFT)
             ->where('team_member_id', $teamMember['id'])
             ->get();
 
-        // Getting the last weight for this member
-        $currentWeightForTeamMember = $logsForThisShift->sortByDesc('id')->first()->after_member_capacity
-            ?? $teamMember['weight'] * TaskDistributionRatiosEnum::TYPES_RATIOS[TaskDistributionRatiosEnum::PER_SHIFT];
-
+        $currentWeightForTeamMember = $this->getCurrentCapacityForATeamMemberToday(
+            $teamMember['id'],
+            $shiftId,
+            TaskDistributionRatiosEnum::PER_SHIFT
+        );
         // Looping for all given tasks
         foreach ($availableTasks as $task) {
             $loggedTask = $logsForThisShift->where('task_id', $task['id'])->count();

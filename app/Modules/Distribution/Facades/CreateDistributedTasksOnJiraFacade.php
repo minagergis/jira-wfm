@@ -6,21 +6,20 @@ use Exception;
 use Illuminate\Support\Facades\Log;
 use Facades\App\Modules\JiraIntegration\Facades\JIRA;
 use App\Modules\Distribution\Entities\TaskDistributionLog;
-use App\Modules\Distribution\Enums\TaskDistributionRatiosEnum;
+use App\Modules\Distribution\Traits\MemberCapacityCalculationTrait;
 
 class CreateDistributedTasksOnJiraFacade
 {
+    use MemberCapacityCalculationTrait;
+
     public function createTaskForATeamMember($task, $teamMember, $team, $shift, string $taskType): bool
     {
         try {
-            $currentMemberCapacity = TaskDistributionLog::today()
-                ->shiftAndTeam($shift->id, $teamMember['team_id'])
-                ->taskType($taskType)
-                ->where('team_member_id', $teamMember['id'])
-                ->latest()
-                ->first()
-                ->after_member_capacity ??
-                $teamMember['weight'] * TaskDistributionRatiosEnum::TYPES_RATIOS[$taskType];
+            $currentMemberCapacity = $this->getCurrentCapacityForATeamMemberToday(
+                $teamMember['id'],
+                $shift->id,
+                $taskType
+            );
 
             $jiraTask = JIRA::createIssue(
                 $team->jira_project_key,
