@@ -35,6 +35,7 @@ class CreateTasksDistributionLogTable extends Migration
             $table->foreign('shift_id')->references('id')->on('shifts')
                 ->onDelete('cascade');
 
+            $table->string('task_type')->nullable();
             $table->integer('before_member_capacity')->nullable();
             $table->integer('after_member_capacity')->nullable();
 

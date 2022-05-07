@@ -6,23 +6,25 @@ use Exception;
 use Illuminate\Support\Facades\Log;
 use Facades\App\Modules\JiraIntegration\Facades\JIRA;
 use App\Modules\Distribution\Entities\TaskDistributionLog;
+use App\Modules\Distribution\Enums\TaskDistributionRatiosEnum;
 
 class CreateDistributedTasksOnJiraFacade
 {
-    public function createTaskForATeamMember($task, $teamMember, $team, $shift): bool
+    public function createTaskForATeamMember($task, $teamMember, $team, $shift, string $taskType): bool
     {
         try {
-            $lastMemberCapacity = TaskDistributionLog::today()
+            $currentMemberCapacity = TaskDistributionLog::today()
                 ->shiftAndTeam($shift->id, $teamMember['team_id'])
+                ->taskType($taskType)
                 ->where('team_member_id', $teamMember['id'])
                 ->latest()
                 ->first()
-                ->after_member_capacity ?? $teamMember['weight'];
-
+                ->after_member_capacity ??
+                $teamMember['weight'] * TaskDistributionRatiosEnum::TYPES_RATIOS[$taskType];
 
             $jiraTask = JIRA::createIssue(
                 $team->jira_project_key,
-                $shift->name . ' - ' . $task['name'],
+                now()->toDateString().' '.$shift->name.'⏰ -> '. $task['name'],
                 $task['description'],
                 $teamMember['jira_integration_id']
             );
@@ -32,8 +34,9 @@ class CreateDistributedTasksOnJiraFacade
                 'team_member_id'         => $teamMember['id'],
                 'shift_id'               => $shift->id,
                 'task_id'                => $task['id'],
-                'before_member_capacity' => $lastMemberCapacity,
-                'after_member_capacity'  => $lastMemberCapacity - $task['points'],
+                'task_type'              => $taskType,
+                'before_member_capacity' => $currentMemberCapacity,
+                'after_member_capacity'  => $currentMemberCapacity - $task['points'],
             ]);
         } catch (Exception $e) {
             // Exception should be handled there

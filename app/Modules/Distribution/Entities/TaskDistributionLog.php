@@ -18,6 +18,7 @@ class TaskDistributionLog extends Model
         'team_member_id',
         'task_id',
         'shift_id',
+        'task_type',
         'before_member_capacity',
         'after_member_capacity',
     ];
@@ -32,6 +33,19 @@ class TaskDistributionLog extends Model
     public function scopeToday(Builder $query): Builder
     {
         return $query->whereDay('created_at', now()->day);
+    }
+
+    /**
+     * Scope a query to only include logs for task types.
+     *
+     * @param Builder $query
+     * @param string  $type
+     *
+     * @return Builder
+     */
+    public function scopeTaskType(Builder $query, string $type): Builder
+    {
+        return $query->where('task_type', $type);
     }
 
     /**

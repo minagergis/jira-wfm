@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Modules\TeamMembers\Entities\TeamMember;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Modules\Distribution\Enums\TaskDistributionRatiosEnum;
 
 class Team extends Model
 {
@@ -39,6 +40,6 @@ class Team extends Model
 
     public function perShiftTasks(): HasMany
     {
-        return $this->hasMany(Task::class)->where('tasks.frequency', 'per_shift');
+        return $this->hasMany(Task::class)->where('tasks.frequency', TaskDistributionRatiosEnum::PER_SHIFT);
     }
 }
