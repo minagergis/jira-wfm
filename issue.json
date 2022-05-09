@@ -1,0 +1,251 @@
+{
+    "issue": {
+        "self": "https:\/\/digisay.atlassian.net\/rest\/api\/2\/10462",
+        "id": 10462,
+        "key": "STL-254",
+        "changelog": {
+            "startAt": 0,
+            "maxResults": 0,
+            "total": 0,
+            "histories": null
+        },
+        "fields": {
+            "statuscategorychangedate": "2022-05-09T20:24:36.058+0200",
+            "issuetype": {
+                "self": "https:\/\/digisay.atlassian.net\/rest\/api\/2\/issuetype\/10020",
+                "id": 10020,
+                "description": "A small, distinct piece of work.",
+                "iconUrl": "https:\/\/digisay.atlassian.net\/rest\/api\/2\/universal_avatar\/view\/type\/issuetype\/avatar\/10318?size=medium",
+                "name": "Task",
+                "subtask": false,
+                "fields": [],
+                "statuses": [],
+                "namedValue": "Task"
+            },
+            "timespent": null,
+            "customfield_10030": [],
+            "project": {
+                "self": "https:\/\/digisay.atlassian.net\/rest\/api\/2\/project\/10008",
+                "id": 10008,
+                "key": "STL",
+                "name": "SEO-TEAM",
+                "description": null,
+                "avatarUrls": {
+                    "48x48": "https:\/\/digisay.atlassian.net\/rest\/api\/2\/universal_avatar\/view\/type\/project\/avatar\/10417",
+                    "24x24": "https:\/\/digisay.atlassian.net\/rest\/api\/2\/universal_avatar\/view\/type\/project\/avatar\/10417?size=small",
+                    "16x16": "https:\/\/digisay.atlassian.net\/rest\/api\/2\/universal_avatar\/view\/type\/project\/avatar\/10417?size=xsmall",
+                    "32x32": "https:\/\/digisay.atlassian.net\/rest\/api\/2\/universal_avatar\/view\/type\/project\/avatar\/10417?size=medium"
+                },
+                "issuetypes": null,
+                "projectCategory": null,
+                "email": null,
+                "lead": null,
+                "components": null,
+                "versions": null,
+                "projectTypeKey": "business",
+                "simplified": true
+            },
+            "customfield_10031": null,
+            "customfield_10032": null,
+            "customfield_10033": null,
+            "fixVersions": [],
+            "customfield_10034": null,
+            "aggregatetimespent": null,
+            "resolution": null,
+            "customfield_10035": null,
+            "customfield_10036": null,
+            "customfield_10037": null,
+            "customfield_10029": null,
+            "resolutiondate": null,
+            "workratio": -1,
+            "lastViewed": null,
+            "watches": {
+                "self": "https:\/\/digisay.atlassian.net\/rest\/api\/2\/issue\/STL-254\/watchers",
+                "watchCount": 1,
+                "isWatching": false
+            },
+            "issuerestriction": {
+                "issuerestrictions": [],
+                "shouldDisplay": false
+            },
+            "created": 1652120675728,
+            "customfield_10020": null,
+            "customfield_10021": null,
+            "customfield_10022": null,
+            "customfield_10023": null,
+            "priority": {
+                "self": "https:\/\/digisay.atlassian.net\/rest\/api\/2\/priority\/2",
+                "id": 2,
+                "name": "High",
+                "iconUrl": "https:\/\/digisay.atlassian.net\/images\/icons\/priorities\/high.svg",
+                "namedValue": "High"
+            },
+            "customfield_10024": null,
+            "customfield_10025": null,
+            "labels": [],
+            "customfield_10016": null,
+            "customfield_10017": null,
+            "customfield_10018": {
+                "hasEpicLinkFieldDependency": false,
+                "showField": false,
+                "nonEditableReason": {
+                    "reason": "PLUGIN_LICENSE_ERROR",
+                    "message": "The Parent Link is only available to Jira Premium users."
+                }
+            },
+            "customfield_10019": "0|i001o7:",
+            "timeestimate": null,
+            "aggregatetimeoriginalestimate": null,
+            "versions": [],
+            "issuelinks": [],
+            "assignee": null,
+            "updated": 1652120675728,
+            "status": {
+                "self": "https:\/\/digisay.atlassian.net\/rest\/api\/2\/status\/10008",
+                "description": null,
+                "iconUrl": "https:\/\/digisay.atlassian.net\/",
+                "name": "To Do",
+                "untranslatedName": null,
+                "id": 10008,
+                "statusCategory": {
+                    "self": "https:\/\/digisay.atlassian.net\/rest\/api\/2\/statuscategory\/2",
+                    "id": 2,
+                    "key": "new",
+                    "colorName": "blue-gray",
+                    "name": "New"
+                },
+                "untranslatedNameValue": null
+            },
+            "components": [],
+            "timeoriginalestimate": null,
+            "customfield_10052": null,
+            "description": "You cannot make calls to this country. Contact our Customer Support team if you would like to enable forwarding to this number.~* Please see Zendesk Support tab for further comments and attachments.~",
+            "customfield_10053": null,
+            "customfield_10010": null,
+            "customfield_10055": null,
+            "customfield_10014": null,
+            "timetracking": {
+                "originalEstimate": null,
+                "remainingEstimate": null,
+                "timeSpent": null,
+                "originalEstimateSeconds": 0,
+                "remainingEstimateSeconds": 0,
+                "timeSpentSeconds": 0
+            },
+            "customfield_10015": null,
+            "customfield_10005": null,
+            "customfield_10006": null,
+            "customfield_10007": null,
+            "security": null,
+            "customfield_10008": null,
+            "customfield_10009": null,
+            "aggregatetimeestimate": null,
+            "attachment": [],
+            "summary": "Missed call from Caller +249 12 177 7395",
+            "creator": {
+                "self": "https:\/\/digisay.atlassian.net\/rest\/api\/2\/user?accountId=557058%3Aa01b4872-0086-4bc3-903e-23f26637afa2",
+                "name": null,
+                "key": null,
+                "accountId": "557058:a01b4872-0086-4bc3-903e-23f26637afa2",
+                "emailAddress": null,
+                "avatarUrls": {
+                    "48x48": "https:\/\/secure.gravatar.com\/avatar\/bc07317d8cbdde0ff466674bb68a9dd7?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FZJ-1.png",
+                    "24x24": "https:\/\/secure.gravatar.com\/avatar\/bc07317d8cbdde0ff466674bb68a9dd7?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FZJ-1.png",
+                    "16x16": "https:\/\/secure.gravatar.com\/avatar\/bc07317d8cbdde0ff466674bb68a9dd7?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FZJ-1.png",
+                    "32x32": "https:\/\/secure.gravatar.com\/avatar\/bc07317d8cbdde0ff466674bb68a9dd7?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FZJ-1.png"
+                },
+                "displayName": "Zendesk Support for Jira",
+                "active": true,
+                "timeZone": "Africa\/Cairo",
+                "groups": null,
+                "locale": null,
+                "accountType": "app"
+            },
+            "subtasks": [],
+            "customfield_10041": null,
+            "customfield_10042": null,
+            "customfield_10043": null,
+            "reporter": {
+                "self": "https:\/\/digisay.atlassian.net\/rest\/api\/2\/user?accountId=611177a8ae72b2006fab616e",
+                "name": null,
+                "key": null,
+                "accountId": "611177a8ae72b2006fab616e",
+                "emailAddress": null,
+                "avatarUrls": {
+                    "48x48": "https:\/\/avatar-management--avatars.us-west-2.prod.public.atl-paas.net\/611177a8ae72b2006fab616e\/c4a49c0b-47ca-4d00-bf4d-1533608b9b5f\/48",
+                    "24x24": "https:\/\/avatar-management--avatars.us-west-2.prod.public.atl-paas.net\/611177a8ae72b2006fab616e\/c4a49c0b-47ca-4d00-bf4d-1533608b9b5f\/24",
+                    "16x16": "https:\/\/avatar-management--avatars.us-west-2.prod.public.atl-paas.net\/611177a8ae72b2006fab616e\/c4a49c0b-47ca-4d00-bf4d-1533608b9b5f\/16",
+                    "32x32": "https:\/\/avatar-management--avatars.us-west-2.prod.public.atl-paas.net\/611177a8ae72b2006fab616e\/c4a49c0b-47ca-4d00-bf4d-1533608b9b5f\/32"
+                },
+                "displayName": "Mina Gergis",
+                "active": true,
+                "timeZone": "Africa\/Cairo",
+                "groups": null,
+                "locale": null,
+                "accountType": "atlassian"
+            },
+            "customfield_10044": null,
+            "customfield_10000": "{}",
+            "aggregateprogress": {
+                "progress": 0,
+                "total": 0
+            },
+            "customfield_10045": null,
+            "customfield_10001": null,
+            "customfield_10046": null,
+            "customfield_10002": null,
+            "customfield_10047": null,
+            "customfield_10003": null,
+            "customfield_10004": null,
+            "customfield_10048": null,
+            "customfield_10038": null,
+            "customfield_10039": [],
+            "environment": null,
+            "duedate": null,
+            "progress": {
+                "progress": 0,
+                "total": 0
+            },
+            "votes": {
+                "self": "https:\/\/digisay.atlassian.net\/rest\/api\/2\/issue\/STL-254\/votes",
+                "votes": 0,
+                "hasVoted": false
+            },
+            "comment": {
+                "maxResults": 0,
+                "total": 0,
+                "startAt": 0,
+                "comments": [],
+                "last": false
+            },
+            "worklog": {
+                "maxResults": 20,
+                "total": 0,
+                "startAt": 0,
+                "worklogs": [],
+                "last": false
+            }
+        },
+        "renderedFields": null
+    },
+    "user": {
+        "self": null,
+        "name": "557058:a01b4872-0086-4bc3-903e-23f26637afa2",
+        "key": "557058:a01b4872-0086-4bc3-903e-23f26637afa2",
+        "accountId": "557058:a01b4872-0086-4bc3-903e-23f26637afa2",
+        "emailAddress": "zendesk_for_jira@connect.atlassian.com",
+        "avatarUrls": {
+            "48x48": "https:\/\/secure.gravatar.com\/avatar\/bc07317d8cbdde0ff466674bb68a9dd7?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FZJ-1.png",
+            "24x24": "https:\/\/secure.gravatar.com\/avatar\/bc07317d8cbdde0ff466674bb68a9dd7?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FZJ-1.png",
+            "16x16": "https:\/\/secure.gravatar.com\/avatar\/bc07317d8cbdde0ff466674bb68a9dd7?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FZJ-1.png",
+            "32x32": "https:\/\/secure.gravatar.com\/avatar\/bc07317d8cbdde0ff466674bb68a9dd7?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FZJ-1.png"
+        },
+        "displayName": "Zendesk Support for Jira",
+        "active": true,
+        "timeZone": null,
+        "groups": null,
+        "locale": null,
+        "accountType": "app"
+    },
+    "timestamp": 1652120677174
+}

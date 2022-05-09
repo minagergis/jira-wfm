@@ -4,8 +4,8 @@ namespace App\Modules\Distribution\Facades;
 
 use Exception;
 use Illuminate\Support\Facades\Log;
-use Facades\App\Modules\JiraIntegration\Facades\JIRA;
 use App\Modules\Distribution\Entities\TaskDistributionLog;
+use Facades\App\Modules\Distribution\Facades\Integrations\JIRA;
 use App\Modules\Distribution\Traits\MemberCapacityCalculationTrait;
 
 class CreateDistributedTasksOnJiraFacade

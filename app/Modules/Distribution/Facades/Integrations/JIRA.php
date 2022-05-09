@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\JiraIntegration\Facades;
+namespace App\Modules\Distribution\Facades\Integrations;
 
 use JsonMapper_Exception;
 use JiraRestApi\Issue\Issue;
@@ -18,9 +18,9 @@ class JIRA
         $this->jiraConfig = new ArrayConfiguration(
             [
 
-                'jiraHost'    => config('jiraintegration.jiraHost'),
-                'jiraUser'    => config('jiraintegration.jiraUser'),
-                'jiraPassword'=> config('jiraintegration.jiraPassword'),
+                'jiraHost'    => config('distribution.jira.host'),
+                'jiraUser'    => config('distribution.jira.user'),
+                'jiraPassword'=> config('distribution.jira.password'),
 
             ]
         );
