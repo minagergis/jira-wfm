@@ -16,3 +16,11 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/distribution', function (Request $request) {
     return $request->user();
 });
+
+Route::prefix('distribution')->group(function () {
+    Route::prefix('zendesk')->middleware('ensure_issue_validity')->group(function () {
+        Route::controller(ZendeskTasksController::class)->group(function () {
+            Route::post('/new-task', 'newTaskCreated');
+        });
+    });
+});

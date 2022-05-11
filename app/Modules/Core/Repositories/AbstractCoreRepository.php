@@ -26,6 +26,16 @@ abstract class AbstractCoreRepository
         return $this->model->find($id);
     }
 
+    public function findWithConditions(array $conditions)
+    {
+        return $this->model->where($conditions)->first();
+    }
+
+    public function allWithConditions(array $conditions)
+    {
+        return $this->model->where($conditions)->first();
+    }
+
     public function update($id, array $attributes)
     {
         return $this->model->find($id)->update($attributes);

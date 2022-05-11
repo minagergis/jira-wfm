@@ -13,4 +13,10 @@ class TeamService extends AbstractCoreService
     {
         $this->repository = $repository;
     }
+
+
+    public function getTeamByJiraProjectCode($jiraProjectCode)
+    {
+        return $this->repository->findWithConditions(['jira_project_key'=>$jiraProjectCode]);
+    }
 }

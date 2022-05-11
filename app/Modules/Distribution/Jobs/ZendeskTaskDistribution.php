@@ -12,7 +12,7 @@ use App\Modules\Distribution\Enums\TaskDistributionRatiosEnum;
 use Facades\App\Modules\Distribution\Facades\NormalTasksDistributionFacade;
 use Facades\App\Modules\Distribution\Facades\CreateDistributedTasksOnJiraFacade;
 
-class DailyTaskDistribution implements ShouldQueue
+class ZendeskTaskDistribution implements ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -21,14 +21,17 @@ class DailyTaskDistribution implements ShouldQueue
 
     private $teamService;
 
+    private $zendeskTask;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(array $zendeskTask)
     {
-        $this->teamService       = resolve(TeamService::class);
+        $this->teamService = resolve(TeamService::class);
+        $this->zendeskTask = $zendeskTask;
     }
 
     /**
@@ -38,8 +41,13 @@ class DailyTaskDistribution implements ShouldQueue
      */
     public function handle()
     {
-        $teams = $this->teamService->index();
+        $team = $this->teamService->getTeamByJiraProjectCode($this->zendeskTask['issue']['fields']['project']['key']);
+        $availableShift = $team->shifts->where([
+            ['from_time' , '=<' , now()->toTimeString()],
+            ['to_time' , '>=' , now()->toTimeString()],
+        ])->get();
 
+        dd($availableShift);
         foreach ($teams as $team) {
             if (! $team->shifts or ! $team->perShiftTasks or ! $team->teamMembers) {
                 continue;
