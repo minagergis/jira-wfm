@@ -19,6 +19,7 @@ class TaskDistributionLog extends Model
         'task_id',
         'shift_id',
         'task_type',
+        'jira_issue_key',
         'before_member_capacity',
         'after_member_capacity',
     ];

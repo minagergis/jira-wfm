@@ -47,4 +47,11 @@ class JIRA
 
         return $issueService->create($issueField);
     }
+
+    public function assignIssue($issueKey, $assigneeJiraID)
+    {
+        $issueService = new IssueService($this->jiraConfig);
+
+        return $issueService->changeAssigneeByAccountId($issueKey, $assigneeJiraID);
+    }
 }
