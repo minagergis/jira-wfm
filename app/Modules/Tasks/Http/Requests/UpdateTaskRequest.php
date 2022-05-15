@@ -35,7 +35,7 @@ class UpdateTaskRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'team' => [
+            'team_id' => [
                 'required',
                 'integer',
                 Rule::exists('teams', 'id'),

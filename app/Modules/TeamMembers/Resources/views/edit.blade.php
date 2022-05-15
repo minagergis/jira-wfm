@@ -22,8 +22,7 @@
                             </nav>
                         </div>
                         <div class="col-lg-6 col-5 text-right">
-                            <a href="#" class="btn btn-sm btn-neutral">New</a>
-                            <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+                            <a href="{{route('get.team-member.create')}}" class="btn btn-sm btn-neutral">New</a>
                         </div>
                     </div>
                 </div>
@@ -69,7 +68,7 @@
                                 <div class="form-group">
                                     <label class="form-control-label" for="weight">Weight</label>
                                     <select required class="form-control" name="weight" data-toggle="select">
-                                        @for ($i = 0; $i <= 10; $i++)
+                                        @for ($i = 0; $i <= 1000; $i++)
                                         <option @if($teamMember->weight == $i) selected @endif value="{{$i}}">{{$i}}</option>
                                         @endfor
                                     </select>

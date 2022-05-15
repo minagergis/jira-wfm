@@ -78,13 +78,8 @@ class TasksController extends AbstractCoreController
         return view('tasks::edit', compact('task', 'teams'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param UpdateTaskRequest $request
-     * @param int $id
-     * @return RedirectResponse
-     */
-    public function update(UpdateTaskRequest $request, $id)
+
+    public function update(UpdateTaskRequest $request, $id): RedirectResponse
     {
         $this->taskService->update($request->all(), $id);
 
