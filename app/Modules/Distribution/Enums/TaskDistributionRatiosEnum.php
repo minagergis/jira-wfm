@@ -2,9 +2,8 @@
 
 namespace App\Modules\Distribution\Enums;
 
-use Spatie\Enum\Laravel\Enum;
 
-final class TaskDistributionRatiosEnum extends Enum
+final class TaskDistributionRatiosEnum
 {
     /* ALL AVAILABLE RATIOS TYPES */
 
