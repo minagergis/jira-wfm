@@ -2,9 +2,9 @@
 
 namespace App\Modules\Distribution\Enums;
 
-use Spatie\Enum\Laravel\Enum;
 
-final class ZendeskTaskPriorityPointsEnum extends Enum
+
+final class ZendeskTaskPriorityPointsEnum
 {
     /* ALL AVAILABLE PRIORITY POINTS */
 
