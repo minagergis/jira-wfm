@@ -20,6 +20,7 @@
                         </div>
                         <div class="col-lg-6 col-5 text-right">
                             <a href="{{route('get.shifts.create')}}" class="btn btn-sm btn-neutral">New</a>
+                            <a href="{{route('get.distribution.distribute')}}" class="btn btn-sm btn-neutral">Distribution</a>
                         </div>
                     </div>
                 </div>

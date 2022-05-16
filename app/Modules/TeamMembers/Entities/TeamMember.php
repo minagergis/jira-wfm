@@ -38,4 +38,12 @@ class TeamMember extends Model
     {
         return $query->where('team_member.is_in_shift_now', '1');
     }
+
+    public function scopeWithInDays($query, int $daysNumber)
+    {
+        $to   = now();
+        $from = now()->subDays($daysNumber);
+
+        return $query->whereBetween('created_at', [$from , $to]);
+    }
 }

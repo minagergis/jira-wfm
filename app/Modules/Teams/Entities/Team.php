@@ -42,4 +42,12 @@ class Team extends Model
     {
         return $this->hasMany(Task::class)->where('tasks.frequency', TaskDistributionRatiosEnum::PER_SHIFT);
     }
+
+    public function scopeWithInDays($query, int $daysNumber)
+    {
+        $to   = now();
+        $from = now()->subDays($daysNumber);
+
+        return $query->whereBetween('created_at', [$from , $to]);
+    }
 }
