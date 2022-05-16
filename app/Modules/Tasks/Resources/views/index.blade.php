@@ -19,8 +19,7 @@
                             </nav>
                         </div>
                         <div class="col-lg-6 col-5 text-right">
-                            <a href="#" class="btn btn-sm btn-neutral">New</a>
-                            <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+                            <a href="{{route('get.tasks.create')}}" class="btn btn-sm btn-neutral">New</a>
                         </div>
                     </div>
                 </div>
@@ -44,7 +43,7 @@
                                     <th>Frequency</th>
                                     <th>Points</th>
                                     <th>Team Name</th>
-                                    <th>Created At</th>
+                                    <th>Controls ⌘</th>
                                 </tr>
                                 </thead>
 
@@ -55,7 +54,12 @@
                                         <td>{{$task->frequency}}</td>
                                         <td>{{$task->points}}</td>
                                         <td>{{$task->team->name ?? 'N/A'}}</td>
-                                        <td>{{$task->created_at}}</td>
+                                        <td>
+                                            <a href="{{route('get.tasks.edit',$task->id)}}" class="btn btn-icon btn-dribbble" type="button">
+                                                <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
+                                                <span class="btn-inner--text">Update</span>
+                                            </a>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

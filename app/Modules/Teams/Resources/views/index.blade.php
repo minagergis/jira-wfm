@@ -20,8 +20,7 @@
                             </nav>
                         </div>
                         <div class="col-lg-6 col-5 text-right">
-                            <a href="#" class="btn btn-sm btn-neutral">New</a>
-                            <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+                            <a href="{{route('get.teams.create')}}" class="btn btn-sm btn-neutral">New</a>
                         </div>
                     </div>
                 </div>
@@ -44,7 +43,7 @@
                                     <th>Name</th>
                                     <th>description</th>
                                     <th>jira project key</th>
-                                    <th>Created At</th>
+                                    <th>Controls ⌘</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -53,7 +52,12 @@
                                     <td>{{$team->name}}</td>
                                     <td>{{$team->description}}</td>
                                     <td>{{$team->jira_project_key ?? 'N/A'}}</td>
-                                    <td>{{$team->created_at}}</td>
+                                    <td>
+                                        <a href="{{route('get.teams.edit',$team->id)}}" class="btn btn-icon btn-dribbble" type="button">
+                                            <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
+                                            <span class="btn-inner--text">Update</span>
+                                        </a>
+                                    </td>
                                 </tr>
                                 @endforeach
                                 </tbody>

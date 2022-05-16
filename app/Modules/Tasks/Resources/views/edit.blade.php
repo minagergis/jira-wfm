@@ -12,18 +12,17 @@
                 <div class="header-body">
                     <div class="row align-items-center py-4">
                         <div class="col-lg-6 col-7">
-                            <h6 class="h2 text-white d-inline-block mb-0">Team Member </h6>
+                            <h6 class="h2 text-white d-inline-block mb-0">Tasks </h6>
                             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                                     <li class="breadcrumb-item"><a href="{{route('home')}}"><i class="fas fa-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="{{route('get.team-member.list')}}">Team Member</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Edit Team Member</li>
+                                    <li class="breadcrumb-item"><a href="{{route('get.tasks.list')}}">Tasks</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Edit Task</li>
                                 </ol>
                             </nav>
                         </div>
                         <div class="col-lg-6 col-5 text-right">
-                            <a href="#" class="btn btn-sm btn-neutral">New</a>
-                            <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+                            <a href="{{route('get.tasks.create')}}" class="btn btn-sm btn-neutral">New</a>
                         </div>
                     </div>
                 </div>
@@ -71,7 +70,7 @@
                                 <div class="form-group">
                                     <label class="form-control-label" for="weight">Points</label>
                                     <select required class="form-control" name="points" data-toggle="select">
-                                        @for ($i = 0; $i <= 10; $i++)
+                                        @for ($i = 0; $i <= 1000; $i++)
                                             <option @if($task->points == $i) selected @endif value="{{$i}}">{{$i}}</option>
                                         @endfor
                                     </select>
