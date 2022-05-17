@@ -18,6 +18,7 @@ Route::prefix('team-members')->group(function () {
     Route::get('/edit/{id}', 'TeamMembersController@edit')->name('get.team-member.edit');
     Route::post('/edit/{id}', 'TeamMembersController@update')->name('post.team-member.edit');
     Route::get('/show/{id}', 'TeamMembersController@show')->name('get.team-member.show');
+    Route::get('/statistics/{id}', 'TeamMembersController@statistics')->name('get.team-member.statistics');
     Route::get('/delete/{id}', 'TeamMembersController@destroy')->name('get.team-member.delete');
     Route::get('/assign-shift/{id}', 'TeamMembersController@getAssignShift')->name('get.team-member.assign-shift');
     Route::post('/assign-shift/{id}', 'TeamMembersController@postAssignShift')->name('post.team-member.assign-shift');

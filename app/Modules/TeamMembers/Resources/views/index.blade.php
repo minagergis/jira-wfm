@@ -61,6 +61,10 @@
                                                 <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
                                                 <span class="btn-inner--text">Update</span>
                                             </a>
+                                            <a href="{{route('get.team-member.statistics',$member->id)}}" class="btn btn-icon btn-github" type="button">
+                                                <span class="btn-inner--icon"><i class="fa fa-chart-bar"></i></span>
+                                                <span class="btn-inner--text">Stats</span>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

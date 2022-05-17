@@ -2,11 +2,14 @@
 
 namespace App\Modules\TeamMembers\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 use App\Modules\Teams\Services\TeamService;
 use Illuminate\Contracts\Support\Renderable;
 use App\Modules\TeamMembers\Services\TeamMemberService;
+use App\Modules\Distribution\Entities\TaskDistributionLog;
 use App\Modules\Core\Http\Controllers\AbstractCoreController;
+use App\Modules\Distribution\Enums\TaskDistributionRatiosEnum;
 use App\Modules\TeamMembers\Http\Requests\CreateTeamMemberRequest;
 use App\Modules\TeamMembers\Http\Requests\UpdateTeamMemberRequest;
 use App\Modules\TeamMembers\Http\Requests\AssignShiftToMemberRequest;
@@ -109,5 +112,55 @@ class TeamMembersController extends AbstractCoreController
     public function destroy($id)
     {
         //
+    }
+
+    public function statistics($id)
+    {
+        $teamMember = $this->teamMemberService->read($id);
+        $teams      = $this->teamService->index();
+
+        [$perShiftTasksDone, $zendeskTasksDone] = $this->getLastDaysInsights(7, $id);
+
+        $allLogs = TaskDistributionLog::withInDays(7)->teamMember($id)
+            ->latest()
+            ->get();
+
+        //dd($teamMember->teams[0]->teamMembers);
+
+
+        if (!$teamMember) {
+            return $this->showErrorMessage('get.team-member.list');
+        }
+
+        return view('teammembers::statistics', compact('teamMember', 'teams', 'perShiftTasksDone', 'zendeskTasksDone', 'allLogs'));
+    }
+
+    /**
+     * @param $lastDaysNumber
+     * @param $memberId
+     *
+     * @return array
+     */
+    private function getLastDaysInsights($lastDaysNumber, $memberId): array
+    {
+        $lastWeekInsights = TaskDistributionLog::withInDays($lastDaysNumber)
+            ->teamMember($memberId)
+            ->select(DB::raw('DATE(created_at) as date'), 'task_type', DB::raw('max(before_member_capacity) as max_capacity'), DB::raw('min(after_member_capacity) as min_capacity'))
+            ->groupBy('date', 'task_type')
+            ->get();
+
+        $perShiftTasksDone = $lastWeekInsights->map(function ($item) {
+            if ($item->task_type === TaskDistributionRatiosEnum::PER_SHIFT) {
+                return $item->max_capacity - $item->min_capacity;
+            }
+        })->sum();
+
+        $zendeskTasksDone = $lastWeekInsights->map(function ($item) {
+            if ($item->task_type === TaskDistributionRatiosEnum::ZENDESK) {
+                return $item->max_capacity - $item->min_capacity;
+            }
+        })->sum();
+
+        return [$perShiftTasksDone, $zendeskTasksDone];
     }
 }
