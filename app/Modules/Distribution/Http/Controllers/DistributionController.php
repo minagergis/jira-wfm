@@ -23,10 +23,11 @@ class DistributionController extends AbstractCoreController
         $this->teamService  = $teamService;
     }
 
-    public function mina()
+    public function distribute(): \Illuminate\Http\RedirectResponse
     {
         DailyTaskDistribution::dispatch();
-        die();
+
+        return redirect()->route('home')->with(['status' => 'Distribution has been created successfully']);
     }
 
     public function testing()

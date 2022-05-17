@@ -12,5 +12,5 @@
 */
 
 Route::prefix('distribution')->group(function() {
-    Route::get('/', 'DistributionController@mina');
+    Route::get('/', 'DistributionController@distribute')->name('get.distribution.distribute');
 });
