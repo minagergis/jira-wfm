@@ -2,6 +2,7 @@
 
 namespace App\Modules\Distribution\Entities;
 
+use App\Modules\Teams\Entities\Team;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -89,5 +90,31 @@ class TaskDistributionLog extends Model
     public function scopeLatest(Builder $query): Builder
     {
         return  $query->orderBy('id', 'desc');
+    }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
+
+    /**
+     * Scope a query to only include logs for latest log.
+     *
+     * @param Builder $query
+     * @param         $teamMemberId
+     *
+     * @return Builder
+     */
+    public function scopeTeamMember(Builder $query, $teamMemberId): Builder
+    {
+        return  $query->where('team_member_id', $teamMemberId);
+    }
+
+    public function scopeWithInDays(Builder $query, int $daysNumber): Builder
+    {
+        $to   = now();
+        $from = now()->subDays($daysNumber);
+
+        return $query->whereBetween('created_at', [$from , $to]);
     }
 }
