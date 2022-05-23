@@ -45,7 +45,7 @@
 {{--                                    <th>Days</th>--}}
                                     <th>Starts from</th>
                                     <th>Ends At</th>
-                                    <th>Created At</th>
+                                    <th>Controls ⌘</th>
                                 </tr>
                                 </thead>
 
@@ -57,7 +57,13 @@
 {{--                                        <td>{{$shift->days}}</td>--}}
                                         <td>{{$shift->time_from}}</td>
                                         <td>{{$shift->time_to}}</td>
-                                        <td>{{$shift->created_at}}</td>
+                                        <td>
+                                            <a href="{{route('get.shifts.edit',$shift->id)}}" class="btn btn-icon btn-dribbble" type="button">
+                                                <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
+                                                <span class="btn-inner--text">Update</span>
+                                            </a>
+
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

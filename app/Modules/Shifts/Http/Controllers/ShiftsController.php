@@ -2,12 +2,12 @@
 
 namespace App\Modules\Shifts\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Modules\Shifts\Enums\DaysEnum;
 use App\Modules\Teams\Services\TeamService;
 use Illuminate\Contracts\Support\Renderable;
 use App\Modules\Shifts\Services\ShiftService;
 use App\Modules\Shifts\Http\Requests\CreateShiftRequest;
+use App\Modules\Shifts\Http\Requests\UpdateShiftRequest;
 use App\Modules\Core\Http\Controllers\AbstractCoreController;
 
 class ShiftsController extends AbstractCoreController
@@ -45,11 +45,9 @@ class ShiftsController extends AbstractCoreController
 
     public function store(CreateShiftRequest $request)
     {
-
         $this->shiftService->create($request->all());
 
         return redirect()->route('get.shifts.list')->with(['status' => 'Shift has been created successfully']);
-
     }
 
     /**
@@ -62,25 +60,24 @@ class ShiftsController extends AbstractCoreController
         return view('shifts::show');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
+    public function edit(int $id)
     {
-        return view('shifts::edit');
+        $teams  = $this->teamService->index();
+        $days   = DaysEnum::DAYSValues;
+        $shift  = $this->shiftService->read($id);
+
+        if (! $shift) {
+            return $this->showErrorMessage('get.shifts.list');
+        }
+
+        return view('shifts::edit', compact('teams', 'days', 'shift'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
+    public function update(UpdateShiftRequest $request, $id): \Illuminate\Http\RedirectResponse
     {
-        //
+        $this->shiftService->update($request->all(), $id);
+
+        return redirect()->route('get.shifts.list')->with(['status' => 'Shift has been edited successfully']);
     }
 
     /**
