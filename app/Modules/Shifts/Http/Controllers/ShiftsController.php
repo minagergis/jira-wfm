@@ -6,6 +6,7 @@ use App\Modules\Shifts\Enums\DaysEnum;
 use App\Modules\Teams\Services\TeamService;
 use Illuminate\Contracts\Support\Renderable;
 use App\Modules\Shifts\Services\ShiftService;
+use App\Modules\Shifts\Http\Requests\CreateShiftRequest;
 use App\Modules\Shifts\Http\Requests\UpdateShiftRequest;
 use App\Modules\Core\Http\Controllers\AbstractCoreController;
 
@@ -42,7 +43,7 @@ class ShiftsController extends AbstractCoreController
         return view('shifts::create', compact('teams', 'days'));
     }
 
-    public function store(UpdateShiftRequest $request)
+    public function store(CreateShiftRequest $request)
     {
         $this->shiftService->create($request->all());
 
