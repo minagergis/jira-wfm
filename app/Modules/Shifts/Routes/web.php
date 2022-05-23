@@ -15,4 +15,6 @@ Route::prefix('shifts')->group(function () {
     Route::get('/', 'ShiftsController@index')->name('get.shifts.list');
     Route::get('/create', 'ShiftsController@create')->name('get.shifts.create');
     Route::post('/create', 'ShiftsController@store')->name('post.shifts.create');
+    Route::get('/edit/{id}', 'ShiftsController@edit')->name('get.shifts.edit');
+    Route::post('/edit/{id}', 'ShiftsController@update')->name('post.shifts.edit');
 });

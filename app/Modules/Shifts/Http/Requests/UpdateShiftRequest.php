@@ -6,7 +6,7 @@ use Illuminate\Validation\Rule;
 use App\Modules\Shifts\Enums\DaysEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateShiftRequest extends FormRequest
+class UpdateShiftRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.

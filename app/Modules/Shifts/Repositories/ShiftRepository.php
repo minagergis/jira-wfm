@@ -2,8 +2,8 @@
 
 namespace App\Modules\Shifts\Repositories;
 
-use App\Modules\Core\Repositories\AbstractCoreRepository;
 use App\Modules\Shifts\Entities\Shift;
+use App\Modules\Core\Repositories\AbstractCoreRepository;
 
 class ShiftRepository extends AbstractCoreRepository
 {
@@ -17,8 +17,19 @@ class ShiftRepository extends AbstractCoreRepository
     public function create($attributes)
     {
         $attributes['days'] = json_encode($attributes['days']);
-        $shift = $this->model->create($attributes);
+        $shift              = $this->model->create($attributes);
         $shift->teams()->attach($attributes['teams']);
+
+        return $shift;
+    }
+
+    public function update($id, array $attributes): bool
+    {
+        $attributes['days'] = json_encode($attributes['days']);
+
+        $shift = $this->model->find($id)->update($attributes);
+
+        $this->model->find($id)->teams()->sync($attributes['teams']);
 
         return $shift;
     }
