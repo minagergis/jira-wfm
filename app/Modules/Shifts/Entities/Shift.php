@@ -50,4 +50,12 @@ class Shift extends Model
                 'team_members.weight',
             );
     }
+
+    public function scopeWithInDays($query, int $daysNumber)
+    {
+        $to   = now();
+        $from = now()->subDays($daysNumber);
+
+        return $query->whereBetween('created_at', [$from , $to]);
+    }
 }
