@@ -48,7 +48,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label" for="name">Description</label>
-                                    <input disabled type="text" class="form-control" id="description"  name="description" placeholder="Description of task" value="{{$task->description}}">
+                                    <textarea disabled type="text" class="form-control" id="description"  name="description" placeholder="Description of task">{{$task->description}}</textarea>
                                 </div>
                             </div>
                         </div>

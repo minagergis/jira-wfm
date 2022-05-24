@@ -50,7 +50,7 @@
                                 @foreach($teams as $team)
                                 <tr>
                                     <td>{{$team->name}}</td>
-                                    <td>{{$team->description}}</td>
+                                    <td>{{ \Illuminate\Support\Str::limit($team->description ,50) }}</td>
                                     <td>{{$team->jira_project_key ?? 'N/A'}}</td>
                                     <td>
                                         <a href="{{route('get.teams.edit',$team->id)}}" class="btn btn-icon btn-dribbble" type="button">

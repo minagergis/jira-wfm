@@ -50,7 +50,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label" for="name">Description</label>
-                                    <input required type="text" class="form-control" id="description"  name="description" placeholder="Description of task" value="{{$task->description}}">
+                                    <textarea required type="text" class="form-control" id="description"  name="description" placeholder="Description of task">{{$task->description}}</textarea>
                                 </div>
                             </div>
 

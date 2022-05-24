@@ -50,7 +50,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-control-label" for="description">Description</label>
-                                <input required type="text" class="form-control" id="description" name="description" placeholder="Description of team">
+                                <textarea required type="text" class="form-control" id="description" name="description" placeholder="Description of team"></textarea>
                             </div>
                         </div>
                     </div>
