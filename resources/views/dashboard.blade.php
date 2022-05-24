@@ -42,7 +42,7 @@
                                         </div>
                                     </div>
                                     <p class="mt-3 mb-0 text-sm">
-                                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> {!! $teamMembersLastDaysCount/$teamMembersCount  !!} %</span>
+                                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> {!! ceil($teamMembersLastDaysCount/$teamMembersCount)  !!} %</span>
                                         <span class="text-nowrap">Since last week</span>
                                     </p>
                                 </div>
