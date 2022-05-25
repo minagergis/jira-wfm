@@ -35,22 +35,7 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-examples">
-                            <i class="ni ni-ungroup text-orange"></i>
-                            <span class="nav-link-text">Team Member </span>
-                        </a>
-                        <div class="collapse" id="navbar-examples">
-                            <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a href="{{route('get.team-member.create')}}" class="nav-link">Add Team Member</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{route('get.team-member.list')}}" class="nav-link">List Team Members</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="#navbar-forms" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-forms">
                             <i class="ni ni-single-copy-04 text-pink"></i>
@@ -63,6 +48,22 @@
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{route('get.teams.list')}}" class="nav-link">List Teams</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-examples">
+                            <i class="ni ni-ungroup text-orange"></i>
+                            <span class="nav-link-text">Team Member </span>
+                        </a>
+                        <div class="collapse" id="navbar-examples">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="{{route('get.team-member.create')}}" class="nav-link">Add Team Member</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('get.team-member.list')}}" class="nav-link">List Team Members</a>
                                 </li>
                             </ul>
                         </div>

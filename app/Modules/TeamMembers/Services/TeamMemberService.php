@@ -18,4 +18,9 @@ class TeamMemberService extends AbstractCoreService
     {
         return $this->repository->assignShifts($id, $attributes);
     }
+
+    public function getTeamMembersByTeamId($teamId)
+    {
+        return $this->repository->getTeamMemberByTeamId($teamId);
+    }
 }

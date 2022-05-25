@@ -32,6 +32,17 @@ class ShiftsController extends AbstractCoreController
     }
 
     /**
+     * Display a listing of the resource.
+     * @return Renderable
+     */
+    public function indexByTeam($teamId)
+    {
+        $shifts = $this->shiftService->getShiftsByTeam($teamId);
+
+        return view('shifts::index', compact('shifts'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      * @return Renderable
      */

@@ -38,6 +38,17 @@ class TeamMembersController extends AbstractCoreController
     }
 
     /**
+     * Display a listing of the resource.
+     * @return Renderable
+     */
+    public function indexByTeam($teamId)
+    {
+        $teamMembers = $this->teamMemberService->getTeamMembersByTeamId($teamId);
+
+        return view('teammembers::index', compact('teamMembers'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      * @return Renderable
      */
