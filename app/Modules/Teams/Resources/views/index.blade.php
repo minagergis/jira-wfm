@@ -57,6 +57,11 @@
                                             <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
                                             <span class="btn-inner--text">Update</span>
                                         </a>
+                                        <a href="{{route('get.team-member.list-by-team',$team->id)}}" class="btn btn-icon btn-default" type="button">
+                                            <span class="btn-inner--icon"><i class="fa fa-heart"></i></span>
+                                            <span class="btn-inner--text">Members</span>
+                                        </a>
+
                                     </td>
                                 </tr>
                                 @endforeach

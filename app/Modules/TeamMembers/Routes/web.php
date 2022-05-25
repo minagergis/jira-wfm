@@ -13,6 +13,7 @@
 
 Route::prefix('team-members')->group(function () {
     Route::get('/', 'TeamMembersController@index')->name('get.team-member.list');
+    Route::get('/by-team/{id}', 'TeamMembersController@indexByTeam')->name('get.team-member.list-by-team');
     Route::get('/create', 'TeamMembersController@create')->name('get.team-member.create');
     Route::post('/create', 'TeamMembersController@store')->name('post.team-member.create');
     Route::get('/edit/{id}', 'TeamMembersController@edit')->name('get.team-member.edit');
