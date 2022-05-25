@@ -13,6 +13,7 @@
 
 Route::prefix('shifts')->group(function () {
     Route::get('/', 'ShiftsController@index')->name('get.shifts.list');
+    Route::get('/by-team/{id}', 'ShiftsController@indexByTeam')->name('get.shifts.list-by-team');
     Route::get('/create', 'ShiftsController@create')->name('get.shifts.create');
     Route::post('/create', 'ShiftsController@store')->name('post.shifts.create');
     Route::get('/edit/{id}', 'ShiftsController@edit')->name('get.shifts.edit');

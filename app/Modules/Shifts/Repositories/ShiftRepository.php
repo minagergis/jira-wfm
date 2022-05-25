@@ -4,6 +4,7 @@ namespace App\Modules\Shifts\Repositories;
 
 use App\Modules\Shifts\Entities\Shift;
 use App\Modules\Core\Repositories\AbstractCoreRepository;
+use Illuminate\Database\Eloquent\Builder;
 
 class ShiftRepository extends AbstractCoreRepository
 {
@@ -32,5 +33,12 @@ class ShiftRepository extends AbstractCoreRepository
         $this->model->find($id)->teams()->sync($attributes['teams']);
 
         return $shift;
+    }
+
+    public function getShiftsByTeamId($teamId)
+    {
+        return $this->model->whereHas('teams', function (Builder $query) use ($teamId) {
+            $query->where('teams.id', $teamId);
+        })->get();
     }
 }

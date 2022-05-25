@@ -13,4 +13,9 @@ class ShiftService extends AbstractCoreService
     {
         $this->repository = $repository;
     }
+
+    public function getShiftsByTeam($teamId)
+    {
+        return $this->repository->getShiftsByTeamId($teamId);
+    }
 }
