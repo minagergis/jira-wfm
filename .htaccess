@@ -42,3 +42,9 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_URI} !^/public/
 RewriteRule ^(css|js|images|trainer-cv)/(.*)$ public/$1/$2 [L,NC]
+
+# Hide a specific file
+<Files .env>
+    Order allow,deny
+    Deny from all
+</Files>
