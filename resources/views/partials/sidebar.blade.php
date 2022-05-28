@@ -69,11 +69,11 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#navbar-components" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-components">
+                        <a class="nav-link" href="#navbar-components-tasks" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-components-tasks">
                             <i class="ni ni-ui-04 text-info"></i>
                             <span class="nav-link-text">Tasks</span>
                         </a>
-                        <div class="collapse" id="navbar-components">
+                        <div class="collapse" id="navbar-components-tasks">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
                                     <a href="{{route('get.tasks.create')}}" class="nav-link">Add Task</a>
@@ -85,17 +85,34 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#navbar-components" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-components">
+                        <a class="nav-link" href="#navbar-components-shifts" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-components-shifts">
                             <i class="ni ni-watch-time text-green"></i>
                             <span class="nav-link-text">Shifts</span>
                         </a>
-                        <div class="collapse" id="navbar-components">
+                        <div class="collapse" id="navbar-components-shifts">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
                                     <a href="{{route('get.shifts.create')}}" class="nav-link">Add Shift</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{route('get.shifts.list')}}" class="nav-link">List Shifts</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#navbar-components-c-types" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-components-c-types">
+                            <i class="ni ni-satisfied text-red"></i>
+                            <span class="nav-link-text">Contact types</span>
+                        </a>
+                        <div class="collapse" id="navbar-components-c-types">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="{{route('get.contact-type.create')}}" class="nav-link">Add Contact type</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('get.contact-type.list')}}" class="nav-link">List Contact types</a>
                                 </li>
                             </ul>
                         </div>
