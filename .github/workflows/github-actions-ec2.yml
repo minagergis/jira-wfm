@@ -26,7 +26,6 @@ jobs:
 
       - name: Run post deployment scripts
         run: |
-          php artisan migrate && \
           composer install --no-interaction && \
           composer require laravel/envoy --dev && \
           php ./vendor/bin/envoy run deploy \
