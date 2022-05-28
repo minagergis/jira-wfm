@@ -4,5 +4,6 @@
     "Core": true,
     "Tasks": true,
     "Shifts": true,
-    "Distribution": true
+    "Distribution": true,
+    "ContactTypes": true
 }
