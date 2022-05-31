@@ -40,7 +40,7 @@
                                 <thead class="thead-light">
                                 <tr>
                                     <th>Name</th>
-                                    <th>SLA (In Hours)</th>
+                                    <th>Points</th>
                                     <th>Team Name</th>
                                     <th>Controls ⌘</th>
                                 </tr>
