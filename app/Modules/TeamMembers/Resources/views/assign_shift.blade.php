@@ -71,7 +71,8 @@
                                         <tr>
                                             <td>{{$shift->name}}</td>
                                             <td>{{$shift->days}}</td>
-                                            <td>{{$shift->time_from}} -> {{$shift->time_to}}</td>
+
+                                            <td>{{\Carbon\Carbon::createFromTimeString($shift->time_from)->format('g:i A')}} -> {{\Carbon\Carbon::createFromTimeString($shift->time_to)->format('g:i A')}}</td>
                                             <td>
                                                 <label class="custom-toggle">
                                                     <input name="shifts[]" @if(in_array($shift->id,$teamMember->shifts->pluck('id')->toArray())) checked @endif value="{{$shift->id}}" type="checkbox">

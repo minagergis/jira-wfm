@@ -55,8 +55,8 @@
                                         <td>{{$shift->name}}</td>
                                         <td>{{$shift->description}}</td>
 {{--                                        <td>{{$shift->days}}</td>--}}
-                                        <td>{{$shift->time_from}}</td>
-                                        <td>{{$shift->time_to}}</td>
+                                        <td>{{\Carbon\Carbon::createFromTimeString($shift->time_from)->format('g:i A')}}</td>
+                                        <td>{{\Carbon\Carbon::createFromTimeString($shift->time_to)->format('g:i A')}}</td>
                                         <td>
                                             <a href="{{route('get.shifts.edit',$shift->id)}}" class="btn btn-icon btn-dribbble" type="button">
                                                 <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
