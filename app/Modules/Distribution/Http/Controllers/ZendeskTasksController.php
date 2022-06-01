@@ -2,11 +2,11 @@
 
 namespace App\Modules\Distribution\Http\Controllers;
 
-use App\Modules\Distribution\Entities\TaskDistributionLog;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\Modules\Teams\Services\TeamService;
+use App\Modules\ContactTypes\Entities\ContactType;
 use App\Modules\Core\Http\Controllers\CoreController;
+use App\Modules\Distribution\Entities\TaskDistributionLog;
 use App\Modules\Distribution\Enums\TaskDistributionRatiosEnum;
 use Facades\App\Modules\Distribution\Facades\Integrations\JIRA;
 use App\Modules\Distribution\Enums\ZendeskTaskPriorityPointsEnum;
@@ -43,9 +43,10 @@ class ZendeskTasksController extends CoreController
                 TaskDistributionRatiosEnum::ZENDESK
             );
 
-            $jiraIssuePriority = $zendeskTask['issue']['fields']['priority']['name'];
 
-            if ($memberAvailableCapacity >= ZendeskTaskPriorityPointsEnum::PRIORITY_POINTS[$jiraIssuePriority]) {
+            $jiraIssueWeight   = $this->getJiraTaskWeight($zendeskTask);
+
+            if ($memberAvailableCapacity >= $jiraIssueWeight) {
                 JIRA::assignIssue($zendeskTask['issue']['key'], $member['jira_integration_id']);
 
                 $loggedTask = TaskDistributionLog::create([
@@ -55,10 +56,25 @@ class ZendeskTasksController extends CoreController
                     'task_type'              => TaskDistributionRatiosEnum::ZENDESK,
                     'jira_issue_key'         => $zendeskTask['issue']['key'],
                     'before_member_capacity' => $memberAvailableCapacity,
-                    'after_member_capacity'  => $memberAvailableCapacity - ZendeskTaskPriorityPointsEnum::PRIORITY_POINTS[$jiraIssuePriority],
+                    'after_member_capacity'  => $memberAvailableCapacity - $jiraIssueWeight,
                 ]);
+
                 break;
             }
         }
+    }
+
+    private function getJiraTaskWeight(array $jiraTask): int
+    {
+        if (config('distribution.distribution_depends_on_priority')) {
+            $taskPriority = $jiraTask['issue']['fields']['priority']['name'];
+
+            return ZendeskTaskPriorityPointsEnum::PRIORITY_POINTS[$taskPriority];
+        }
+
+        $contactType = ContactType::where('name', $jiraTask['issue']['fields']['issuetype']['name'])
+            ->first();
+
+        return (int) isset($contactType) ? $contactType->sla : 10;
     }
 }

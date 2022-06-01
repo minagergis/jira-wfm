@@ -38,7 +38,7 @@ class JIRA
 
         $issueField->setProjectKey($projectId)
             ->setSummary($taskName)
-            ->setIssueType("Task")
+            ->setIssueType("Normal Task")
             ->setDescription($taskDescription);
 
         if ($assigneeJiraID) {

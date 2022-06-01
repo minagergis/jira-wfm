@@ -58,10 +58,10 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="sla">SLA (In Hours)</label>
+                                    <label class="form-control-label" for="sla">Points</label>
                                     <select required class="form-control" name="sla" data-toggle="select">
-                                        @for ($i = 1; $i <= 40; $i++)
-                                            <option value="{{$i}}">{{$i}} Hours</option>
+                                        @for ($i = 1; $i <= 1000; $i++)
+                                            <option value="{{$i}}">{{$i}}</option>
                                         @endfor
                                     </select>
                                 </div>
