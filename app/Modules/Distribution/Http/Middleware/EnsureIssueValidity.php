@@ -25,11 +25,12 @@ class EnsureIssueValidity
     public function handle(Request $request, Closure $next)
     {
         $teams = $this->teamService->index()->pluck('jira_project_key')->toArray();
-
+        /*
         if (! $request->has('user') ||
             $request->get('user')['displayName'] !== 'Zendesk Support for Jira') {
             return response('Invalid Creator', 401);
         }
+        */
 
         if (! $request->has('issue')) {
             return response('Issue Not Found', 404);
