@@ -2,6 +2,7 @@
 
 namespace App\Modules\Teams\Http\Controllers;
 
+use Faker\Factory;
 use App\Modules\Teams\Services\TeamService;
 use App\Modules\Teams\Http\Requests\CreateTeamRequest;
 use App\Modules\Teams\Http\Requests\UpdateTeamRequest;
@@ -68,5 +69,23 @@ class TeamsController extends AbstractCoreController
         $this->teamService->delete($id);
 
         return redirect()->route('get.teams.list')->with(['status' => 'Team has been deleted successfully']);
+    }
+
+    public function scheduleCalendar($id)
+    {
+        $faker = Factory::create();
+        $team  = $this->teamService->read($id);
+
+        if (! $team) {
+            return $this->showErrorMessage('get.teams.list');
+        }
+
+        $teamMembers = $team->teamMembers->map(function ($item, $key) use ($faker) {
+            $item['color'] = $faker->hexColor;
+
+            return $item;
+        });
+
+        return view('teams::schedule_calendar', compact('teamMembers'));
     }
 }

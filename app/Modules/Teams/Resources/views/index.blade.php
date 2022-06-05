@@ -61,9 +61,9 @@
                                             <span class="btn-inner--icon"><i class="fa fa-heart"></i></span>
                                             <span class="btn-inner--text">Members</span>
                                         </a>
-                                        <a href="{{route('get.shifts.list-by-team',$team->id)}}" class="btn btn-icon btn-outline-warning" type="button">
+                                        <a href="{{route('get.teams.calendar',$team->id)}}" class="btn btn-icon btn-outline-warning" type="button">
                                             <span class="btn-inner--icon"><i class="fa fa-user-clock"></i></span>
-                                            <span class="btn-inner--text">Shifts</span>
+                                            <span class="btn-inner--text">Schedules</span>
                                         </a>
 
                                     </td>
