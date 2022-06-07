@@ -2,10 +2,12 @@
 
 namespace App\Modules\TeamMembers\Entities;
 
-use App\Modules\Shifts\Entities\Shift;
 use App\Modules\Teams\Entities\Team;
+use App\Modules\Shifts\Entities\Shift;
 use Illuminate\Database\Eloquent\Model;
+use App\Modules\Shifts\Entities\MemberSchedule;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TeamMember extends Model
 {
@@ -22,6 +24,11 @@ class TeamMember extends Model
     public function teams(): BelongsToMany
     {
         return $this->belongsToMany(Team::class, 'team_members_team');
+    }
+
+    public function schedules(): HasMany
+    {
+        return $this->hasMany(MemberSchedule::class, 'team_member_id');
     }
 
     public function shifts(): BelongsToMany

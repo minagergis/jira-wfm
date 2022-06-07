@@ -9,8 +9,7 @@ use App\Modules\Shifts\Services\ShiftService;
 use App\Modules\Shifts\Http\Requests\CreateShiftRequest;
 use App\Modules\Shifts\Http\Requests\UpdateShiftRequest;
 use App\Modules\Core\Http\Controllers\AbstractCoreController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use phpDocumentor\Reflection\Types\False_;
 
 class ShiftsController extends AbstractCoreController
 {
@@ -103,11 +102,5 @@ class ShiftsController extends AbstractCoreController
         //
     }
 
-    public function addSchedule(Request $request)
-    {
 
-        Log::error($request->toArray());
-
-        return true;
-    }
 }

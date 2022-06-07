@@ -20,10 +20,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.13/chance.min.js"></script>
     <script src="{{asset('assets/vendor/toastr-calendar/tui-calendar.js')}}"></script>
     <script src="{{asset('assets/vendor/toastr-calendar/js/data/calendars.js')}}"></script>
+    <script src="{{asset('assets/vendor/toastr-calendar/js/data/schedules.js')}}"></script>
     <script>
         (function() {
+            ScheduleList = [];
             let calendar;
-            let id = 0;
+
 
             let teamMembers = {!! $teamMembers !!};
 
@@ -37,11 +39,30 @@
                 calendar.dragBgColor = member.color;
                 calendar.borderColor = member.color;
                 addCalendar(calendar);
-            })
 
+                var localSchedules = member.schedules;
+
+                localSchedules.forEach(memberSchedule => {
+                    let schedule = new ScheduleInfo();
+                    schedule.id = String(memberSchedule.id);
+                    schedule.calendarId = String(memberSchedule.team_member_id);
+                    schedule.title = memberSchedule.name;
+                    schedule.body = 'memberSchedule.description';
+                    schedule.start = moment(memberSchedule.date_from + ' '+ memberSchedule.time_from).toDate();
+                    schedule.end = moment(memberSchedule.date_to+ ' '+ memberSchedule.time_to).toDate();
+                    schedule.color = '#ffffff';
+                    schedule.bgColor = member.color;
+                    schedule.dragBgColor = member.color;
+                    schedule.borderColor = member.color;
+                    schedule.category = 'time';
+
+                    ScheduleList.push(schedule);
+                })
+            })
+console.log(ScheduleList);
         })();
     </script>
-    <script src="{{asset('assets/vendor/toastr-calendar/js/data/schedules.js')}}"></script>
+
     <script> let addScheduleUrl = "{!! route('post.schedule.add') !!}" </script>
     <script src="{{asset('assets/vendor/toastr-calendar/js/app.js')}}"></script>
 @endsection

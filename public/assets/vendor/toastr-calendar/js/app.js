@@ -287,8 +287,9 @@
             schedule.bgColor = calendar.bgColor;
             schedule.borderColor = calendar.borderColor;
         }
-        let mina = JSON.stringify(schedule)
-        sendAjaxRequest(mina,addScheduleUrl,'POST')
+        let scheduleObject = JSON.stringify(schedule)
+        let foo = sendAjaxRequest(scheduleObject,addScheduleUrl,'POST')
+        //console.log(foo);
 
         cal.createSchedules([schedule]);
 
@@ -401,7 +402,8 @@
 
     function setSchedules() {
         cal.clear();
-        generateSchedule(cal.getViewName(), cal.getDateRangeStart(), cal.getDateRangeEnd());
+        //generateSchedule(cal.getViewName(), cal.getDateRangeStart(), cal.getDateRangeEnd());
+        console.log(ScheduleList)
         cal.createSchedules(ScheduleList);
 
         refreshScheduleVisibility();
@@ -426,7 +428,6 @@
 
     function sendAjaxRequest(object, link,method) {
         let returnValue;
-        console.log(object);
         $.ajax({
             type: method,
             async: false,

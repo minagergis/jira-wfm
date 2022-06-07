@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::prefix('shifts')->group(function () {
     Route::get('/', 'ShiftsController@index')->name('get.shifts.list');
     Route::get('/by-team/{id}', 'ShiftsController@indexByTeam')->name('get.shifts.list-by-team');
@@ -18,5 +20,9 @@ Route::prefix('shifts')->group(function () {
     Route::post('/create', 'ShiftsController@store')->name('post.shifts.create');
     Route::get('/edit/{id}', 'ShiftsController@edit')->name('get.shifts.edit');
     Route::post('/edit/{id}', 'ShiftsController@update')->name('post.shifts.edit');
-    Route::post('/add-schedule', 'ShiftsController@addSchedule')->name('post.schedule.add');
+});
+
+Route::prefix('schedule')->group(function () {
+    Route::get('/by-team/{id}', 'ScheduleController@scheduleCalendarForTeam')->name('get.schedule.list-by-team');
+    Route::post('/add-schedule', 'ScheduleController@addSchedule')->name('post.schedule.add');
 });

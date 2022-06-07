@@ -58,11 +58,11 @@ function generateTime(schedule, renderStart, renderEnd) {
     var endDate = moment(renderEnd.getTime());
     var diffDate = endDate.diff(startDate, 'days');
 
-    schedule.isAllday = 0;
+    schedule.isAllday = chance.bool({likelihood: 30});
     if (schedule.isAllday) {
         schedule.category = 'allday';
-    } else if (1) {
-        schedule.category = SCHEDULE_CATEGORY[1];
+    } else if (chance.bool({likelihood: 30})) {
+        schedule.category = SCHEDULE_CATEGORY[chance.integer({min: 0, max: 1})];
         if (schedule.category === SCHEDULE_CATEGORY[1]) {
             schedule.dueDateClass = 'morning';
         }
@@ -114,7 +114,7 @@ function generateRandomSchedule(calendar, renderStart, renderEnd) {
 
     schedule.title = chance.sentence({words: 3});
     schedule.body = chance.bool({likelihood: 20}) ? chance.sentence({words: 10}) : '';
-    //schedule.isReadOnly = chance.bool({likelihood: 20});
+//    schedule.isReadOnly = chance.bool({likelihood: 20});
     generateTime(schedule, renderStart, renderEnd);
 
     //schedule.isPrivate = chance.bool({likelihood: 10});
