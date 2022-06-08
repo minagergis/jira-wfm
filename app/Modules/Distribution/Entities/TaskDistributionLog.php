@@ -18,7 +18,7 @@ class TaskDistributionLog extends Model
         'team_id',
         'team_member_id',
         'task_id',
-        'shift_id',
+        'schedule_id',
         'task_type',
         'jira_issue_key',
         'before_member_capacity',
@@ -54,16 +54,16 @@ class TaskDistributionLog extends Model
      * Scope a query to only include logs for a certain shift and team.
      *
      * @param Builder $query
-     * @param         $shiftId
+     * @param         $scheduleId
      * @param         $teamId
      *
      * @return Builder
      */
-    public function scopeShiftAndTeam(Builder $query, $shiftId, $teamId): Builder
+    public function scopeScheduleAndTeam(Builder $query, $scheduleId, $teamId): Builder
     {
         return $query->where([
-            'shift_id' => $shiftId,
-            'team_id'  => $teamId,
+            'schedule_id' => $scheduleId,
+            'team_id'     => $teamId,
         ]);
     }
 
@@ -71,13 +71,13 @@ class TaskDistributionLog extends Model
      * Scope a query to only include logs for a certain shift.
      *
      * @param Builder $query
-     * @param         $shiftId
+     * @param         $scheduleId
      *
      * @return Builder
      */
-    public function scopeShift(Builder $query, $shiftId): Builder
+    public function scopeSchedule(Builder $query, $scheduleId): Builder
     {
-        return $query->where('shift_id', $shiftId);
+        return $query->where('schedule_id', $scheduleId);
     }
 
     /**

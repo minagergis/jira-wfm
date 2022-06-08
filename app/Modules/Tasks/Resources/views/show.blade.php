@@ -55,27 +55,6 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="active">Frequency</label>
-                                    <select disabled class="form-control" name="frequency" data-toggle="select">
-                                        <option @if($task->frequency == 'daily') selected @endif value="daily">Daily</option>
-                                        <option @if($task->frequency == 'weekly') selected @endif value="weekly">Weekly</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="weight">Points</label>
-                                    <select disabled class="form-control" name="points" data-toggle="select">
-                                        @for ($i = 0; $i <= 10; $i++)
-                                            <option @if($task->points == $i) selected @endif value="{{$i}}">{{$i}}</option>
-                                        @endfor
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
                                     <label class="form-control-label" for="team">Team</label>
                                     <select disabled class="form-control" name="team_id" data-toggle="select">
                                         @foreach ($teams as $team)
@@ -86,10 +65,11 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="is_automatic">Is Automatic</label>
-                                    <select disabled class="form-control" name="is_automatic" data-toggle="select">
-                                        <option  @if($task->is_automatic == 1) selected @endif  value="1">Yes</option>
-                                        <option  @if($task->is_automatic == 1) selected @endif  value="0">No</option>
+                                    <label class="form-control-label" for="weight">Points</label>
+                                    <select disabled class="form-control" name="points" data-toggle="select">
+                                        @for ($i = 0; $i <= 10; $i++)
+                                            <option @if($task->points == $i) selected @endif value="{{$i}}">{{$i}}</option>
+                                        @endfor
                                     </select>
                                 </div>
                             </div>

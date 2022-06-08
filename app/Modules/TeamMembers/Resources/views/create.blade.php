@@ -2,6 +2,19 @@
 @section('title')
     {!! config('teammembers.name') !!}
 @endsection
+@section('scripts')
+    <script>
+        $(function () {
+            // Basic instantiation:
+            $('#demo-input').colorpicker();
+
+            // Example using an event, to change the color of the #demo div background:
+            $('#demo-input').on('colorpickerChange', function(event) {
+                $('#demo-input').css('background-color', event.color.toString());
+            });
+        });
+    </script>
+@endsection
 @section('content')
 
     <div class="main-content" id="panel">
@@ -78,11 +91,8 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="shift">shift now</label>
-                                    <select required class="form-control" name="is_in_shift_now" data-toggle="select">
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
+                                    <label class="form-control-label" for="shift">Color</label>
+                                   <input required type="text" class="form-control" name="color"  id="demo-input">
                                 </div>
                             </div>
                             <div class="col-md-6">

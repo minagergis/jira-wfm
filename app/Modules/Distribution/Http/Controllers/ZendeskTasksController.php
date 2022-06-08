@@ -3,7 +3,11 @@
 namespace App\Modules\Distribution\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
 use App\Modules\Teams\Services\TeamService;
+use App\Modules\Shifts\Entities\MemberSchedule;
+use App\Modules\TeamMembers\Entities\TeamMember;
 use App\Modules\ContactTypes\Entities\ContactType;
 use App\Modules\Core\Http\Controllers\CoreController;
 use App\Modules\Distribution\Entities\TaskDistributionLog;
@@ -27,22 +31,51 @@ class ZendeskTasksController extends CoreController
     {
         $zendeskTask =  $request->toArray();
 
-        $team           = $this->teamService->getTeamByJiraProjectCode($zendeskTask['issue']['fields']['project']['key']);
+        $team = $this->teamService->getTeamByJiraProjectCode($zendeskTask['issue']['fields']['project']['key']);
 
-        $availableShift = $team->shifts
-            ->where('time_from', '<', now('Africa/Cairo')->toTimeString())
-            ->where('time_to', '>', now('Africa/Cairo')->toTimeString())
+        $availableTeamMembersForNow = TeamMember::query()
+            ->whereHas('teams', function (Builder $query) use ($team) {
+                $query->where('teams.id', $team->id);
+            })
+            ->whereHas('schedules', function (Builder $query) {
+                $query
+                    ->where(
+                        DB::raw("CONCAT(`date_from`, ' ', `time_from`)"),
+                        '<=',
+                        now('Africa/Cairo')->toDateTimeString()
+                    )
+                    ->where(
+                        DB::raw("CONCAT(`date_to`, ' ', `time_to`)"),
+                        '>=',
+                        now('Africa/Cairo')->toDateTimeString()
+                    );
+            })
+            ->get();
+
+        $currentSchedule =  MemberSchedule::query()
+            ->where(
+                DB::raw("CONCAT(`date_from`, ' ', `time_from`)"),
+                '<=',
+                now('Africa/Cairo')->toDateTimeString()
+            )
+            ->where(
+                DB::raw("CONCAT(`date_to`, ' ', `time_to`)"),
+                '>=',
+                now('Africa/Cairo')->toDateTimeString()
+            )
+            ->whereIn(
+                'team_member_id',
+                $availableTeamMembersForNow->pluck('id')->toArray()
+            )
             ->first();
 
-        $shiftMembers = $availableShift->teamMembersForCertainTeam($team->id, $availableShift->id)->get()->toArray();
+        foreach ($availableTeamMembersForNow as $member) {
 
-        foreach ($shiftMembers as $member) {
             $memberAvailableCapacity = $this->getCurrentCapacityForATeamMemberToday(
-                $member['id'],
-                $availableShift->id,
+                $member->id,
+                $currentSchedule->id,
                 TaskDistributionRatiosEnum::ZENDESK
             );
-
 
             $jiraIssueWeight   = $this->getJiraTaskWeight($zendeskTask);
 
@@ -52,7 +85,7 @@ class ZendeskTasksController extends CoreController
                 $loggedTask = TaskDistributionLog::create([
                     'team_id'                => $team->id,
                     'team_member_id'         => $member['id'],
-                    'shift_id'               => $availableShift->id,
+                    'schedule_id'            => $currentSchedule->id,
                     'task_type'              => TaskDistributionRatiosEnum::ZENDESK,
                     'jira_issue_key'         => $zendeskTask['issue']['key'],
                     'before_member_capacity' => $memberAvailableCapacity,

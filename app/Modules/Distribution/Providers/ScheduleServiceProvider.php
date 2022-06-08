@@ -4,7 +4,7 @@ namespace App\Modules\Distribution\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Console\Scheduling\Schedule;
-use App\Modules\Distribution\Jobs\DailyTaskDistribution;
+use App\Modules\Distribution\Jobs\DailyScheduleTaskDistribution;
 
 class ScheduleServiceProvider extends ServiceProvider
 {
@@ -14,7 +14,7 @@ class ScheduleServiceProvider extends ServiceProvider
             $schedule = $this->app->make(Schedule::class);
 
             // $schedule->command('inspire')->hourly();
-            $schedule->job(new DailyTaskDistribution())->dailyAt(config('distribution.distribution_hour_every_day'));
+            $schedule->job(new DailyScheduleTaskDistribution())->dailyAt(config('distribution.distribution_hour_every_day'));
         });
     }
 }

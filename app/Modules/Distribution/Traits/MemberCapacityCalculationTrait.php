@@ -8,12 +8,12 @@ use App\Modules\Distribution\Enums\TaskDistributionRatiosEnum;
 
 trait MemberCapacityCalculationTrait
 {
-    public function getCurrentCapacityForATeamMemberToday(int $teamMemberId, int $shiftId, string $taskType)
+    public function getCurrentCapacityForATeamMemberToday(int $teamMemberId, int $scheduleId, string $taskType)
     {
         $teamMember = TeamMember::find($teamMemberId);
 
         $logsForMemberInShift = TaskDistributionLog::today()
-            ->shift($shiftId)
+            ->schedule($scheduleId)
             ->taskType($taskType)
             ->where('team_member_id', $teamMember->id)
             ->latest()

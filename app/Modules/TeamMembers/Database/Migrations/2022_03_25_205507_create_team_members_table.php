@@ -19,7 +19,7 @@ class CreateTeamMembersTable extends Migration
             $table->boolean('is_active');
             $table->string('jira_integration_id');
             $table->integer('weight');
-            $table->boolean('is_in_shift_now');
+            $table->string('color')->nullable();
 
             $table->timestamps();
         });

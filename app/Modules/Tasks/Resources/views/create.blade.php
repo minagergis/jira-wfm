@@ -57,11 +57,11 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="active">Frequency</label>
-                                    <select required class="form-control" name="frequency" data-toggle="select">
-                                        <option value="per_shift">Every shift</option>
-                                        <option value="daily">Daily</option>
-                                        <option value="weekly">Weekly</option>
+                                    <label class="form-control-label" for="team">Team</label>
+                                    <select required class="form-control" name="team_id" data-toggle="select">
+                                        @foreach ($teams as $team)
+                                            <option value="{{$team->id}}">{{$team->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -76,27 +76,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="team">Team</label>
-                                    <select required class="form-control" name="team_id" data-toggle="select">
-                                        @foreach ($teams as $team)
-                                            <option value="{{$team->id}}">{{$team->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="is_automatic">Is Automatic</label>
-                                    <select required class="form-control" name="is_automatic" data-toggle="select">
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+
 
                         <div class="row">
                             <div class="col-md-6">

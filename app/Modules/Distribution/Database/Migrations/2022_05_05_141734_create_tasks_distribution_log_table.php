@@ -21,7 +21,7 @@ class CreateTasksDistributionLogTable extends Migration
             $table->bigInteger('team_id')->unsigned();
             $table->bigInteger('team_member_id')->unsigned();
             $table->bigInteger('task_id')->unsigned()->nullable();
-            $table->bigInteger('shift_id')->unsigned()->nullable()->default(null);
+            $table->bigInteger('schedule_id')->unsigned()->nullable()->default(null);
 
             $table->foreign('team_id')->references('id')->on('teams')
                 ->onDelete('cascade');
@@ -32,7 +32,7 @@ class CreateTasksDistributionLogTable extends Migration
             $table->foreign('task_id')->references('id')->on('tasks')
                 ->onDelete('cascade');
 
-            $table->foreign('shift_id')->references('id')->on('shifts')
+            $table->foreign('schedule_id')->references('id')->on('member_schedules')
                 ->onDelete('cascade');
 
             $table->string('jira_issue_key')->nullable();
