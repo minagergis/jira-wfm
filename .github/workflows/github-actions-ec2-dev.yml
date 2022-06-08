@@ -1,0 +1,31 @@
+name: Push-to-DEV-ENV
+
+# Trigger deployment only on push to develop branch
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    name: Deploy to develop EC2 on develop branch push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Handling the files
+        uses: actions/checkout@v2
+
+      - name: Deploy to AWS EC2
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST_DEV_DNS }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          TARGET: ${{ secrets.TARGET_DIR }}
+
+
+      - name: Run post deployment scripts
+        run: |
+          composer install --no-interaction && \
+          composer require laravel/envoy --dev && \
+          php ./vendor/bin/envoy run deploy \
