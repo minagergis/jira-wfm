@@ -92,7 +92,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label" for="shift">Color</label>
-                                    <input required type="text" class="form-control" name="color"  id="demo-input">
+                                    <input style="background-color: {{$teamMember->color ?? '#FFFFFF'}}" required type="text" class="form-control" name="color" value="{{$teamMember->color}}"  id="demo-input">
                                 </div>
                             </div>
                             <div class="col-md-6">

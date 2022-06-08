@@ -31,7 +31,7 @@ class ScheduleController extends AbstractCoreController
         }
 
         $teamMembers = $team->teamMembers->map(function ($item, $key) use ($faker) {
-            $item['color']     = $faker->hexColor;
+            $item['color']     = $item->color ?? $faker->hexColor;
             $item['schedules'] = $item->schedules;
 
             return $item;

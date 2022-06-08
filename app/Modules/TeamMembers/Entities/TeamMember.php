@@ -18,7 +18,7 @@ class TeamMember extends Model
         'is_active',
         'jira_integration_id',
         'weight',
-        'is_in_shift_now',
+        'color',
     ];
 
     public function teams(): BelongsToMany
