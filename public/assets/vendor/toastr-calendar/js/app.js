@@ -12,7 +12,9 @@
     var datePicker, selectedCalendar;
 
     cal = new Calendar('#calendar', {
-        defaultView: 'week',
+        defaultView: 'week', // set 'week' or 'day'
+        taskView: false,  // e.g. true, false, or ['task', 'milestone']
+        scheduleView: ['time'] ,// e.g. true, false, or ['allday', 'time']
         useCreationPopup: useCreationPopup,
         useDetailPopup: useDetailPopup,
         calendars: CalendarList,
