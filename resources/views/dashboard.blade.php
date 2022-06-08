@@ -21,7 +21,7 @@
                             </nav>
                         </div>
                         <div class="col-lg-6 col-5 text-right">
-                            <a href="{{route('get.shifts.create')}}" class="btn btn-sm btn-neutral">New Shift</a>
+                            <a href="{{route('get.teams.list')}}" class="btn btn-sm btn-neutral">List Teams</a>
                         </div>
                     </div>
                     <!-- Card stats -->

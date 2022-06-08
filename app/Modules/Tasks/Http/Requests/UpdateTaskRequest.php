@@ -2,6 +2,7 @@
 
 namespace App\Modules\Tasks\Http\Requests;
 
+use App\Modules\Distribution\Enums\TaskDistributionRatiosEnum;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -51,5 +52,13 @@ class UpdateTaskRequest extends FormRequest
     public function authorize()
     {
         return true;
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'frequency'    => TaskDistributionRatiosEnum::PER_SHIFT,
+            'is_automatic' => true,
+        ]);
     }
 }
