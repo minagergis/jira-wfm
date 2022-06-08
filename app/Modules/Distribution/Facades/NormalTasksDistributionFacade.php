@@ -13,23 +13,23 @@ class NormalTasksDistributionFacade
     /**
      * @param array $teamMember     Team member data
      * @param array $availableTasks Available tasks for this team member
-     * @param int   $shiftId
+     * @param int   $scheduleId
      *
      * @return array
      */
-    public function distributePerShiftTasksForTeamMember(array $teamMember, array $availableTasks, int $shiftId): array
+    public function distributePerShiftTasksForTeamMember(array $teamMember, array $availableTasks, int $scheduleId): array
     {
         $distributedTasks = [];
 
         $logsForThisShift = TaskDistributionLog::today()
-            ->shift($shiftId)
+            ->schedule($scheduleId)
             ->taskType(TaskDistributionRatiosEnum::PER_SHIFT)
             ->where('team_member_id', $teamMember['id'])
             ->get();
 
         $currentWeightForTeamMember = $this->getCurrentCapacityForATeamMemberToday(
             $teamMember['id'],
-            $shiftId,
+            $scheduleId,
             TaskDistributionRatiosEnum::PER_SHIFT
         );
         // Looping for all given tasks
