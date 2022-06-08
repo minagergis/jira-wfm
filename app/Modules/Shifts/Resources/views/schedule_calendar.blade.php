@@ -59,12 +59,27 @@
                     ScheduleList.push(schedule);
                 })
             })
-console.log(ScheduleList);
+//console.log(ScheduleList);
         })();
     </script>
 
-    <script> let addScheduleUrl = "{!! route('post.schedule.add') !!}" </script>
+    <script>
+        let addScheduleUrl = "{!! route('post.schedule.add') !!}"
+        let deleteScheduleUrl = "{!! route('post.schedule.delete') !!}"
+    </script>
     <script src="{{asset('assets/vendor/toastr-calendar/js/app.js')}}"></script>
+    <script>
+        document.getElementById("calendar").addEventListener("click", hideButtons);
+        function hideButtons() {
+            var editButton = document.getElementsByClassName("tui-full-calendar-popup-edit")[0];
+            var deleteButton = document.getElementsByClassName("tui-full-calendar-popup-delete")[0];
+            if (editButton) {
+                editButton.style.display = "none";
+                editButton.nextElementSibling.style.display = "none";
+                deleteButton.style.width = "100%";
+            }
+        }
+    </script>
 @endsection
 @section('content')
     <div class="main-content" id="panel">

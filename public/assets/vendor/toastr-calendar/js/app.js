@@ -60,6 +60,7 @@
         'beforeDeleteSchedule': function(e) {
             console.log('beforeDeleteSchedule', e);
             cal.deleteSchedule(e.schedule.id, e.schedule.calendarId);
+            handleDeleteScheduleEvent(e);
         },
         'afterRenderSchedule': function(e) {
             var schedule = e.schedule;
@@ -426,8 +427,19 @@
         return target.dataset ? target.dataset.action : target.getAttribute('data-action');
     }
 
+
+
+    function handleDeleteScheduleEvent(event){
+        let deletePayload = JSON.stringify(event.schedule);
+
+        sendAjaxRequest(deletePayload,deleteScheduleUrl,'POST');
+    }
+
     function sendAjaxRequest(object, link,method) {
+
+        //alert(link);
         let returnValue;
+
         $.ajax({
             type: method,
             async: false,

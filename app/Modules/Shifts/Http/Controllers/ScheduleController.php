@@ -46,16 +46,30 @@ class ScheduleController extends AbstractCoreController
     {
         $schedule =(array) json_decode($request->get('data'));
 
+        //dd($schedule['start']->_date, $schedule['end']->_date);
         $memberSchedule = [
             'name'           => $schedule['title'],
             'team_member_id' => $schedule['calendarId'],
-            'time_from'      => Carbon::parse($schedule['start']->_date)->toTimeString(),
-            'time_to'        => Carbon::parse($schedule['end']->_date)->toTimeString(),
-            'date_from'      => Carbon::parse($schedule['start']->_date)->toDateString(),
-            'date_to'        => Carbon::parse($schedule['end']->_date)->toDateString(),
+            'time_from'      => Carbon::parse($schedule['start']->_date)->timezone('Africa/Cairo')->toTimeString(),
+            'time_to'        => Carbon::parse($schedule['end']->_date)->timezone('Africa/Cairo')->toTimeString(),
+            'date_from'      => Carbon::parse($schedule['start']->_date)->timezone('Africa/Cairo')->toDateString(),
+            'date_to'        => Carbon::parse($schedule['end']->_date)->timezone('Africa/Cairo')->toDateString(),
         ];
 
         if ($this->memberScheduleService->create($memberSchedule)) {
+            return response()->json([
+                'message'  => 'success',
+            ]);
+        }
+
+        return false;
+    }
+
+    public function deleteSchedule(Request $request)
+    {
+        $schedule =(array) json_decode($request->get('data'));
+
+        if ($this->memberScheduleService->delete($schedule['id'])) {
             return response()->json([
                 'message'  => 'success',
             ]);

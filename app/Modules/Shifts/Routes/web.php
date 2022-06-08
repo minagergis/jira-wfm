@@ -25,4 +25,5 @@ Route::prefix('shifts')->group(function () {
 Route::prefix('schedule')->group(function () {
     Route::get('/by-team/{id}', 'ScheduleController@scheduleCalendarForTeam')->name('get.schedule.list-by-team');
     Route::post('/add-schedule', 'ScheduleController@addSchedule')->name('post.schedule.add');
+    Route::post('/delete-schedule', 'ScheduleController@deleteSchedule')->name('post.schedule.delete');
 });
