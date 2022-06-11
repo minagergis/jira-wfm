@@ -15,7 +15,7 @@
         "laravel/ui": "^3.4",
         "lesstif/php-jira-rest-client": "^2.6",
         "nwidart/laravel-modules": "^8.3",
-        "sentry/sentry-laravel": "^2.12"
+        "sentry/sentry-laravel": "^1.9.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
