@@ -53,10 +53,10 @@
                                         <td>{{$member->weight}}</td>
                                         <td>{{$member->teams[0]->name ?? 'N/A'}}</td>
                                         <td>
-                                            <a href="{{route('get.team-member.assign-shift',$member->id)}}" class="btn btn-icon btn-primary" type="button">
-                                                <span class="btn-inner--icon"><i class="ni ni-watch-time"></i></span>
-                                                <span class="btn-inner--text">Assign shift</span>
-                                            </a>
+{{--                                            <a href="{{route('get.team-member.assign-shift',$member->id)}}" class="btn btn-icon btn-primary" type="button">--}}
+{{--                                                <span class="btn-inner--icon"><i class="ni ni-watch-time"></i></span>--}}
+{{--                                                <span class="btn-inner--text">Assign shift</span>--}}
+{{--                                            </a>--}}
                                             <a href="{{route('get.team-member.edit',$member->id)}}" class="btn btn-icon btn-dribbble" type="button">
                                                 <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
                                                 <span class="btn-inner--text">Update</span>
