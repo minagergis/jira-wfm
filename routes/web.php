@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,3 +18,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [DashboardController::class, 'getDashboard'])->name('home');
+
+Route::get('/debug-sentry', function () {
+    throw new Exception('My first Sentry error!');
+});
