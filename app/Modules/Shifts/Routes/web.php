@@ -13,7 +13,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('shifts')->group(function () {
+Route::prefix('shifts')->middleware('auth')->group(function () {
     Route::get('/', 'ShiftsController@index')->name('get.shifts.list');
     Route::get('/by-team/{id}', 'ShiftsController@indexByTeam')->name('get.shifts.list-by-team');
     Route::get('/create', 'ShiftsController@create')->name('get.shifts.create');
@@ -22,7 +22,7 @@ Route::prefix('shifts')->group(function () {
     Route::post('/edit/{id}', 'ShiftsController@update')->name('post.shifts.edit');
 });
 
-Route::prefix('schedule')->group(function () {
+Route::prefix('schedule')->middleware('auth')->group(function () {
     Route::get('/by-team/{id}', 'ScheduleController@scheduleCalendarForTeam')->name('get.schedule.list-by-team');
     Route::post('/add-schedule', 'ScheduleController@addSchedule')->name('post.schedule.add');
     Route::post('/delete-schedule', 'ScheduleController@deleteSchedule')->name('post.schedule.delete');
