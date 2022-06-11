@@ -13,7 +13,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('contact-types')->group(function () {
+Route::prefix('contact-types')->middleware('auth')->group(function () {
     Route::get('/', 'ContactTypesController@index')->name('get.contact-type.list');
     Route::get('/create', 'ContactTypesController@create')->name('get.contact-type.create');
     Route::post('/create', 'ContactTypesController@store')->name('post.contact-type.create');
