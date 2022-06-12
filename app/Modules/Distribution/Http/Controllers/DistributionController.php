@@ -2,10 +2,10 @@
 
 namespace App\Modules\Distribution\Http\Controllers;
 
-use App\Modules\Distribution\Jobs\DailyTaskDistribution;
 use App\Modules\Teams\Services\TeamService;
 use App\Modules\Core\Http\Controllers\AbstractCoreController;
 use App\Modules\Distribution\Enums\TaskDistributionRatiosEnum;
+use App\Modules\Distribution\Jobs\DailyScheduleTaskDistribution;
 use Facades\App\Modules\Distribution\Facades\NormalTasksDistributionFacade;
 use Facades\App\Modules\Distribution\Facades\CreateDistributedTasksOnJiraFacade;
 
@@ -25,7 +25,7 @@ class DistributionController extends AbstractCoreController
 
     public function distribute(): \Illuminate\Http\RedirectResponse
     {
-        DailyTaskDistribution::dispatch();
+        DailyScheduleTaskDistribution::dispatch();
 
         return redirect()->route('home')->with(['status' => 'Distribution has been created successfully']);
     }
@@ -46,7 +46,6 @@ class DistributionController extends AbstractCoreController
             if ($team->dailyTasks) {
                 $this->distributePerShiftTasksForATeam($team);
             }
-
         }
     }
 

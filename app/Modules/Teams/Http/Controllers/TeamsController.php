@@ -69,4 +69,5 @@ class TeamsController extends AbstractCoreController
 
         return redirect()->route('get.teams.list')->with(['status' => 'Team has been deleted successfully']);
     }
+
 }

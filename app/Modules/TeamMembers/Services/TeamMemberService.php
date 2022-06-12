@@ -23,4 +23,9 @@ class TeamMemberService extends AbstractCoreService
     {
         return $this->repository->getTeamMemberByTeamId($teamId);
     }
+
+    public function getTeamMemberWithScheduleInDay($day)
+    {
+        return $this->repository->getTeamMemberWithScheduleInDay($day);
+    }
 }

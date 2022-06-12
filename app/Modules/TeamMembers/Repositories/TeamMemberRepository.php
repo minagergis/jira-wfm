@@ -2,9 +2,9 @@
 
 namespace App\Modules\TeamMembers\Repositories;
 
+use Illuminate\Database\Eloquent\Builder;
 use App\Modules\TeamMembers\Entities\TeamMember;
 use App\Modules\Core\Repositories\AbstractCoreRepository;
-use Illuminate\Database\Eloquent\Builder;
 
 class TeamMemberRepository extends AbstractCoreRepository
 {
@@ -42,6 +42,12 @@ class TeamMemberRepository extends AbstractCoreRepository
         return $this->model->whereHas('teams', function (Builder $query) use ($teamId) {
             $query->where('teams.id', $teamId);
         })->get();
+    }
 
+    public function getTeamMemberWithScheduleInDay($dayDate)
+    {
+        return $this->model->whereHas('schedules', function (Builder $query) use ($dayDate) {
+            $query->where('member_schedules.date_from', 'LIKE', '%'.$dayDate.'%');
+        })->get();
     }
 }

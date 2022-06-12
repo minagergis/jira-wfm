@@ -11,7 +11,9 @@
 |
 */
 
-Route::prefix('team-members')->group(function () {
+use Illuminate\Support\Facades\Route;
+
+Route::prefix('team-members')->middleware('auth')->group(function () {
     Route::get('/', 'TeamMembersController@index')->name('get.team-member.list');
     Route::get('/by-team/{id}', 'TeamMembersController@indexByTeam')->name('get.team-member.list-by-team');
     Route::get('/create', 'TeamMembersController@create')->name('get.team-member.create');

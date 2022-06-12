@@ -11,7 +11,9 @@
 |
 */
 
-Route::prefix('tasks')->group(function() {
+use Illuminate\Support\Facades\Route;
+
+Route::prefix('tasks')->middleware('auth')->group(function () {
     Route::get('/', 'TasksController@index')->name('get.tasks.list');
     Route::get('/create', 'TasksController@create')->name('get.tasks.create');
     Route::post('/create', 'TasksController@store')->name('post.tasks.create');

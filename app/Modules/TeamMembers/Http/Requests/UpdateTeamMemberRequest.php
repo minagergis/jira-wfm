@@ -26,9 +26,9 @@ class UpdateTeamMemberRequest extends FormRequest
                 'required',
                 'boolean',
             ],
-            'is_in_shift_now' => [
+            'color' => [
                 'required',
-                'boolean',
+                'string',
             ],
             'weight' => [
                 'required',

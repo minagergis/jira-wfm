@@ -11,6 +11,8 @@
 |
 */
 
-Route::prefix('distribution')->group(function() {
+use Illuminate\Support\Facades\Route;
+
+Route::prefix('distribution')->middleware('auth')->group(function () {
     Route::get('/', 'DistributionController@distribute')->name('get.distribution.distribute');
 });

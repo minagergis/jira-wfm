@@ -12,18 +12,18 @@ class CreateDistributedTasksOnJiraFacade
 {
     use MemberCapacityCalculationTrait;
 
-    public function createTaskForATeamMember($task, $teamMember, $team, $shift, string $taskType): bool
+    public function createTaskForATeamMember($task, $teamMember, $team, $schedule, string $taskType): bool
     {
         try {
             $currentMemberCapacity = $this->getCurrentCapacityForATeamMemberToday(
                 $teamMember['id'],
-                $shift->id,
+                $schedule->id,
                 $taskType
             );
 
             $jiraTask = JIRA::createIssue(
                 $team->jira_project_key,
-                now()->toDateString().' '.$shift->name.'⏰ -> '. $task['name'],
+                now()->toDateString().' '.$schedule->name.'⏰ -> '. $task['name'],
                 $task['description'],
                 $teamMember['jira_integration_id']
             );
@@ -31,7 +31,7 @@ class CreateDistributedTasksOnJiraFacade
             $loggedTask = TaskDistributionLog::create([
                 'team_id'                => $team->id,
                 'team_member_id'         => $teamMember['id'],
-                'shift_id'               => $shift->id,
+                'schedule_id'            => $schedule->id,
                 'task_id'                => $task['id'],
                 'task_type'              => $taskType,
                 'before_member_capacity' => $currentMemberCapacity,

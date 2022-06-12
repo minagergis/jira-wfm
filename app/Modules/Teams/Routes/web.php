@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::prefix('teams')->middleware('auth')->group(function () {
     Route::get('/', 'TeamsController@index')->name('get.teams.list');
     Route::get('/create', 'TeamsController@create')->name('get.teams.create');

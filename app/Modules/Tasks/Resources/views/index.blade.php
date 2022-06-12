@@ -40,7 +40,7 @@
                                 <thead class="thead-light">
                                 <tr>
                                     <th>Name</th>
-                                    <th>Frequency</th>
+{{--                                    <th>Frequency</th>--}}
                                     <th>Points</th>
                                     <th>Team Name</th>
                                     <th>Controls ⌘</th>
@@ -51,7 +51,7 @@
                                 @foreach($tasks as $task)
                                     <tr>
                                         <td>{{$task->name}}</td>
-                                        <td>{{$task->frequency}}</td>
+{{--                                        <td>{{$task->frequency}}</td>--}}
                                         <td>{{$task->points}}</td>
                                         <td>{{$task->team->name ?? 'N/A'}}</td>
                                         <td>

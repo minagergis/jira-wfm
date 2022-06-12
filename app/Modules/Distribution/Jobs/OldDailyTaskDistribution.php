@@ -12,7 +12,7 @@ use App\Modules\Distribution\Enums\TaskDistributionRatiosEnum;
 use Facades\App\Modules\Distribution\Facades\NormalTasksDistributionFacade;
 use Facades\App\Modules\Distribution\Facades\CreateDistributedTasksOnJiraFacade;
 
-class DailyTaskDistribution implements ShouldQueue
+class OldDailyTaskDistribution implements ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;

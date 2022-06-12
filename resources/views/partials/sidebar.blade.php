@@ -84,22 +84,22 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#navbar-components-shifts" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-components-shifts">
-                            <i class="ni ni-watch-time text-green"></i>
-                            <span class="nav-link-text">Shifts</span>
-                        </a>
-                        <div class="collapse" id="navbar-components-shifts">
-                            <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a href="{{route('get.shifts.create')}}" class="nav-link">Add Shift</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{route('get.shifts.list')}}" class="nav-link">List Shifts</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link" href="#navbar-components-shifts" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-components-shifts">--}}
+{{--                            <i class="ni ni-watch-time text-green"></i>--}}
+{{--                            <span class="nav-link-text">Shifts</span>--}}
+{{--                        </a>--}}
+{{--                        <div class="collapse" id="navbar-components-shifts">--}}
+{{--                            <ul class="nav nav-sm flex-column">--}}
+{{--                                <li class="nav-item">--}}
+{{--                                    <a href="{{route('get.shifts.create')}}" class="nav-link">Add Shift</a>--}}
+{{--                                </li>--}}
+{{--                                <li class="nav-item">--}}
+{{--                                    <a href="{{route('get.shifts.list')}}" class="nav-link">List Shifts</a>--}}
+{{--                                </li>--}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
+{{--                    </li>--}}
 
                     <li class="nav-item">
                         <a class="nav-link" href="#navbar-components-c-types" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-components-c-types">
