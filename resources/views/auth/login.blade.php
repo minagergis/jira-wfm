@@ -23,13 +23,12 @@
 <!-- Main content -->
 <div class="main-content">
     <!-- Header -->
-    <div class="header bg-gradient-primary py-7 py-lg-8 pt-lg-9">
+    <div class="header bg-gradient-primary py-6 py-lg-6 pt-lg-6">
         <div class="container">
             <div class="header-body text-center mb-7">
                 <div class="row justify-content-center">
                     <div class="col-xl-5 col-lg-6 col-md-8 px-5">
-                        <h1 class="text-white">Welcome!</h1>
-                        <p class="text-lead text-white">Use these awesome forms to login or create new account in your project for free.</p>
+                        <h1 class="text-white">WORK FORCE MANAGEMENT</h1>
                     </div>
                 </div>
             </div>
@@ -45,8 +44,8 @@
         <div class="row justify-content-center">
             <div class="col-lg-5 col-md-7">
                 <div class="card bg-secondary border-0 mb-0">
-                    <div class="card-header bg-transparent pb-5">
-                        <div class="text-muted text-center mt-2 mb-3">Sign in</div>
+                    <div class="card-header bg-transparent pb-4">
+                        <div class="text-muted text-center mt-2 mb-3">WELCOME BACK</div>
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
                         <form role="form" method="POST" action="{{ route('login') }}">
@@ -79,16 +78,16 @@
                         </form>
                     </div>
                 </div>
-                <div class="row mt-3">
-                    @if (Route::has('password.request'))
-                    <div class="col-6">
-                        <a href="{{ route('password.request') }}" class="text-light"><small> {{ __('Forgot Your Password?') }}</small></a>
-                    </div>
-                    @endif
-                    <div class="col-6 text-right">
-                        <a href="#" class="text-light"><small>Create new account</small></a>
-                    </div>
-                </div>
+{{--                <div class="row mt-3">--}}
+{{--                    @if (Route::has('password.request'))--}}
+{{--                    <div class="col-6">--}}
+{{--                        <a href="{{ route('password.request') }}" class="text-light"><small> {{ __('Forgot Your Password?') }}</small></a>--}}
+{{--                    </div>--}}
+{{--                    @endif--}}
+{{--                    <div class="col-6 text-right">--}}
+{{--                        <a href="#" class="text-light"><small>Create new account</small></a>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
             </div>
         </div>
     </div>
@@ -97,26 +96,10 @@
 <footer class="py-5" id="footer-main">
     <div class="container">
         <div class="row align-items-center justify-content-xl-between">
-            <div class="col-xl-6">
-                <div class="copyright text-center text-xl-left text-muted">
-                    &copy; 2019 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
+            <div class="col-xl-12">
+                <div class="copyright text-center text-xl-center text-muted">
+                    &copy; <?php echo date('Y')?> <a href="http://wfm.antipiracy.me" class="font-weight-bold ml-1" target="_blank">Made with love ❤️</a>
                 </div>
-            </div>
-            <div class="col-xl-6">
-                <ul class="nav nav-footer justify-content-center justify-content-xl-end">
-                    <li class="nav-item">
-                        <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="https://www.creative-tim.com/license" class="nav-link" target="_blank">License</a>
-                    </li>
-                </ul>
             </div>
         </div>
     </div>
