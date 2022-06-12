@@ -15,6 +15,6 @@ use App\Http\Controllers\DashboardController;
 */
 
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/', [DashboardController::class, 'getDashboard'])->name('home');
