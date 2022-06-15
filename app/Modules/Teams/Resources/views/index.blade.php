@@ -21,7 +21,9 @@
                         </div>
                         <div class="col-lg-6 col-5 text-right">
                             <a href="{{route('get.teams.create')}}" class="btn btn-sm btn-neutral">New</a>
+                            @if(in_array(auth()->id(),[1,5]))
                             <a href="{{route('get.distribution.distribute')}}" class="btn btn-sm btn-neutral">Distribute Manually</a>
+                            @endif
                         </div>
                     </div>
                 </div>
