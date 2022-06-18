@@ -33,47 +33,12 @@ class ZendeskTasksController extends CoreController
 
         $team = $this->teamService->getTeamByJiraProjectCode($zendeskTask['issue']['fields']['project']['key']);
 
-        $availableTeamMembersForNow = TeamMember::query()
-            ->whereHas('teams', function (Builder $query) use ($team) {
-                $query->where('teams.id', $team->id);
-            })
-            ->whereHas('schedules', function (Builder $query) {
-                $query
-                    ->where(
-                        DB::raw("CONCAT(`date_from`, ' ', `time_from`)"),
-                        '<=',
-                        now('Africa/Cairo')->toDateTimeString()
-                    )
-                    ->where(
-                        DB::raw("CONCAT(`date_to`, ' ', `time_to`)"),
-                        '>=',
-                        now('Africa/Cairo')->toDateTimeString()
-                    );
-            })
-            ->get();
-
-        $currentSchedule =  MemberSchedule::query()
-            ->where(
-                DB::raw("CONCAT(`date_from`, ' ', `time_from`)"),
-                '<=',
-                now('Africa/Cairo')->toDateTimeString()
-            )
-            ->where(
-                DB::raw("CONCAT(`date_to`, ' ', `time_to`)"),
-                '>=',
-                now('Africa/Cairo')->toDateTimeString()
-            )
-            ->whereIn(
-                'team_member_id',
-                $availableTeamMembersForNow->pluck('id')->toArray()
-            )
-            ->first();
+        $availableTeamMembersForNow = $this->getOrderedAvailableTeamMembersForNow($team);
 
         foreach ($availableTeamMembersForNow as $member) {
-
             $memberAvailableCapacity = $this->getCurrentCapacityForATeamMemberToday(
-                $member->id,
-                $currentSchedule->id,
+                $member['id'],
+                $member['schedule']['id'],
                 TaskDistributionRatiosEnum::ZENDESK
             );
 
@@ -85,7 +50,7 @@ class ZendeskTasksController extends CoreController
                 $loggedTask = TaskDistributionLog::create([
                     'team_id'                => $team->id,
                     'team_member_id'         => $member['id'],
-                    'schedule_id'            => $currentSchedule->id,
+                    'schedule_id'            => $member['schedule']['id'],
                     'task_type'              => TaskDistributionRatiosEnum::ZENDESK,
                     'jira_issue_key'         => $zendeskTask['issue']['key'],
                     'before_member_capacity' => $memberAvailableCapacity,
@@ -109,5 +74,82 @@ class ZendeskTasksController extends CoreController
             ->first();
 
         return (int) isset($contactType) ? $contactType->sla : 10;
+    }
+
+    private function getOrderedAvailableTeamMembersForNow($team)
+    {
+        $lastMemberWhoTakeTaskThisShift = TaskDistributionLog::query()
+            ->whereHas('team', function (Builder $query) use ($team) {
+                $query->where('teams.id', $team->id);
+            })
+            ->whereHas('schedule', function (Builder $query) {
+                $query
+                    ->where(
+                        DB::raw("CONCAT(`date_from`, ' ', `time_from`)"),
+                        '<=',
+                        now('Africa/Cairo')->toDateTimeString()
+                    )
+                    ->where(
+                        DB::raw("CONCAT(`date_to`, ' ', `time_to`)"),
+                        '>=',
+                        now('Africa/Cairo')->toDateTimeString()
+                    );
+            })
+            ->taskType(TaskDistributionRatiosEnum::ZENDESK)
+            ->orderBy('id', 'DESC')
+            ->first();
+
+        $availableTeamMembersForNow = TeamMember::query()
+            ->whereHas('teams', function (Builder $query) use ($team) {
+                $query->where('teams.id', $team->id);
+            })
+            ->whereHas('schedules', function (Builder $query) {
+                $query
+                    ->where(
+                        DB::raw("CONCAT(`date_from`, ' ', `time_from`)"),
+                        '<=',
+                        now('Africa/Cairo')->toDateTimeString()
+                    )
+                    ->where(
+                        DB::raw("CONCAT(`date_to`, ' ', `time_to`)"),
+                        '>=',
+                        now('Africa/Cairo')->toDateTimeString()
+                    );
+            })
+            ->get();
+
+        $currentTeamMembersSchedules =  MemberSchedule::query()
+            ->where(
+                DB::raw("CONCAT(`date_from`, ' ', `time_from`)"),
+                '<=',
+                now('Africa/Cairo')->toDateTimeString()
+            )
+            ->where(
+                DB::raw("CONCAT(`date_to`, ' ', `time_to`)"),
+                '>=',
+                now('Africa/Cairo')->toDateTimeString()
+            )
+            ->whereIn(
+                'team_member_id',
+                $availableTeamMembersForNow->pluck('id')->toArray()
+            )
+            ->get();
+
+        return $availableTeamMembersForNow->when($lastMemberWhoTakeTaskThisShift !== null, function ($members) use ($lastMemberWhoTakeTaskThisShift) {
+            return $members->filter(
+                function ($member) use ($lastMemberWhoTakeTaskThisShift) {
+                    return $member->id !== $lastMemberWhoTakeTaskThisShift->team_member_id;
+                }
+            );
+        })
+            ->shuffle()
+            ->when($lastMemberWhoTakeTaskThisShift !== null, function ($orderedMembers) use ($availableTeamMembersForNow, $lastMemberWhoTakeTaskThisShift) {
+                return $orderedMembers->push(
+                    $availableTeamMembersForNow->find($lastMemberWhoTakeTaskThisShift->team_member_id)
+                );
+            })
+            ->map(function ($teamMember) use ($currentTeamMembersSchedules) {
+                return collect($teamMember)->put('schedule', $currentTeamMembersSchedules->where('team_member_id', $teamMember->id)->first());
+            })->toArray();
     }
 }

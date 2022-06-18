@@ -5,6 +5,8 @@ namespace App\Modules\Distribution\Entities;
 use App\Modules\Teams\Entities\Team;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use App\Modules\Shifts\Entities\MemberSchedule;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class TaskDistributionLog extends Model
@@ -24,6 +26,11 @@ class TaskDistributionLog extends Model
         'before_member_capacity',
         'after_member_capacity',
     ];
+
+    public function schedule(): BelongsTo
+    {
+        return $this->belongsTo(MemberSchedule::class);
+    }
 
     /**
      * Scope a query to only include logs for today.
