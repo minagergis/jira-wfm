@@ -47,6 +47,39 @@
            }
 
        })();
+       var BarsChart = (function() {
+
+           //
+           // Variables
+           //
+
+           var $chart = $('#chart-bars-id');
+           var $batChartsData = {!! $barChartData !!}
+
+           //
+           // Methods
+           //
+
+           // Init chart
+           function initChart($chart) {
+
+               // Create chart
+               var ordersChart = new Chart($chart, {
+                   type: 'bar',
+                   data: $batChartsData
+               });
+
+               // Save to jQuery object
+               $chart.data('chart', ordersChart);
+           }
+
+
+           // Init chart
+           if ($chart.length) {
+               initChart($chart);
+           }
+
+       })();
    </script>
 @endsection
 @section('content')
@@ -208,15 +241,15 @@
                         <div class="card-header bg-transparent">
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
-                                    <h5 class="h3 mb-0">Total Tasks</h5>
+                                    <h6 class="text-uppercase text-muted ls-1 mb-1">zendesk tasks performance for last 7 days</h6>
+                                    <h5 class="h3 mb-0 ">Performance</h5>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
                             <!-- Chart -->
                             <div class="chart">
-                                <canvas id="chart-bars" class="chart-canvas"></canvas>
+                                <canvas id="chart-bars-id" class="chart-canvas"></canvas>
                             </div>
                         </div>
                     </div>

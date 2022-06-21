@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Modules\Teams\Services\TeamService;
 use App\Modules\Shifts\Services\MemberScheduleService;
 use App\Modules\TeamMembers\Services\TeamMemberService;
+use App\Modules\Distribution\Enums\TaskDistributionRatiosEnum;
 use App\Modules\Distribution\Services\TaskDistributionLogService;
 
 class DashboardController extends Controller
@@ -34,7 +35,8 @@ class DashboardController extends Controller
 
     public function getDashboard()
     {
-        $teamsCount               = $this->teamService->index()->count();
+        $teams                    = $this->teamService->index();
+        $teamsCount               = $teams->count();
         $teamsLastDaysCount       = $this->teamService->withScope('withInDays', 7)->count();
 
         $teamMembersCount         = $this->teamMemberService->index()->count();
@@ -47,24 +49,9 @@ class DashboardController extends Controller
         $schedulesCount           = $this->memberScheduleService->index()->count();
         $schedulesLastDaysCount   = $this->memberScheduleService->withScope('withInDays', 7)->count();
 
+        $lineChartData = $this->getLineChartData($tasksLastDays);
+        $barChartData  = $this->getBarChartData($teams, $tasksLastDays);
 
-        $taskCountsForThisWeek = $this->getTaskCountsForThisWeek($tasksLastDays);
-
-        $lineChartData = json_encode([
-            'labels' => [
-                now()->subDays(6)->dayName,
-                now()->subDays(5)->dayName,
-                now()->subDays(4)->dayName,
-                now()->subDays(3)->dayName,
-                now()->subDays(2)->dayName,
-                now()->subDay()->dayName,
-                now()->dayName,
-            ],
-            'datasets' => [[
-                'label' => 'task count',
-                'data'  => $taskCountsForThisWeek,
-            ]],
-        ]);
 
         return view('dashboard', compact(
             'teamMembersCount',
@@ -75,16 +62,17 @@ class DashboardController extends Controller
             'teamsLastDaysCount',
             'schedulesCount',
             'schedulesLastDaysCount',
-            'lineChartData'
+            'lineChartData',
+            'barChartData'
         ));
     }
 
     /**
      * @param $tasksLastDays
      *
-     * @return array
+     * @return string
      */
-    private function getTaskCountsForThisWeek($tasksLastDays): array
+    private function getLineChartData($tasksLastDays): string
     {
         $tasksPerDay = $tasksLastDays->groupBy(function ($log) {
             return Carbon::parse($log->created_at)->format('Y-m-d');
@@ -107,7 +95,50 @@ class DashboardController extends Controller
                 $tasksPerDay[$day->toDateString()] = 0;
             }
         }
+        $taskCountsForThisWeek = array_values($tasksPerDay);
 
-        return array_values($tasksPerDay);
+        return json_encode([
+            'labels' => [
+                now()->subDays(6)->dayName,
+                now()->subDays(5)->dayName,
+                now()->subDays(4)->dayName,
+                now()->subDays(3)->dayName,
+                now()->subDays(2)->dayName,
+                now()->subDay()->dayName,
+                now()->dayName,
+            ],
+            'datasets' => [[
+                'label' => 'task count',
+                'data'  => $taskCountsForThisWeek,
+            ]],
+        ]);
+    }
+
+    private function getBarChartData($teams, $tasksLastDays): string
+    {
+        $tasksPerDay = $tasksLastDays->where('task_type', TaskDistributionRatiosEnum::ZENDESK)->groupBy('team_id')->map(function ($tasks) {
+            return count($tasks);
+        })->toArray();
+
+        foreach ($teams as $team) {
+            if (!isset($tasksPerDay[$team->id])) {
+                $tasksPerDay[$team->id] = 0;
+            }
+        }
+
+        $labels = [];
+        foreach ($tasksPerDay as $teamId => $val) {
+            $labels[] = $team->find($teamId)->name;
+        }
+
+        $taskCountsForThisWeek = array_values($tasksPerDay);
+
+        return json_encode([
+            'labels'   => $labels,
+            'datasets' => [[
+                'label' => 'Zendesk tasks count',
+                'data'  => $taskCountsForThisWeek,
+            ]],
+        ]);
     }
 }
