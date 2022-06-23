@@ -35,4 +35,10 @@ class MemberSchedule extends Model
 
         return $query->whereBetween('date_from', [$from , $to]);
     }
+
+    public function scopeTeamMember($query, $memberId)
+    {
+        return $query->where('team_member_id', $memberId)
+            ->where('date_from', '<=', now()->toDateString());
+    }
 }
