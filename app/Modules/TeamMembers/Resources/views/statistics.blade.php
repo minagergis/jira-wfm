@@ -27,6 +27,69 @@
                     </div>
                     <!-- Card stats -->
                     <div class="row">
+
+                            <div class="col-xl-4 col-md-6">
+                                <div class="card bg-gradient-purple">
+                                    <!-- Card body -->
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="card-title text-uppercase text-muted mb-0 text-white">Done points in @if($isInShiftNow) this @else last @endif shift </h5>
+                                                <span class="h2 font-weight-bold mb-0 text-white">{{$totalPointsLastShift}} POINTS</span>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div class="icon icon-shape bg-white text-dark rounded-circle shadow">
+                                                    <i class="fa fa-check-circle"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        <div class="col-xl-4 col-md-6">
+                            <div class="card bg-gradient-green">
+                                <!-- Card body -->
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="card-title text-uppercase text-muted mb-0 text-white">Remaining points in @if($isInShiftNow) this @else last @endif shift </h5>
+                                            <span class="h2 font-weight-bold mb-0 text-white">{{$memberWeightLastShift - $totalPointsLastShift}} POINTS</span>
+
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="icon icon-shape bg-white text-dark rounded-circle shadow">
+                                                <i class="fa fa-clock"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6">
+                            <div class="card bg-gradient-danger">
+                                <!-- Card body -->
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="card-title text-uppercase text-muted mb-0 text-white">Total tasks in @if($isInShiftNow) this @else last @endif shift</h5>
+                                            <span class="h2 font-weight-bold mb-0 text-white">{{$numberOfTasks}}</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="icon icon-shape bg-white text-dark rounded-circle shadow">
+                                                <i class="fa fa-tasks"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
                         <div class="col-xl-3 col-md-6">
                             <div class="card card-stats">
                                 <!-- Card body -->
@@ -38,7 +101,7 @@
                                         </div>
                                         <div class="col-auto">
                                             <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
-                                                <i class="ni ni-active-40"></i>
+                                                <i class="fa fa-clipboard-check"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -60,7 +123,7 @@
                                         </div>
                                         <div class="col-auto">
                                             <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-                                                <i class="ni ni-chart-pie-35"></i>
+                                                <i class="fa fa-calendar-day"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -82,7 +145,7 @@
                                         </div>
                                         <div class="col-auto">
                                             <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-                                                <i class="ni ni-money-coins"></i>
+                                                <i class="fa fa-check-circle"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -99,18 +162,18 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col">
-                                            <h5 class="card-title text-uppercase text-muted mb-0">Performance</h5>
-                                            <span class="h2 font-weight-bold mb-0">High</span>
+                                            <h5 class="card-title text-uppercase text-muted mb-0">Total tasks</h5>
+                                            <span class="h2 font-weight-bold mb-0">{{$numberOfTasksLast7Days}}</span>
                                         </div>
                                         <div class="col-auto">
                                             <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
-                                                <i class="ni ni-chart-bar-32"></i>
+                                                <i class="fa fa-chart-bar"></i>
                                             </div>
                                         </div>
                                     </div>
                                     <p class="mt-3 mb-0 text-sm">
-                                        <span class="text-danger mr-2"><i class="fa fa-arrow-up"></i> 150%</span>
-                                        <span class="text-nowrap">today</span>
+                                        <span class="text-nowrap">All Tasks count </span>
+                                        <span class="text-success mr-2"> last 7 days</span>
                                     </p>
                                 </div>
                             </div>
@@ -199,51 +262,7 @@
                         </div>
                     </div>
                     <!-- Progress track -->
-                    <div class="card">
-                        <!-- Card header -->
-                        <div class="card-header">
-                            <!-- Title -->
-                            <h5 class="h3 mb-0">Today's Capacity track</h5>
-                        </div>
-                        <!-- Card body -->
-                        <div class="card-body">
-                            <!-- List group -->
-                            <ul class="list-group list-group-flush list my--3">
-                                <li class="list-group-item px-0">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <!-- Avatar -->
-                                            <a href="#" class="avatar rounded-circle">
-                                                <img alt="Image placeholder" src="{{asset('assets/img/brand/ds.png')}}">
-                                            </a>
-                                        </div>
-                                        <div class="col">
-                                            <h5>Daily tasks</h5>
-                                            <div class="progress progress-xs mb-0">
-                                                <div class="progress-bar bg-orange" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item px-0">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <!-- Avatar -->
-                                            <a href="#" class="avatar rounded-circle">
-                                                <img alt="Image placeholder" src="{{asset('/assets/img/icons/common/zendesk.png')}}">
-                                            </a>
-                                        </div>
-                                        <div class="col">
-                                            <h5>Zendesk tasks</h5>
-                                            <div class="progress progress-xs mb-0">
-                                                <div class="progress-bar bg-green" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+
 
                 </div>
                 <div class="col-lg-4">
@@ -258,7 +277,7 @@
                         <!-- Card body -->
                         <div class="card-body">
                             <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed">
-@if( $allLogs->count() === 0)
+                                @if( $allLogs->count() === 0)
                                     <div class="timeline-block">
 
                                             <span class="timeline-step badge-danger">
@@ -315,7 +334,56 @@
 
                 </div>
                 <div class="col-lg-4">
-
+                    <div class="card">
+                        <!-- Card header -->
+                        <div class="card-header">
+                            <!-- Title -->
+                            <h5 class="h3 mb-0">@if($isInShiftNow) This @else Last @endif shift capacity track</h5>
+                        </div>
+                        <!-- Card body -->
+                        <div class="card-body">
+                            <!-- List group -->
+                            <ul class="list-group list-group-flush list my--3">
+                                <li class="list-group-item px-0">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <!-- Avatar -->
+                                            <a href="#" class="avatar rounded-circle">
+                                                <img alt="Image placeholder" src="{{asset('assets/img/brand/ds.png')}}">
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <?php
+                                            use App\Modules\Distribution\Enums\TaskDistributionRatiosEnum;
+                                            $pershiftRatio = TaskDistributionRatiosEnum::TYPES_RATIOS[TaskDistributionRatiosEnum::PER_SHIFT];
+                                            $zendeskRatio = TaskDistributionRatiosEnum::TYPES_RATIOS[TaskDistributionRatiosEnum::ZENDESK];
+                                            ?>
+                                            <h5>Daily tasks</h5>
+                                            <div class="progress progress-xs mb-0">
+                                                <div class="progress-bar bg-orange" role="progressbar" aria-valuenow="{{$totalPointsLastShiftForPerShift}}" aria-valuemin="0" aria-valuemax="{{$memberWeightLastShift * $pershiftRatio}}" style="width: @if($memberWeightLastShift == 0) 0 @else  {{$totalPointsLastShiftForPerShift / ($memberWeightLastShift * $pershiftRatio) * 100}}@endif%;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item px-0">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <!-- Avatar -->
+                                            <a href="#" class="avatar rounded-circle">
+                                                <img alt="Image placeholder" src="{{asset('/assets/img/icons/common/zendesk.png')}}">
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <h5>Zendesk tasks</h5>
+                                            <div class="progress progress-xs mb-0">
+                                                <div class="progress-bar bg-green" role="progressbar" aria-valuenow="{{$totalPointsLastShiftForZendesk}}" aria-valuemin="0" aria-valuemax="100" style="width:@if($memberWeightLastShift == 0) 0 @else {{$totalPointsLastShiftForZendesk / ($memberWeightLastShift * $zendeskRatio) * 100}}@endif%;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                     <div class="card">
                         <!-- Card body -->
                         <div class="card-body">
@@ -350,75 +418,9 @@
                         </div>
                     </div>
 
-                    <div class="card bg-gradient-default">
-                        <!-- Card body -->
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0 text-white">Total traffic</h5>
-                                    <span class="h2 font-weight-bold mb-0 text-white">350,897</span>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="icon icon-shape bg-white text-dark rounded-circle shadow">
-                                        <i class="ni ni-active-40"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="mt-3 mb-0 text-sm">
-                                <span class="text-white mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                <span class="text-nowrap text-light">Since last month</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card bg-gradient-primary">
-                        <!-- Card body -->
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0 text-white">New users</h5>
-                                    <span class="h2 font-weight-bold mb-0 text-white">2,356</span>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="icon icon-shape bg-white text-dark rounded-circle shadow">
-                                        <i class="ni ni-atom"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="mt-3 mb-0 text-sm">
-                                <span class="text-white mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                <span class="text-nowrap text-light">Since last month</span>
-                            </p>
-                        </div>
-                    </div>
-
                 </div>
             </div>
-            <!-- Footer -->
-            <footer class="footer pt-0">
-                <div class="row align-items-center justify-content-lg-between">
-                    <div class="col-lg-6">
-                        <div class="copyright text-center text-lg-left text-muted">
-                            &copy; 2019 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                            <li class="nav-item">
-                                <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="https://www.creative-tim.com/license" class="nav-link" target="_blank">License</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </footer>
+
         </div>
     </div>
 @endsection
