@@ -146,7 +146,7 @@ class TeamMembersController extends AbstractCoreController
             }
         })->first();
 
-        $numberOfTasks = $allLogs->where('schedule_id', $lastShift->id)->count();
+        $numberOfTasks          = $allLogs->where('schedule_id', $lastShift->id)->count();
         $numberOfTasksLast7Days = $allLogs->count();
 
         $isInShiftNow = $this->isInShiftNow($lastShift);
