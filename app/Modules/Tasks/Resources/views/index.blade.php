@@ -19,7 +19,9 @@
                             </nav>
                         </div>
                         <div class="col-lg-6 col-5 text-right">
+                            @can('create-task')
                             <a href="{{route('get.tasks.create')}}" class="btn btn-sm btn-neutral">New</a>
+                            @endcan
                         </div>
                     </div>
                 </div>
@@ -40,7 +42,6 @@
                                 <thead class="thead-light">
                                 <tr>
                                     <th>Name</th>
-{{--                                    <th>Frequency</th>--}}
                                     <th>Points</th>
                                     <th>Team Name</th>
                                     <th>Controls ⌘</th>
@@ -51,14 +52,15 @@
                                 @foreach($tasks as $task)
                                     <tr>
                                         <td>{{$task->name}}</td>
-{{--                                        <td>{{$task->frequency}}</td>--}}
                                         <td>{{$task->points}}</td>
                                         <td>{{$task->team->name ?? 'N/A'}}</td>
                                         <td>
+                                            @can('edit-task')
                                             <a href="{{route('get.tasks.edit',$task->id)}}" class="btn btn-icon btn-dribbble" type="button">
                                                 <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
                                                 <span class="btn-inner--text">Update</span>
                                             </a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach
