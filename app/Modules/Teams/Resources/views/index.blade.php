@@ -20,11 +20,14 @@
                             </nav>
                         </div>
                         <div class="col-lg-6 col-5 text-right">
+                            @can('create-team')
                             <a href="{{route('get.teams.create')}}" class="btn btn-sm btn-neutral">New</a>
-                            @if(in_array(auth()->id(),[1,5]))
+                            @endcan
+                            @can('manual-distribution')
                             <a href="{{route('get.distribution.distribute')}}" class="btn btn-sm btn-neutral">Distribute Manually</a>
-                            @endif
+                            @endcan
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -56,21 +59,24 @@
                                     <td>{{ \Illuminate\Support\Str::limit($team->description ,50) }}</td>
                                     <td>{{$team->jira_project_key ?? 'N/A'}}</td>
                                     <td>
+                                        @can('edit-team')
                                         <a href="{{route('get.teams.edit',$team->id)}}" class="btn btn-icon btn-dribbble" type="button">
                                             <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
                                             <span class="btn-inner--text">Update</span>
                                         </a>
+                                        @endcan
+                                        @can('list-team-member')
                                         <a href="{{route('get.team-member.list-by-team',$team->id)}}" class="btn btn-icon btn-default" type="button">
                                             <span class="btn-inner--icon"><i class="fa fa-heart"></i></span>
                                             <span class="btn-inner--text">Members</span>
                                         </a>
+                                        @endcan
+                                        @can('view-team-schedule')
                                         <a href="{{route('get.schedule.list-by-team',$team->id)}}" class="btn btn-icon btn-outline-warning" type="button">
                                             <span class="btn-inner--icon"><i class="fa fa-user-clock"></i></span>
                                             <span class="btn-inner--text">Schedules</span>
                                         </a>
-
-
-
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

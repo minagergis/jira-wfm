@@ -22,6 +22,8 @@
             <div class="collapse navbar-collapse" id="sidenav-collapse-main">
                 <!-- Nav items -->
                 <ul class="navbar-nav">
+                    @can('view-dashboard-stats')
+
                     <li class="nav-item">
                         <a class="nav-link active" href="#navbar-dashboards" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-dashboards">
                             <i class="ni ni-shop text-primary"></i>
@@ -35,7 +37,8 @@
                             </ul>
                         </div>
                     </li>
-
+                    @endcan
+                    @if(auth()->user()->can('list-team') || auth()->user()->can('create-team'))
                     <li class="nav-item">
                         <a class="nav-link" href="#navbar-forms" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-forms">
                             <i class="ni ni-single-copy-04 text-pink"></i>
@@ -43,63 +46,68 @@
                         </a>
                         <div class="collapse" id="navbar-forms">
                             <ul class="nav nav-sm flex-column">
+                                @can('create-team')
                                 <li class="nav-item">
                                     <a href="{{route('get.teams.create')}}" class="nav-link">Add Team</a>
                                 </li>
+                                @endcan
+                                @can('list-team')
                                 <li class="nav-item">
                                     <a href="{{route('get.teams.list')}}" class="nav-link">List Teams</a>
                                 </li>
+                                @endcan
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item">
+                 @endif
+                    @if(auth()->user()->can('list-team-member') || auth()->user()->can('create-team-member'))
+
+                        <li class="nav-item">
                         <a class="nav-link" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-examples">
                             <i class="ni ni-ungroup text-orange"></i>
                             <span class="nav-link-text">Team Member </span>
                         </a>
                         <div class="collapse" id="navbar-examples">
                             <ul class="nav nav-sm flex-column">
+                                @can('list-team-member')
                                 <li class="nav-item">
                                     <a href="{{route('get.team-member.create')}}" class="nav-link">Add Team Member</a>
                                 </li>
-                                <li class="nav-item">
+                                @endcan
+                                @can('create-team-member')
+
+                                    <li class="nav-item">
                                     <a href="{{route('get.team-member.list')}}" class="nav-link">List Team Members</a>
                                 </li>
+                                @endcan
+
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item">
+                        @endif
+                    @if(auth()->user()->can('list-task') || auth()->user()->can('create-task'))
+                        <li class="nav-item">
                         <a class="nav-link" href="#navbar-components-tasks" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-components-tasks">
                             <i class="ni ni-ui-04 text-info"></i>
                             <span class="nav-link-text">Tasks</span>
                         </a>
                         <div class="collapse" id="navbar-components-tasks">
                             <ul class="nav nav-sm flex-column">
+                                @can('create-task')
                                 <li class="nav-item">
                                     <a href="{{route('get.tasks.create')}}" class="nav-link">Add Task</a>
                                 </li>
+                                @endcan
+                                @can('list-task')
                                 <li class="nav-item">
                                     <a href="{{route('get.tasks.list')}}" class="nav-link">List Tasks</a>
                                 </li>
+                                @endcan
                             </ul>
                         </div>
                     </li>
-{{--                    <li class="nav-item">--}}
-{{--                        <a class="nav-link" href="#navbar-components-shifts" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-components-shifts">--}}
-{{--                            <i class="ni ni-watch-time text-green"></i>--}}
-{{--                            <span class="nav-link-text">Shifts</span>--}}
-{{--                        </a>--}}
-{{--                        <div class="collapse" id="navbar-components-shifts">--}}
-{{--                            <ul class="nav nav-sm flex-column">--}}
-{{--                                <li class="nav-item">--}}
-{{--                                    <a href="{{route('get.shifts.create')}}" class="nav-link">Add Shift</a>--}}
-{{--                                </li>--}}
-{{--                                <li class="nav-item">--}}
-{{--                                    <a href="{{route('get.shifts.list')}}" class="nav-link">List Shifts</a>--}}
-{{--                                </li>--}}
-{{--                            </ul>--}}
-{{--                        </div>--}}
-{{--                    </li>--}}
+                        @endif
+                    @if(auth()->user()->can('list-contact-type') || auth()->user()->can('create-contact-type'))
 
                     <li class="nav-item">
                         <a class="nav-link" href="#navbar-components-c-types" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-components-c-types">
@@ -108,16 +116,21 @@
                         </a>
                         <div class="collapse" id="navbar-components-c-types">
                             <ul class="nav nav-sm flex-column">
+                                @can('list-contact-type')
                                 <li class="nav-item">
                                     <a href="{{route('get.contact-type.create')}}" class="nav-link">Add Contact type</a>
                                 </li>
+                                @endcan
+                                @can('create-contact-type')
                                 <li class="nav-item">
                                     <a href="{{route('get.contact-type.list')}}" class="nav-link">List Contact types</a>
                                 </li>
+                                @endcan
                             </ul>
                         </div>
                     </li>
                 </ul>
+                @endif
             </div>
         </div>
     </div>
