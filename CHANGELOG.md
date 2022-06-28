@@ -22,6 +22,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - issue in the team member stats
 
 
+## [3.0.6] - 2022-06-28
+### Fixed
+- issue in the team member stats
+
+
 ## [3.0.5] - 2022-06-25
 ### Added
 - Add user roles and permissions
