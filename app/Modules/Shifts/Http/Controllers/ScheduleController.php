@@ -65,6 +65,36 @@ class ScheduleController extends AbstractCoreController
         return false;
     }
 
+    public function editSchedule(Request $request)
+    {
+        $schedule         =(array) json_decode($request->get('data'));
+        $memberScheduleId = $schedule['schedule']->id;
+        $changes          = [];
+        foreach ((array) $schedule['changes'] as $key => $value) {
+            if ($key === 'start') {
+                $changes['time_from'] = Carbon::parse($value->_date)->timezone('Africa/Cairo')->toTimeString();
+                $changes['date_from'] = Carbon::parse($value->_date)->timezone('Africa/Cairo')->toDateString();
+            } elseif ($key === 'end') {
+                $changes['time_to'] = Carbon::parse($value->_date)->timezone('Africa/Cairo')->toTimeString();
+                $changes['date_to'] = Carbon::parse($value->_date)->timezone('Africa/Cairo')->toDateString();
+            } elseif ($key === 'calendarId') {
+                $changes['team_member_id'] = $value;
+            } elseif ($key === 'title') {
+                $changes['name'] = $value;
+            } else {
+                continue;
+            }
+        }
+
+        if ($this->memberScheduleService->update($changes, $memberScheduleId)) {
+            return response()->json([
+                'message'  => 'success',
+            ]);
+        }
+
+        return false;
+    }
+
     public function deleteSchedule(Request $request)
     {
         $schedule =(array) json_decode($request->get('data'));
