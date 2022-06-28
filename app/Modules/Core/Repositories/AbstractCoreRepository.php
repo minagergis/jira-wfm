@@ -16,8 +16,12 @@ abstract class AbstractCoreRepository
         return $this->model->get();
     }
 
-    public function withScope($scopeName)
+    public function withScope($scopeName, $args = null)
     {
+        if ($args) {
+            return $this->model->{$scopeName}($args)->get();
+        }
+
         return $this->model->{$scopeName}()->get();
     }
 

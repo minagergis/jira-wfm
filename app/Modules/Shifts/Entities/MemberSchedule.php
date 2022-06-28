@@ -27,4 +27,18 @@ class MemberSchedule extends Model
     {
         return $this->belongsTo(TeamMember::class, 'team_member_id');
     }
+
+    public function scopeWithInDays($query, int $daysNumber)
+    {
+        $to   = now()->toDateString();
+        $from = now()->subDays($daysNumber)->toDateString();
+
+        return $query->whereBetween('date_from', [$from , $to]);
+    }
+
+    public function scopeTeamMember($query, $memberId)
+    {
+        return $query->where('team_member_id', $memberId)
+            ->where('date_from', '<=', now()->toDateString());
+    }
 }
