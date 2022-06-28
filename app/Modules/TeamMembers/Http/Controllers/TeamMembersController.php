@@ -132,50 +132,63 @@ class TeamMembersController extends AbstractCoreController
 
     public function statistics($id)
     {
-        $teamMember   = $this->teamMemberService->read($id);
-        $teams        = $this->teamService->index();
-        $lastShift    = $this->memberScheduleService->withScope('teamMember', $id)->sortByDesc('id')->first();
-        $allLogs      = TaskDistributionLog::withInDays(7)->teamMember($id)->latest()->get();
+        $numberOfTasks                   = 0;
+        $numberOfTasksLast7Days          = 0;
+        $totalPointsLastShift            = 0;
+        $totalPointsLastShiftForZendesk  = 0;
+        $totalPointsLastShiftForPerShift = 0;
+        $memberWeightLastShift           = 0;
+        $teamMember                      = $this->teamMemberService->read($id);
+        $teams                           = $this->teamService->index();
+        $lastShift                       = $this->memberScheduleService->withScope('teamMember', $id)->sortByDesc('id')->first();
+        $allLogs                         = TaskDistributionLog::withInDays(7)->teamMember($id)->latest()->get();
+        if ($lastShift) {
+            $memberWeightLastShift = $allLogs->where('schedule_id', $lastShift->id)->map(function ($item) {
+                if ($item->task_type === TaskDistributionRatiosEnum::PER_SHIFT) {
+                    return $item->before_member_capacity / TaskDistributionRatiosEnum::TYPES_RATIOS[TaskDistributionRatiosEnum::PER_SHIFT];
+                }
+                if ($item->task_type === TaskDistributionRatiosEnum::ZENDESK) {
+                    return $item->before_member_capacity / TaskDistributionRatiosEnum::TYPES_RATIOS[TaskDistributionRatiosEnum::ZENDESK];
+                }
+            })->first();
 
-        $memberWeightLastShift = $allLogs->where('schedule_id', $lastShift->id)->map(function ($item) {
-            if ($item->task_type === TaskDistributionRatiosEnum::PER_SHIFT) {
-                return $item->before_member_capacity / TaskDistributionRatiosEnum::TYPES_RATIOS[TaskDistributionRatiosEnum::PER_SHIFT];
-            }
-            if ($item->task_type === TaskDistributionRatiosEnum::ZENDESK) {
-                return $item->before_member_capacity / TaskDistributionRatiosEnum::TYPES_RATIOS[TaskDistributionRatiosEnum::ZENDESK];
-            }
-        })->first();
+            $numberOfTasks          = $allLogs->where('schedule_id', $lastShift->id)->count();
+            $numberOfTasksLast7Days = $allLogs->count();
 
-        $numberOfTasks          = $allLogs->where('schedule_id', $lastShift->id)->count();
-        $numberOfTasksLast7Days = $allLogs->count();
+            $totalPointsLastShift = $allLogs->where('schedule_id', $lastShift->id)->map(function ($item) {
+                return $item->before_member_capacity - $item->after_member_capacity;
+            })->sum();
+
+            $totalPointsLastShiftForZendesk = $allLogs->where('schedule_id', $lastShift->id)->map(function ($item) {
+                if ($item->task_type === TaskDistributionRatiosEnum::ZENDESK) {
+                    return $item->before_member_capacity - $item->after_member_capacity;
+                }
+            })->sum();
+
+            $totalPointsLastShift = $allLogs->where('schedule_id', $lastShift->id)->map(function ($item) {
+                return $item->before_member_capacity - $item->after_member_capacity;
+            })->sum();
+
+            $totalPointsLastShiftForZendesk = $allLogs->where('schedule_id', $lastShift->id)->map(function ($item) {
+                if ($item->task_type === TaskDistributionRatiosEnum::ZENDESK) {
+                    return $item->before_member_capacity - $item->after_member_capacity;
+                }
+            })->sum();
+
+            $totalPointsLastShiftForPerShift = $allLogs->where('schedule_id', $lastShift->id)->map(function ($item) {
+                if ($item->task_type === TaskDistributionRatiosEnum::PER_SHIFT) {
+                    return $item->before_member_capacity - $item->after_member_capacity;
+                }
+            })->sum();
+        }
+
 
         $isInShiftNow = $this->isInShiftNow($lastShift);
 
 
-        //dd($allLogs->where('schedule_id',$lastShift->id));
-        $totalPointsLastShift = $allLogs->where('schedule_id', $lastShift->id)->map(function ($item) {
-            return $item->before_member_capacity - $item->after_member_capacity;
-        })->sum();
-
-        $totalPointsLastShiftForZendesk = $allLogs->where('schedule_id', $lastShift->id)->map(function ($item) {
-            if ($item->task_type === TaskDistributionRatiosEnum::ZENDESK) {
-                return $item->before_member_capacity - $item->after_member_capacity;
-            }
-        })->sum();
-
-        $totalPointsLastShiftForPerShift = $allLogs->where('schedule_id', $lastShift->id)->map(function ($item) {
-            if ($item->task_type === TaskDistributionRatiosEnum::PER_SHIFT) {
-                return $item->before_member_capacity - $item->after_member_capacity;
-            }
-        })->sum();
 
 
         [$perShiftTasksDone, $zendeskTasksDone] = $this->getLastDaysInsights(7, $id);
-
-
-
-        //dd($teamMember->teams[0]->teamMembers);
-
 
         if (!$teamMember) {
             return $this->showErrorMessage('get.team-member.list');
