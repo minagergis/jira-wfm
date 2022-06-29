@@ -46,19 +46,21 @@
             console.log('beforeCreateSchedule', e);
             saveNewSchedule(e);
         },
-        // 'beforeUpdateSchedule': function(e) {
-        //     var schedule = e.schedule;
-        //     var changes = e.changes;
-        //
-        //     console.log('beforeUpdateSchedule', e);
-        //
-        //     if (changes && !changes.isAllDay && schedule.category === 'allday') {
-        //         changes.category = 'time';
-        //     }
-        //
-        //     cal.updateSchedule(schedule.id, schedule.calendarId, changes);
-        //     refreshScheduleVisibility();
-        // },
+        'beforeUpdateSchedule': function(e) {
+            var schedule = e.schedule;
+            var changes = e.changes;
+
+            console.log(changes);
+            console.log('beforeUpdateSchedule', e);
+
+            if (changes && !changes.isAllDay && schedule.category === 'allday') {
+                changes.category = 'time';
+            }
+
+            handleEditScheduleEvent(e);
+            cal.updateSchedule(schedule.id, schedule.calendarId, changes);
+            refreshScheduleVisibility();
+        },
         'beforeDeleteSchedule': function(e) {
             console.log('beforeDeleteSchedule', e);
             cal.deleteSchedule(e.schedule.id, e.schedule.calendarId);
@@ -435,6 +437,12 @@
         let deletePayload = JSON.stringify(event.schedule);
 
         sendAjaxRequest(deletePayload,deleteScheduleUrl,'POST');
+    }
+
+    function handleEditScheduleEvent(event){
+        let editPayload = JSON.stringify(event);
+
+        sendAjaxRequest(editPayload,editScheduleUrl,'POST');
     }
 
     function sendAjaxRequest(object, link,method) {
