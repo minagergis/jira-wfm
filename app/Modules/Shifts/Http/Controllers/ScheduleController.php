@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Modules\Teams\Services\TeamService;
 use App\Modules\Shifts\Services\MemberScheduleService;
 use App\Modules\Core\Http\Controllers\AbstractCoreController;
+use App\Modules\Shifts\Http\Requests\MemberSchedules\UpdateMemberScheduleRequest;
 
 class ScheduleController extends AbstractCoreController
 {
@@ -65,7 +66,7 @@ class ScheduleController extends AbstractCoreController
         return false;
     }
 
-    public function editSchedule(Request $request)
+    public function editSchedule(UpdateMemberScheduleRequest $request)
     {
         $schedule         =(array) json_decode($request->get('data'));
         $memberScheduleId = $schedule['schedule']->id;
