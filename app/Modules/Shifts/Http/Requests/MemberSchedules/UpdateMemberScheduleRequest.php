@@ -28,7 +28,7 @@ class UpdateMemberScheduleRequest extends FormRequest
             'team_member_id' => [
                 'sometimes',
                 Rule::exists('team_members', 'id'),
-                new NoOverlappedSchedule($this->start_date, $this->end_date),
+                new NoOverlappedSchedule($this->start_date, $this->end_date, $this->id),
             ],
         ];
     }
