@@ -5,9 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [3.0.6] - 2022-06-29
+## [3.0.6] - 2022-07-03
 ### Added
-- update any schedule slot in the shifts calendar
+- Update any schedule slot in the shifts calendar
+- Add validation for updating,deleting and adding slots.
+- Add Toastr notification for the crud actions.
 
 
 ## [3.0.5] - 2022-06-28
