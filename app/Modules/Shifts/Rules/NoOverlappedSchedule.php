@@ -12,15 +12,18 @@ class NoOverlappedSchedule implements Rule
 
     private $endDate;
 
+    private $scheduleId;
+
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct($startDate, $endDate)
+    public function __construct($startDate, $endDate, $scheduleId = null)
     {
-        $this->startDate = $startDate;
-        $this->endDate   = $endDate;
+        $this->startDate  = $startDate;
+        $this->endDate    = $endDate;
+        $this->scheduleId = $scheduleId;
     }
 
     /**
@@ -32,7 +35,13 @@ class NoOverlappedSchedule implements Rule
      */
     public function passes($attribute, $value)
     {
-        return MemberSchedule::query()
+        $overlappingQuery =  MemberSchedule::query();
+
+        if ($this->scheduleId != null) {
+            $overlappingQuery->where('id', '<>', $this->scheduleId);
+        }
+
+        return $overlappingQuery
             ->where('team_member_id', $value)
             ->where(function ($query) {
                 return $query->where(
