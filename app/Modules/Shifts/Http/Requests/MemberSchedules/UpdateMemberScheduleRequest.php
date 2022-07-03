@@ -20,7 +20,7 @@ class UpdateMemberScheduleRequest extends FormRequest
     {
         //dd($this->toArray());
         return [
-            'schedule_id' => [
+            'id' => [
                 'required',
                 Rule::exists('member_schedules', 'id'),
                 new MustBeFutureSchedule(),
@@ -43,11 +43,11 @@ class UpdateMemberScheduleRequest extends FormRequest
         return true;
     }
 
-    public function prepareForValidation(MemberScheduleService $service)
+    public function prepareForValidation()
     {
+        $service     = resolve(MemberScheduleService::class);
         $requestData = (array) json_decode($this->data);
         $oldSchedule = $service->read($requestData['schedule']->id);
-
 
         $changes               = [
             'id'             => $requestData['schedule']->id,
@@ -74,7 +74,6 @@ class UpdateMemberScheduleRequest extends FormRequest
             $changes['time_to']  = Carbon::parse($requestData['changes']->end->_date)->timezone('Africa/Cairo')->toTimeString();
             $changes['date_to']  = Carbon::parse($requestData['changes']->end->_date)->timezone('Africa/Cairo')->toDateString();
         }
-
 
         $this->merge($changes);
     }

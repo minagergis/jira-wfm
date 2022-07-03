@@ -42,6 +42,6 @@ class MustBeFutureSchedule implements Rule
      */
     public function message()
     {
-        return 'Cannot update past schedule !';
+        return 'You cannot take actions on schedule in the past';
     }
 }

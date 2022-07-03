@@ -34,16 +34,29 @@ class NoOverlappedSchedule implements Rule
     {
         return MemberSchedule::query()
             ->where('team_member_id', $value)
-            ->where(
-                DB::raw("CONCAT(`date_from`, ' ', `time_from`)"),
-                '<=',
-                $this->startDate
-            )
-            ->where(
-                DB::raw("CONCAT(`date_to`, ' ', `time_to`)"),
-                '>=',
-                $this->startDate
-            )->doesntExist();
+            ->where(function ($query) {
+                return $query->where(
+                    DB::raw("CONCAT(`date_from`, ' ', `time_from`)"),
+                    '<=',
+                    $this->startDate
+                )->where(
+                    DB::raw("CONCAT(`date_to`, ' ', `time_to`)"),
+                    '>=',
+                    $this->startDate
+                );
+            })
+            ->orWhere(function ($query2) {
+                return $query2->where(
+                    DB::raw("CONCAT(`date_from`, ' ', `time_from`)"),
+                    '<=',
+                    $this->endDate
+                )->where(
+                    DB::raw("CONCAT(`date_to`, ' ', `time_to`)"),
+                    '>=',
+                    $this->endDate
+                );
+            })
+            ->doesntExist();
     }
 
     /**

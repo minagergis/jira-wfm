@@ -18,6 +18,7 @@
 <!-- Optional JS -->
 <script src="{{asset('assets/vendor/chart.js/dist/Chart.min.js')}}"></script>
 <script src="{{asset('assets/vendor/chart.js/dist/Chart.extension.js')}}"></script>
+<script src="{{asset('assets/vendor/toastr-notifications/js/toastr.min.js')}}"></script>
 <!-- Argon JS -->
 <script src="{{asset('assets/js/argon.js?v=1.1.0')}}"></script>
 <!-- Demo JS - remove this in your project -->
