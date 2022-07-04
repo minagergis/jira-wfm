@@ -38,33 +38,36 @@ class NoOverlappedSchedule implements Rule
         $overlappingQuery =  MemberSchedule::query();
 
         if ($this->scheduleId != null) {
-            $overlappingQuery->where('id', '<>', $this->scheduleId);
+            $overlappingQuery = $overlappingQuery->where('id', '<>', $this->scheduleId);
         }
 
         return $overlappingQuery
             ->where('team_member_id', $value)
-            ->where(function ($query) {
-                return $query->where(
-                    DB::raw("CONCAT(`date_from`, ' ', `time_from`)"),
-                    '<=',
-                    $this->startDate
-                )->where(
-                    DB::raw("CONCAT(`date_to`, ' ', `time_to`)"),
-                    '>=',
-                    $this->startDate
-                );
+            ->where(function ($queryBuilder) {
+                $queryBuilder->where(function ($query) {
+                    return $query->where(
+                        DB::raw("CONCAT(`date_from`, ' ', `time_from`)"),
+                        '<=',
+                        $this->startDate
+                    )->where(
+                        DB::raw("CONCAT(`date_to`, ' ', `time_to`)"),
+                        '>=',
+                        $this->startDate
+                    );
+                })
+                    ->orWhere(function ($query2) {
+                        return $query2->where(
+                            DB::raw("CONCAT(`date_from`, ' ', `time_from`)"),
+                            '<=',
+                            $this->endDate
+                        )->where(
+                            DB::raw("CONCAT(`date_to`, ' ', `time_to`)"),
+                            '>=',
+                            $this->endDate
+                        );
+                    });
             })
-            ->orWhere(function ($query2) {
-                return $query2->where(
-                    DB::raw("CONCAT(`date_from`, ' ', `time_from`)"),
-                    '<=',
-                    $this->endDate
-                )->where(
-                    DB::raw("CONCAT(`date_to`, ' ', `time_to`)"),
-                    '>=',
-                    $this->endDate
-                );
-            })
+
             ->doesntExist();
     }
 
