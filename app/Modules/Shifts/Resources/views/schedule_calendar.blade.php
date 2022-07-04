@@ -65,6 +65,7 @@
 
     <script>
         let addScheduleUrl = "{!! route('post.schedule.add') !!}"
+        let editScheduleUrl = "{!! route('post.schedule.edit') !!}"
         let deleteScheduleUrl = "{!! route('post.schedule.delete') !!}"
     </script>
     <script src="{{asset('assets/vendor/toastr-calendar/js/app.js')}}"></script>
@@ -73,11 +74,11 @@
         function hideButtons() {
             var editButton = document.getElementsByClassName("tui-full-calendar-popup-edit")[0];
             var deleteButton = document.getElementsByClassName("tui-full-calendar-popup-delete")[0];
-            if (editButton) {
-                editButton.style.display = "none";
-                editButton.nextElementSibling.style.display = "none";
-                deleteButton.style.width = "100%";
-            }
+            // if (editButton) {
+            //     editButton.style.display = "none";
+            //     editButton.nextElementSibling.style.display = "none";
+            //     deleteButton.style.width = "100%";
+            // }
         }
     </script>
 @endsection
