@@ -33,33 +33,43 @@ class ZendeskTasksController extends CoreController
 
         $team = $this->teamService->getTeamByJiraProjectCode($zendeskTask['issue']['fields']['project']['key']);
 
+        $mina = $this->getOrderedAvailableTeamMembersForNextShift($team);
+
+        dd($mina);
         $availableTeamMembersForNow = $this->getOrderedAvailableTeamMembersForNow($team);
 
-        foreach ($availableTeamMembersForNow as $member) {
-            $memberAvailableCapacity = $this->getCurrentCapacityForATeamMemberToday(
-                $member['id'],
-                $member['schedule']['id'],
-                TaskDistributionRatiosEnum::ZENDESK
-            );
+        if (count($availableTeamMembersForNow) > 0) {
+            foreach ($availableTeamMembersForNow as $member) {
+                $memberAvailableCapacity = $this->getCurrentCapacityForATeamMemberToday(
+                    $member['id'],
+                    $member['schedule']['id'],
+                    TaskDistributionRatiosEnum::ZENDESK
+                );
 
-            $jiraIssueWeight   = $this->getJiraTaskWeight($zendeskTask);
+                $jiraIssueWeight   = $this->getJiraTaskWeight($zendeskTask);
 
-            if ($memberAvailableCapacity >= $jiraIssueWeight) {
-                JIRA::assignIssue($zendeskTask['issue']['key'], $member['jira_integration_id']);
+                if ($memberAvailableCapacity >= $jiraIssueWeight) {
+                    JIRA::assignIssue($zendeskTask['issue']['key'], $member['jira_integration_id']);
 
-                $loggedTask = TaskDistributionLog::create([
-                    'team_id'                => $team->id,
-                    'team_member_id'         => $member['id'],
-                    'schedule_id'            => $member['schedule']['id'],
-                    'task_type'              => TaskDistributionRatiosEnum::ZENDESK,
-                    'jira_issue_key'         => $zendeskTask['issue']['key'],
-                    'before_member_capacity' => $memberAvailableCapacity,
-                    'after_member_capacity'  => $memberAvailableCapacity - $jiraIssueWeight,
-                ]);
+                    $loggedTask = TaskDistributionLog::create([
+                        'team_id'                => $team->id,
+                        'team_member_id'         => $member['id'],
+                        'schedule_id'            => $member['schedule']['id'],
+                        'task_type'              => TaskDistributionRatiosEnum::ZENDESK,
+                        'jira_issue_key'         => $zendeskTask['issue']['key'],
+                        'before_member_capacity' => $memberAvailableCapacity,
+                        'after_member_capacity'  => $memberAvailableCapacity - $jiraIssueWeight,
+                    ]);
 
-                break;
+                    break;
+                }
             }
+
+            // X - So another business
+        } else {
         }
+
+        // X - Do another business
     }
 
     private function getJiraTaskWeight(array $jiraTask): int
@@ -150,6 +160,77 @@ class ZendeskTasksController extends CoreController
             })
             ->map(function ($teamMember) use ($currentTeamMembersSchedules) {
                 return collect($teamMember)->put('schedule', $currentTeamMembersSchedules->where('team_member_id', $teamMember->id)->first());
+            })->toArray();
+    }
+
+    private function getOrderedAvailableTeamMembersForNextShift($team)
+    {
+        $shiftsLimitation      = 2;
+
+        $teamMembersForTheTeam = TeamMember::query()
+            ->whereHas('teams', function (Builder $builder) use ($team) {
+                $builder->where('teams.id', $team->id);
+            })->pluck('id')->toArray();
+
+
+        $nextShiftsForThisTeam = MemberSchedule::query()
+            ->whereIn('team_member_id', $teamMembersForTheTeam)
+            ->where(
+                DB::raw("CONCAT(`date_from`, ' ', `time_from`)"),
+                '>',
+                now('Africa/Cairo')->toDateTimeString()
+            )
+            ->orderBy(
+                DB::raw("CONCAT(`date_from`, ' ', `time_from`)"),
+                'ASC'
+            )
+            ->take($shiftsLimitation)
+            ->get();
+
+
+        $lastMemberWhoTakeTaskNextShift = TaskDistributionLog::query()
+            ->whereHas('team', function (Builder $query) use ($team) {
+                $query->where('teams.id', $team->id);
+            })
+            ->whereHas('schedule', function (Builder $query) use ($nextShiftsForThisTeam) {
+                $query->whereIn(
+                    'member_schedules.id',
+                    $nextShiftsForThisTeam->pluck('id')->toArray()
+                );
+            })
+            ->taskType(TaskDistributionRatiosEnum::ZENDESK)
+            ->orderBy('id', 'DESC')
+            ->first();
+
+
+
+        $availableTeamMembersForNextShift = TeamMember::query()
+            ->whereHas('teams', function (Builder $query) use ($team) {
+                $query->where('teams.id', $team->id);
+            })
+            ->whereHas('schedules', function (Builder $query) use ($nextShiftsForThisTeam) {
+                $query->whereIn(
+                    'member_schedules.id',
+                    $nextShiftsForThisTeam->pluck('id')->toArray()
+                );
+            })
+            ->get();
+
+        return $availableTeamMembersForNextShift->when($lastMemberWhoTakeTaskNextShift !== null, function ($members) use ($lastMemberWhoTakeTaskNextShift) {
+            return $members->filter(
+                function ($member) use ($lastMemberWhoTakeTaskNextShift) {
+                    return $member->id !== $lastMemberWhoTakeTaskNextShift->team_member_id;
+                }
+            );
+        })
+            ->shuffle()
+            ->when($lastMemberWhoTakeTaskNextShift !== null, function ($orderedMembers) use ($availableTeamMembersForNextShift, $lastMemberWhoTakeTaskNextShift) {
+                return $orderedMembers->push(
+                    $availableTeamMembersForNextShift->find($lastMemberWhoTakeTaskNextShift->team_member_id)
+                );
+            })
+            ->map(function ($teamMember) use ($nextShiftsForThisTeam) {
+                return collect($teamMember)->put('schedule', $nextShiftsForThisTeam->where('team_member_id', $teamMember->id)->first());
             })->toArray();
     }
 }
