@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Laravel\Sanctum\HasApiTokens;
+use App\Modules\Teams\Entities\Team;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'managed_team_id',
     ];
 
     /**
@@ -44,4 +46,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function managedTeam()
+    {
+        return $this->hasOne(Team::class, 'managed_team_id');
+    }
 }

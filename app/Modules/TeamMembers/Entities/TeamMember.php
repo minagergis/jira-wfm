@@ -2,12 +2,13 @@
 
 namespace App\Modules\TeamMembers\Entities;
 
+use App\Scopes\AuthUserScope;
 use App\Modules\Teams\Entities\Team;
 use App\Modules\Shifts\Entities\Shift;
 use Illuminate\Database\Eloquent\Model;
 use App\Modules\Shifts\Entities\MemberSchedule;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class TeamMember extends Model
 {
@@ -20,6 +21,16 @@ class TeamMember extends Model
         'weight',
         'color',
     ];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new AuthUserScope());
+    }
 
     public function teams(): BelongsToMany
     {
