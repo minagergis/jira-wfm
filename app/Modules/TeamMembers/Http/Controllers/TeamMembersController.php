@@ -143,7 +143,7 @@ class TeamMembersController extends AbstractCoreController
         $lastShift                       = $this->memberScheduleService->withScope('teamMember', $id)->sortByDesc('id')->first();
         $allLogs                         = TaskDistributionLog::withInDays(7)->teamMember($id)->latest()->get();
         if ($lastShift) {
-            $memberWeightLastShift = $allLogs->where('schedule_id', $lastShift->id)->sortBy('id')->map(function ($item) {
+            $memberWeightLastShift = $allLogs->where('schedule_id', $lastShift->id)->map(function ($item) {
                 if ($item->task_type === TaskDistributionRatiosEnum::PER_SHIFT) {
                     return $item->before_member_capacity / TaskDistributionRatiosEnum::TYPES_RATIOS[TaskDistributionRatiosEnum::PER_SHIFT];
                 }

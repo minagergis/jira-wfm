@@ -49,48 +49,22 @@
         'beforeUpdateSchedule': function(e) {
             var schedule = e.schedule;
             var changes = e.changes;
-            var editScheduleResponse;
+
+            console.log(changes);
+            console.log('beforeUpdateSchedule', e);
 
             if (changes && !changes.isAllDay && schedule.category === 'allday') {
                 changes.category = 'time';
             }
 
-
-            editScheduleResponse = handleEditScheduleEvent(e);
-
-            if (editScheduleResponse.status == 200){
-                toastr.success('The slot had been edited successfully');
-                console.log(editScheduleResponse.status);
-                cal.updateSchedule(schedule.id, schedule.calendarId, changes);
-                refreshScheduleVisibility();
-            }else if (editScheduleResponse.status = 422){
-                jQuery.each(editScheduleResponse.data, function(i, val) {
-                    toastr.error(val);
-                });
-            }
-            else {
-                console.log(editScheduleResponse);
-            }
-
-
+            handleEditScheduleEvent(e);
+            cal.updateSchedule(schedule.id, schedule.calendarId, changes);
+            refreshScheduleVisibility();
         },
         'beforeDeleteSchedule': function(e) {
-            var deleteScheduleResponse;
             console.log('beforeDeleteSchedule', e);
-            deleteScheduleResponse = handleDeleteScheduleEvent(e);
-
-            if (deleteScheduleResponse.status == 200){
-                toastr.success('The slot had been deleted successfully');
-                cal.deleteSchedule(e.schedule.id, e.schedule.calendarId);
-            }else if (deleteScheduleResponse.status = 422){
-                jQuery.each(deleteScheduleResponse.data, function(i, val) {
-                    toastr.error(val);
-                });
-            }
-            else {
-                console.log(deleteScheduleResponse);
-            }
-
+            cal.deleteSchedule(e.schedule.id, e.schedule.calendarId);
+            handleDeleteScheduleEvent(e);
         },
         'afterRenderSchedule': function(e) {
             var schedule = e.schedule;
@@ -297,7 +271,7 @@
     function saveNewSchedule(scheduleData) {
         var calendar = scheduleData.calendar || findCalendar(scheduleData.calendarId);
         var schedule = {
-            // id: String(chance.guid()),
+            id: String(chance.guid()),
             title: scheduleData.title,
             isAllDay: scheduleData.isAllDay,
             start: scheduleData.start,
@@ -319,20 +293,12 @@
             schedule.borderColor = calendar.borderColor;
         }
         let scheduleObject = JSON.stringify(schedule)
-        let scheduleResult = sendAjaxRequest(scheduleObject,addScheduleUrl,'POST');
-        if (scheduleResult.status == 200){
-            toastr.success('The slot had been created successfully');
-            schedule.id = scheduleResult.data.scheduleId
-            cal.createSchedules([schedule]);
-            refreshScheduleVisibility();
-        }else if (scheduleResult.status == 422){
-            jQuery.each(scheduleResult.data, function(i, val) {
-                toastr.error(val);
-            });
-        }
-        else {
-            console.log(editScheduleResponse);
-        }
+        let foo = sendAjaxRequest(scheduleObject,addScheduleUrl,'POST')
+        //console.log(foo);
+
+        cal.createSchedules([schedule]);
+
+        refreshScheduleVisibility();
     }
 
     function onChangeCalendars(e) {
@@ -415,9 +381,9 @@
     }
 
     function currentCalendarDate(format) {
-        var currentDate = moment([cal.getDate().getFullYear(), cal.getDate().getMonth(), cal.getDate().getDate()]);
+      var currentDate = moment([cal.getDate().getFullYear(), cal.getDate().getMonth(), cal.getDate().getDate()]);
 
-        return currentDate.format(format);
+      return currentDate.format(format);
     }
 
     function setRenderRangeText() {
@@ -470,13 +436,13 @@
     function handleDeleteScheduleEvent(event){
         let deletePayload = JSON.stringify(event.schedule);
 
-        return sendAjaxRequest(deletePayload,deleteScheduleUrl,'POST');
+        sendAjaxRequest(deletePayload,deleteScheduleUrl,'POST');
     }
 
     function handleEditScheduleEvent(event){
         let editPayload = JSON.stringify(event);
 
-        return sendAjaxRequest(editPayload,editScheduleUrl,'POST');
+        sendAjaxRequest(editPayload,editScheduleUrl,'POST');
     }
 
     function sendAjaxRequest(object, link,method) {
@@ -493,18 +459,10 @@
                 _token: $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-                returnValue = {
-                    "status": 200,
-                    "data" : data
-
-                };
+                returnValue = data;
             },
             error: function (data) {
-                if (data.status == 422)
-                    returnValue = {
-                        "status": data.status,
-                        "data" : data.responseJSON.errors
-                    };
+                returnValue = false;
             }
         });
         return returnValue;
