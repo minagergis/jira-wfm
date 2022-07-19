@@ -19,7 +19,9 @@
                             </nav>
                         </div>
                         <div class="col-lg-6 col-5 text-right">
+                            @can('create-contact-type')
                             <a href="{{route('get.contact-type.create')}}" class="btn btn-sm btn-neutral">New</a>
+                            @endcan
                         </div>
                     </div>
                 </div>
@@ -53,10 +55,12 @@
                                         <td>{{$contactType->sla}}</td>
                                         <td>{{$contactType->team->name ?? 'N/A'}}</td>
                                         <td>
+                                            @can('edit-contact-type')
                                             <a href="{{route('get.contact-type.edit',$contactType->id)}}" class="btn btn-icon btn-dribbble" type="button">
                                                 <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
                                                 <span class="btn-inner--text">Update</span>
                                             </a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

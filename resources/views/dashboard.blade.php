@@ -101,7 +101,9 @@
                             </nav>
                         </div>
                         <div class="col-lg-6 col-5 text-right">
+                            @can('list-team')
                             <a href="{{route('get.teams.list')}}" class="btn btn-sm btn-neutral">List Teams</a>
+                            @endcan
                         </div>
                     </div>
                     <!-- Card stats -->
