@@ -73,7 +73,10 @@ class TeamMembersController extends AbstractCoreController
     {
         $this->teamMemberService->create($request->all());
 
-        return redirect()->route('get.team-member.list')->with(['status' => 'Team member has been created successfully']);
+        return redirect()->route('get.team-member.list')->with([
+            'alert-type' => 'success',
+            'message'    => 'Team member has been created successfully',
+        ]);
     }
 
     public function show($id)
@@ -103,22 +106,12 @@ class TeamMembersController extends AbstractCoreController
     {
         $this->teamMemberService->update($request->all(), $id);
 
-        return redirect()->route('get.team-member.list')->with(['status' => 'Team member has been edited successfully']);
+        return redirect()->route('get.team-member.list')->with([
+            'alert-type' => 'success',
+            'message'    => 'Team member has been edited successfully',
+        ]);
     }
 
-    public function getAssignShift($id)
-    {
-        $teamMember      = $this->teamMemberService->read($id);
-
-        return view('teammembers::assign_shift', compact('teamMember'));
-    }
-
-    public function postAssignShift($id, AssignShiftToMemberRequest $request): RedirectResponse
-    {
-        $this->teamMemberService->assignShift($id, $request->all());
-
-        return redirect()->route('get.team-member.list')->with(['status' => 'Shift has been assigned successfully']);
-    }
 
     /**
      * Remove the specified resource from storage.

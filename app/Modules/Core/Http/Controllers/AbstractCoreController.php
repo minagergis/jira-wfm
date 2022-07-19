@@ -9,6 +9,9 @@ class AbstractCoreController extends Controller
 {
     protected function showErrorMessage($route, $message = 'Something Went Wrong'): RedirectResponse
     {
-        return redirect()->route($route)->with(['status' => $message]);
+        return redirect()->route($route)->with([
+            'alert-type' => 'error',
+            'message'    => $message,
+        ]);
     }
 }

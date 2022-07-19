@@ -32,7 +32,10 @@ class TeamsController extends AbstractCoreController
     {
         $this->teamService->create($request->all());
 
-        return redirect()->route('get.teams.list')->with(['status' => 'Team has been created successfully']);
+        return redirect()->route('get.teams.list')->with([
+            'alert-type' => 'success',
+            'message'    => 'Team has been created successfully',
+        ]);
     }
 
     public function show(int $id)
@@ -60,14 +63,19 @@ class TeamsController extends AbstractCoreController
     {
         $this->teamService->update($request->all(), $id);
 
-        return redirect()->route('get.teams.list')->with(['status' => 'Team has been edited successfully']);
+        return redirect()->route('get.teams.list')->with([
+            'alert-type' => 'success',
+            'message'    => 'Team has been edited successfully',
+        ]);
     }
 
     public function destroy($id)
     {
         $this->teamService->delete($id);
 
-        return redirect()->route('get.teams.list')->with(['status' => 'Team has been deleted successfully']);
+        return redirect()->route('get.teams.list')->with([
+            'alert-type' => 'success',
+            'message'    => 'Team has been deleted successfully',
+        ]);
     }
-
 }
