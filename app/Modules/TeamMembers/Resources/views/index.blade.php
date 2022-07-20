@@ -19,7 +19,9 @@
                             </nav>
                         </div>
                         <div class="col-lg-6 col-5 text-right">
+                            @can('create-team-member')
                             <a href="{{route('get.team-member.create')}}" class="btn btn-sm btn-neutral">New</a>
+                            @endcan
                         </div>
                     </div>
                 </div>
@@ -53,18 +55,18 @@
                                         <td>{{$member->weight}}</td>
                                         <td>{{$member->teams[0]->name ?? 'N/A'}}</td>
                                         <td>
-{{--                                            <a href="{{route('get.team-member.assign-shift',$member->id)}}" class="btn btn-icon btn-primary" type="button">--}}
-{{--                                                <span class="btn-inner--icon"><i class="ni ni-watch-time"></i></span>--}}
-{{--                                                <span class="btn-inner--text">Assign shift</span>--}}
-{{--                                            </a>--}}
+                                            @can('edit-team-member')
                                             <a href="{{route('get.team-member.edit',$member->id)}}" class="btn btn-icon btn-dribbble" type="button">
                                                 <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
                                                 <span class="btn-inner--text">Update</span>
                                             </a>
+                                            @endcan
+                                            @can('view-team-member-stats')
                                             <a href="{{route('get.team-member.statistics',$member->id)}}" class="btn btn-icon btn-github" type="button">
                                                 <span class="btn-inner--icon"><i class="fa fa-chart-bar"></i></span>
                                                 <span class="btn-inner--text">Stats</span>
                                             </a>
+                                             @endcan
                                         </td>
                                     </tr>
                                 @endforeach

@@ -2,24 +2,26 @@
 
 namespace App\Modules\Tasks\Http\Controllers;
 
-use App\Modules\Core\Http\Controllers\AbstractCoreController;
-use App\Modules\Tasks\Http\Requests\CreateTaskRequest;
-use App\Modules\Tasks\Http\Requests\UpdateTaskRequest;
+use Illuminate\Http\RedirectResponse;
 use App\Modules\Tasks\Services\TaskService;
 use App\Modules\Teams\Services\TeamService;
 use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\RedirectResponse;
+use App\Modules\Tasks\Http\Requests\CreateTaskRequest;
+use App\Modules\Tasks\Http\Requests\UpdateTaskRequest;
+use App\Modules\Core\Http\Controllers\AbstractCoreController;
 
 class TasksController extends AbstractCoreController
 {
     private $taskService;
+
     private $teamService;
 
-    public function __construct(TaskService $taskService , TeamService $teamService)
+    public function __construct(TaskService $taskService, TeamService $teamService)
     {
         $this->taskService = $taskService;
         $this->teamService = $teamService;
     }
+
     /**
      * Display a listing of the resource.
      * @return Renderable
@@ -27,7 +29,8 @@ class TasksController extends AbstractCoreController
     public function index()
     {
         $tasks = $this->taskService->index();
-        return view('tasks::index',compact('tasks'));
+
+        return view('tasks::index', compact('tasks'));
     }
 
     /**
@@ -37,7 +40,8 @@ class TasksController extends AbstractCoreController
     public function create()
     {
         $teams = $this->teamService->index();
-        return view('tasks::create',compact('teams'));
+
+        return view('tasks::create', compact('teams'));
     }
 
     /**
@@ -49,7 +53,10 @@ class TasksController extends AbstractCoreController
     {
         $this->taskService->create($request->all());
 
-        return redirect()->route('get.tasks.list')->with(['status' => 'task has been created successfully']);
+        return redirect()->route('get.tasks.list')->with([
+            'alert-type' => 'success',
+            'message'    => 'Task has been created successfully',
+        ]);
     }
 
     /**
@@ -58,19 +65,20 @@ class TasksController extends AbstractCoreController
      */
     public function show($id)
     {
-        $task = $this->taskService->read($id);
+        $task       = $this->taskService->read($id);
         $teams      = $this->teamService->index();
 
         if (!$task) {
             return $this->showErrorMessage('get.task.list');
         }
-        return view('tasks::show',compact('task','teams'));
+
+        return view('tasks::show', compact('task', 'teams'));
     }
 
     public function edit($id)
     {
         $teams      = $this->teamService->index();
-        $task = $this->taskService->read($id);
+        $task       = $this->taskService->read($id);
         if (!$task) {
             return $this->showErrorMessage('get.tasks.list');
         }
@@ -78,13 +86,14 @@ class TasksController extends AbstractCoreController
         return view('tasks::edit', compact('task', 'teams'));
     }
 
-
     public function update(UpdateTaskRequest $request, $id): RedirectResponse
     {
         $this->taskService->update($request->all(), $id);
 
-        return redirect()->route('get.tasks.list')->with(['status' => 'Task has been edited successfully']);
-
+        return redirect()->route('get.tasks.list')->with([
+            'alert-type' => 'success',
+            'message'    => 'Task has been edited successfully',
+        ]);
     }
 
     /**

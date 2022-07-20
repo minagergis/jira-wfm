@@ -2,8 +2,8 @@
 
 namespace App\Http;
 
-use App\Modules\Distribution\Http\Middleware\EnsureIssueValidity;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use App\Modules\Distribution\Http\Middleware\EnsureIssueValidity;
 
 class Kernel extends HttpKernel
 {
@@ -65,5 +65,8 @@ class Kernel extends HttpKernel
         'throttle'              => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified'              => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'ensure_issue_validity' => EnsureIssueValidity::class,
+        'role'                  => \Spatie\Permission\Middlewares\RoleMiddleware::class,
+        'permission'            => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+        'role_or_permission'    => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
     ];
 }

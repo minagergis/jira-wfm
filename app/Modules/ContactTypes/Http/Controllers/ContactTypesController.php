@@ -2,13 +2,12 @@
 
 namespace App\Modules\ContactTypes\Http\Controllers;
 
-use App\Modules\ContactTypes\Http\Requests\UpdateContactTypeRequest;
 use Illuminate\Http\RedirectResponse;
 use App\Modules\Teams\Services\TeamService;
 use App\Modules\ContactTypes\Services\ContactTypeService;
 use App\Modules\Core\Http\Controllers\AbstractCoreController;
-use App\Modules\TeamMembers\Http\Requests\UpdateTeamMemberRequest;
 use App\Modules\ContactTypes\Http\Requests\CreateContactTypeRequest;
+use App\Modules\ContactTypes\Http\Requests\UpdateContactTypeRequest;
 
 class ContactTypesController extends AbstractCoreController
 {
@@ -40,7 +39,10 @@ class ContactTypesController extends AbstractCoreController
     {
         $this->service->create($request->all());
 
-        return redirect()->route('get.contact-type.list')->with(['status' => 'Contact type has been created successfully']);
+        return redirect()->route('get.contact-type.list')->with([
+            'alert-type' => 'success',
+            'message'    => 'Contact type has been created successfully',
+        ]);
     }
 
     public function edit($id)
@@ -58,6 +60,9 @@ class ContactTypesController extends AbstractCoreController
     {
         $this->service->update($request->all(), $id);
 
-        return redirect()->route('get.contact-type.list')->with(['status' => 'Contact type has been edited successfully']);
+        return redirect()->route('get.contact-type.list')->with([
+            'alert-type' => 'success',
+            'message'    => 'Contact type has been edited successfully',
+        ]);
     }
 }

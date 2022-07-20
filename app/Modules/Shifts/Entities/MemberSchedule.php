@@ -2,6 +2,7 @@
 
 namespace App\Modules\Shifts\Entities;
 
+use App\Scopes\AuthUserScope;
 use Illuminate\Database\Eloquent\Model;
 use App\Modules\TeamMembers\Entities\TeamMember;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,6 +23,16 @@ class MemberSchedule extends Model
         'date_to',
         'team_member_id',
     ];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new AuthUserScope());
+    }
 
     public function member(): BelongsToMany
     {

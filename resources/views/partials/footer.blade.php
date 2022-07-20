@@ -19,6 +19,13 @@
 <script src="{{asset('assets/vendor/chart.js/dist/Chart.min.js')}}"></script>
 <script src="{{asset('assets/vendor/chart.js/dist/Chart.extension.js')}}"></script>
 <script src="{{asset('assets/vendor/toastr-notifications/js/toastr.min.js')}}"></script>
+<script>
+        toastr.options.timeOut = 10000;
+        @if(session('message') && session('alert-type'))
+        toastr.{{ session('alert-type') }}('{{ session('message') }}');
+        @endif
+
+</script>
 <!-- Argon JS -->
 <script src="{{asset('assets/js/argon.js?v=1.1.0')}}"></script>
 <!-- Demo JS - remove this in your project -->

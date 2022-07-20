@@ -2,8 +2,10 @@
 
 namespace App\Modules\Teams\Entities;
 
+use App\Scopes\AuthUserScope;
 use App\Modules\Tasks\Entities\Task;
 use App\Modules\Shifts\Entities\Shift;
+use App\Modules\Teams\Scopes\UserScope;
 use Illuminate\Database\Eloquent\Model;
 use App\Modules\TeamMembers\Entities\TeamMember;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -19,6 +21,16 @@ class Team extends Model
         'description',
         'jira_project_key',
     ];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new AuthUserScope());
+    }
 
     /**
      * @return BelongsToMany
