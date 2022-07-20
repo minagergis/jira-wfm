@@ -2,6 +2,7 @@
 
 namespace App\Modules\Tasks\Entities;
 
+use App\Scopes\AuthUserScope;
 use App\Modules\Teams\Entities\Team;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +18,16 @@ class Task extends Model
         'is_automatic',
         'team_id',
     ];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new AuthUserScope());
+    }
 
     public function team(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

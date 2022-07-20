@@ -2,6 +2,7 @@
 
 namespace App\Modules\Distribution\Entities;
 
+use App\Scopes\AuthUserScope;
 use App\Modules\Teams\Entities\Team;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -26,6 +27,16 @@ class TaskDistributionLog extends Model
         'before_member_capacity',
         'after_member_capacity',
     ];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new AuthUserScope());
+    }
 
     public function schedule(): BelongsTo
     {
