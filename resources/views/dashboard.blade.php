@@ -124,7 +124,7 @@
                                         </div>
                                     </div>
                                     <p class="mt-3 mb-0 text-sm">
-                                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>  {!! ceil(($teamsLastDaysCount/$teamsCount)*100)  !!} %</span>
+                                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> @if($teamsCount > 0 )  {!! ceil(($teamsLastDaysCount/$teamsCount)*100)  !!} @else 0 @endif%</span>
                                         <span class="text-nowrap">Since last week</span>
                                     </p>
                                 </div>
@@ -190,7 +190,7 @@
                                         </div>
                                     </div>
                                     <p class="mt-3 mb-0 text-sm">
-                                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> {!! ceil(($schedulesLastDaysCount/$schedulesCount)*100)  !!} %</span>
+                                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> @if($schedulesCount > 0) {!! ceil(($schedulesLastDaysCount/$schedulesCount)*100)  !!} @else 0 @endif %</span>
                                         <span class="text-nowrap">Since last week</span>
                                     </p>
                                 </div>
