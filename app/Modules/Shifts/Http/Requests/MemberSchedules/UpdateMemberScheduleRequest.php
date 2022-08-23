@@ -18,7 +18,6 @@ class UpdateMemberScheduleRequest extends FormRequest
      */
     public function rules()
     {
-        //dd($this->toArray());
         return [
             'id' => [
                 'required',
@@ -32,7 +31,8 @@ class UpdateMemberScheduleRequest extends FormRequest
             ],
             'shift_hours' => [
                 'required',
-                'digits_between:5,10',
+                'gte:5',
+                'lte:10',
             ],
         ];
     }
@@ -87,10 +87,4 @@ class UpdateMemberScheduleRequest extends FormRequest
         $this->merge($changes);
     }
 
-    public function messages()
-    {
-        return [
-            'shift_hours.digits_between' => 'Shift hours must be from 5 Hours to 10 Hours.',
-        ];
-    }
 }

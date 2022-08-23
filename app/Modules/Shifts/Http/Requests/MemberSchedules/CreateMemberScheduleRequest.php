@@ -16,7 +16,6 @@ class CreateMemberScheduleRequest extends FormRequest
      */
     public function rules()
     {
-        //dd($this->toArray());
         return [
             'team_member_id' => [
                 'required',
@@ -41,7 +40,8 @@ class CreateMemberScheduleRequest extends FormRequest
             'date_to'     => ['required'],
             'shift_hours' => [
                 'required',
-                'digits_between:5,10',
+                'gte:5',
+                'lte:10',
             ],
         ];
     }
@@ -63,7 +63,8 @@ class CreateMemberScheduleRequest extends FormRequest
         $fromDate = Carbon::parse($requestData['start']->_date)->timezone('Africa/Cairo');
         $toDate   = Carbon::parse($requestData['end']->_date)->timezone('Africa/Cairo');
 
-        $shiftHours = $toDate->diffInHours($toDate);
+        $shiftHours = $toDate->diffInHours($fromDate);
+
 
         $memberSchedule = [
             'name'           => $requestData['title'],
@@ -82,10 +83,4 @@ class CreateMemberScheduleRequest extends FormRequest
         $this->merge($memberSchedule);
     }
 
-    public function messages()
-    {
-        return [
-            'shift_hours.digits_between' => 'Shift hours must be from 5 Hours to 10 Hours.',
-        ];
-    }
 }
