@@ -35,10 +35,14 @@ class CreateMemberScheduleRequest extends FormRequest
                 'required',
                 'after:start_date',
             ],
-            'time_from' => ['required'],
-            'date_from' => ['required'],
-            'time_to'   => ['required'],
-            'date_to'   => ['required'],
+            'time_from'   => ['required'],
+            'date_from'   => ['required'],
+            'time_to'     => ['required'],
+            'date_to'     => ['required'],
+            'shift_hours' => [
+                'required',
+                'digits_between:5,10',
+            ],
         ];
     }
 
@@ -56,19 +60,32 @@ class CreateMemberScheduleRequest extends FormRequest
     {
         $requestData = (array) json_decode($this->data);
 
+        $fromDate = Carbon::parse($requestData['start']->_date)->timezone('Africa/Cairo');
+        $toDate   = Carbon::parse($requestData['end']->_date)->timezone('Africa/Cairo');
+
+        $shiftHours = $toDate->diffInHours($toDate);
+
         $memberSchedule = [
             'name'           => $requestData['title'],
             'team_member_id' => $requestData['calendarId'],
 
-            'start_date'     => Carbon::parse($requestData['start']->_date)->timezone('Africa/Cairo')->toDateTimeString(),
-            'time_from'      => Carbon::parse($requestData['start']->_date)->timezone('Africa/Cairo')->toTimeString(),
-            'date_from'      => Carbon::parse($requestData['start']->_date)->timezone('Africa/Cairo')->toDateString(),
+            'start_date'     => $fromDate->toDateTimeString(),
+            'time_from'      => $fromDate->toTimeString(),
+            'date_from'      => $fromDate->toDateString(),
 
-            'end_date'       => Carbon::parse($requestData['end']->_date)->timezone('Africa/Cairo')->toDateTimeString(),
-            'time_to'        => Carbon::parse($requestData['end']->_date)->timezone('Africa/Cairo')->toTimeString(),
-            'date_to'        => Carbon::parse($requestData['end']->_date)->timezone('Africa/Cairo')->toDateString(),
+            'end_date'       => $toDate->toDateTimeString(),
+            'time_to'        => $toDate->toTimeString(),
+            'date_to'        => $toDate->toDateString(),
+            'shift_hours'    => $shiftHours,
         ];
 
         $this->merge($memberSchedule);
+    }
+
+    public function messages()
+    {
+        return [
+            'shift_hours.digits_between' => 'Shift hours must be from 5 Hours to 10 Hours.',
+        ];
     }
 }

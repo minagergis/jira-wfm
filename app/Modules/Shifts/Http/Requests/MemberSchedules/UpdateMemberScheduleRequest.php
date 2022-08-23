@@ -30,6 +30,10 @@ class UpdateMemberScheduleRequest extends FormRequest
                 Rule::exists('team_members', 'id'),
                 new NoOverlappedSchedule($this->start_date, $this->end_date, $this->id),
             ],
+            'shift_hours' => [
+                'required',
+                'digits_between:5,10',
+            ],
         ];
     }
 
@@ -75,6 +79,18 @@ class UpdateMemberScheduleRequest extends FormRequest
             $changes['date_to']  = Carbon::parse($requestData['changes']->end->_date)->timezone('Africa/Cairo')->toDateString();
         }
 
+        $startDate = Carbon::parse($changes['start_date']);
+        $endDate   = Carbon::parse($changes['end_date']);
+
+        $changes['shift_hours'] = $endDate->diffInHours($startDate);
+
         $this->merge($changes);
+    }
+
+    public function messages()
+    {
+        return [
+            'shift_hours.digits_between' => 'Shift hours must be from 5 Hours to 10 Hours.',
+        ];
     }
 }
