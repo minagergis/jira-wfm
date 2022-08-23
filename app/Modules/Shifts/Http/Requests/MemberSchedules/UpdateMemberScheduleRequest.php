@@ -18,7 +18,6 @@ class UpdateMemberScheduleRequest extends FormRequest
      */
     public function rules()
     {
-        //dd($this->toArray());
         return [
             'id' => [
                 'required',
@@ -29,6 +28,11 @@ class UpdateMemberScheduleRequest extends FormRequest
                 'sometimes',
                 Rule::exists('team_members', 'id'),
                 new NoOverlappedSchedule($this->start_date, $this->end_date, $this->id),
+            ],
+            'shift_hours' => [
+                'required',
+                'gte:5',
+                'lte:10',
             ],
         ];
     }
@@ -75,6 +79,12 @@ class UpdateMemberScheduleRequest extends FormRequest
             $changes['date_to']  = Carbon::parse($requestData['changes']->end->_date)->timezone('Africa/Cairo')->toDateString();
         }
 
+        $startDate = Carbon::parse($changes['start_date']);
+        $endDate   = Carbon::parse($changes['end_date']);
+
+        $changes['shift_hours'] = $endDate->diffInHours($startDate);
+
         $this->merge($changes);
     }
+
 }
