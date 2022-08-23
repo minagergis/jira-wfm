@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [4.0.2] - 2022-08-23
+### Added
+- Validation for the shift period to be from 5 hours min to 10 hours max.
+
+
 ## [4.0.1] - 2022-08-22
 ### Fixed
 - Crash of division by zero in main dashboard, when a new teamleader register for the first time.
