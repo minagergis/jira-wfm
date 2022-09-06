@@ -15,6 +15,7 @@
         "laravel/ui": "^3.4",
         "lesstif/php-jira-rest-client": "^2.6",
         "nwidart/laravel-modules": "^8.3",
+        "opcodesio/log-viewer": "^1.2",
         "spatie/laravel-permission": "^5.5"
     },
     "require-dev": {
