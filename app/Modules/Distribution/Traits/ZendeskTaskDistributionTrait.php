@@ -103,7 +103,7 @@ trait ZendeskTaskDistributionTrait
      */
     private function getOrderedAvailableTeamMembersForNextShift($team): array
     {
-        $shiftsLimitation      = 2;
+        $shiftsLimitation      = config('distribution.next_schedule_limit_for_tasks');
 
         $teamMembersForTheTeam = TeamMember::query()
             ->whereHas('teams', function (Builder $builder) use ($team) {
