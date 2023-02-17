@@ -44,6 +44,7 @@
                                     <th>Name</th>
                                     <th>Weight</th>
                                     <th>Team Name</th>
+                                    <th>API Integration Key</th>
                                     <th>Controls ⌘</th>
                                 </tr>
                                 </thead>
@@ -54,6 +55,7 @@
                                         <td>{{$member->name}}</td>
                                         <td>{{$member->weight}}</td>
                                         <td>{{$member->teams[0]->name ?? 'N/A'}}</td>
+                                        <td>{{$member->api_key ?? 'N/A'}}</td>
                                         <td>
                                             @can('edit-team-member')
                                             <a href="{{route('get.team-member.edit',$member->id)}}" class="btn btn-icon btn-dribbble" type="button">

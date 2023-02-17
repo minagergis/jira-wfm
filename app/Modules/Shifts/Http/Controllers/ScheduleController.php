@@ -7,6 +7,7 @@ use Faker\Factory;
 use App\Modules\Teams\Services\TeamService;
 use App\Modules\Shifts\Services\MemberScheduleService;
 use App\Modules\Core\Http\Controllers\AbstractCoreController;
+use App\Modules\Integration\Jobs\HRMS\CreateScheduleIntegrationJob;
 use App\Modules\Shifts\Http\Requests\MemberSchedules\CreateMemberScheduleRequest;
 use App\Modules\Shifts\Http\Requests\MemberSchedules\DeleteMemberScheduleRequest;
 use App\Modules\Shifts\Http\Requests\MemberSchedules\UpdateMemberScheduleRequest;
@@ -49,6 +50,8 @@ class ScheduleController extends AbstractCoreController
         $memberScheduleAdded = $this->memberScheduleService->create($request->validated());
 
         if ($memberScheduleAdded) {
+            CreateScheduleIntegrationJob::dispatch($memberScheduleAdded);
+
             return response()->json([
                 'message'    => 'success',
                 'scheduleId' => $memberScheduleAdded->id,

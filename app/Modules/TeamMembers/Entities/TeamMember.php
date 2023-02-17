@@ -2,6 +2,7 @@
 
 namespace App\Modules\TeamMembers\Entities;
 
+use Illuminate\Support\Str;
 use App\Scopes\AuthUserScope;
 use App\Modules\Teams\Entities\Team;
 use App\Modules\Shifts\Entities\Shift;
@@ -20,7 +21,16 @@ class TeamMember extends Model
         'jira_integration_id',
         'weight',
         'color',
+        'api_key',
     ];
+
+    public static function boot(): void
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            $model->api_key = Str::uuid();
+        });
+    }
 
     /**
      * The "booted" method of the model.
