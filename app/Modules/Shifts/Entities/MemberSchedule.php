@@ -6,7 +6,7 @@ use App\Scopes\AuthUserScope;
 use Illuminate\Database\Eloquent\Model;
 use App\Modules\TeamMembers\Entities\TeamMember;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class MemberSchedule extends Model
 {
@@ -34,7 +34,7 @@ class MemberSchedule extends Model
         static::addGlobalScope(new AuthUserScope());
     }
 
-    public function member(): BelongsToMany
+    public function member(): BelongsTo
     {
         return $this->belongsTo(TeamMember::class, 'team_member_id');
     }
