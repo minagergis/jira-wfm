@@ -3,9 +3,10 @@
 namespace App\Modules\Integration\Jobs\HRMS;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 
-class CreateScheduleIntegrationJob extends BaseHRMSIntegrationJob
+class EditScheduleIntegrationJob extends BaseHRMSIntegrationJob
 {
     /**
      * Execute the job.
@@ -14,12 +15,13 @@ class CreateScheduleIntegrationJob extends BaseHRMSIntegrationJob
      */
     public function handle()
     {
-        $createScheduleLink = $this->baseUrl.'api/v1/schedules/create';
+        $editScheduleUrl = $this->baseUrl.'api/v1/schedules/edit';
 
         try {
             $response = Http::withToken($this->accessToken)->acceptJson()->post(
-                $createScheduleLink,
+                $editScheduleUrl,
                 [
+                    'id'       => $this->schedule->id,
                     'schedule' => [
                         'id'          => $this->schedule->id,
                         'name'        => $this->schedule->name,
@@ -40,4 +42,5 @@ class CreateScheduleIntegrationJob extends BaseHRMSIntegrationJob
             return $this->failed($e);
         }
     }
+
 }

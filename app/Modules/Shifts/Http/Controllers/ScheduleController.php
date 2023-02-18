@@ -2,6 +2,8 @@
 
 namespace App\Modules\Shifts\Http\Controllers;
 
+use App\Modules\Integration\Jobs\HRMS\DeleteScheduleIntegrationJob;
+use App\Modules\Integration\Jobs\HRMS\EditScheduleIntegrationJob;
 use Carbon\Carbon;
 use Faker\Factory;
 use App\Modules\Teams\Services\TeamService;
@@ -83,6 +85,10 @@ class ScheduleController extends AbstractCoreController
         }
 
         if ($this->memberScheduleService->update($changes, $memberScheduleId)) {
+            $editedSchedule = $this->memberScheduleService->read($memberScheduleId);
+
+            EditScheduleIntegrationJob::dispatch($editedSchedule);
+
             return response()->json([
                 'message'  => 'success',
             ]);
@@ -94,6 +100,7 @@ class ScheduleController extends AbstractCoreController
     public function deleteSchedule(DeleteMemberScheduleRequest $request)
     {
         if ($this->memberScheduleService->delete($request->validated()['id'])) {
+            DeleteScheduleIntegrationJob::dispatch($request->validated()['id']);
             return response()->json([
                 'message'  => 'success',
             ]);
