@@ -415,6 +415,12 @@
                                     <span class="d-block h3">{{$teamMember->name}}</span>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col">
+                                    <span class="h6 surtitle text-muted">WFM Integration API Key</span>
+                                    <span class="d-block h3">{{$teamMember->api_key}}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
