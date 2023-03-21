@@ -19,6 +19,12 @@ class UpdateTeamMemberRequest extends FormRequest
                 'required',
                 'string',
             ],
+            'email' => [
+                'nullable',
+                'string',
+                Rule::unique('team_members', 'email')
+                    ->ignore($this->id, 'id'),
+            ],
             'jira_integration_id' => [
                 'required',
             ],
