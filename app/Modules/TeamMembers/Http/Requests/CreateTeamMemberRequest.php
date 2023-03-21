@@ -19,6 +19,11 @@ class CreateTeamMemberRequest extends FormRequest
                 'required',
                 'string',
             ],
+            'email' => [
+                'nullable',
+                'string',
+                Rule::unique('team_members', 'email'),
+            ],
             'jira_integration_id' => [
                 'required',
             ],

@@ -16,6 +16,7 @@ class CreateTeamMembersTable extends Migration
         Schema::create('team_members', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('email')->nullable();
             $table->boolean('is_active');
             $table->string('jira_integration_id');
             $table->integer('weight');

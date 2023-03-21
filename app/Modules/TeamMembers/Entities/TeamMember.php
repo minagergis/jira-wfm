@@ -22,6 +22,7 @@ class TeamMember extends Model
         'weight',
         'color',
         'api_key',
+        'email',
     ];
 
     public static function boot(): void
