@@ -106,6 +106,17 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row" >
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="email">Email</label>
+                                    <input  type="email" class="form-control" id="email"  name="email" placeholder="Email of team member">
+                                </div>
+                                @error('email')
+                                <div class="text-danger fs-7">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">

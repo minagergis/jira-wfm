@@ -107,6 +107,17 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="name">Email</label>
+                                    <input  type="email" class="form-control" id="email"  name="email" value="{{$teamMember->email}}">
+                                </div>
+                                @error('email')
+                                <div class="text-danger fs-7">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <button class="btn btn-icon btn-primary" type="submit">
