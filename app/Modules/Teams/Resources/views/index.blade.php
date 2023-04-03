@@ -71,6 +71,12 @@
                                             <span class="btn-inner--text">Members</span>
                                         </a>
                                         @endcan
+                                            @can('manual-distribution')
+                                                <a href="{{route('get.schedule.shift-changer',$team->id)}}" class="btn btn-icon btn-danger" type="button">
+                                                    <span class="btn-inner--icon"><i class="fa fa-calendar"></i></span>
+                                                    <span class="btn-inner--text">Shift changer</span>
+                                                </a>
+                                            @endcan
                                         @can('view-team-schedule')
                                         <a href="{{route('get.schedule.list-by-team',$team->id)}}" class="btn btn-icon btn-outline-warning" type="button">
                                             <span class="btn-inner--icon"><i class="fa fa-user-clock"></i></span>
