@@ -35,4 +35,9 @@ abstract class AbstractCoreService
     {
         return $this->repository->withScope($scopeName, $args);
     }
+
+    public function query()
+    {
+        return $this->repository->query();
+    }
 }

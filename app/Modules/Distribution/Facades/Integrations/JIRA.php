@@ -54,4 +54,29 @@ class JIRA
 
         return $issueService->changeAssigneeByAccountId($issueKey, $assigneeJiraID);
     }
+
+    /**
+     * @throws JiraException
+     */
+    public function getAllIssuesAssignedToMemberBetweenTwoDates($projectKey, $assignee, $startDate, $endDate)
+    {
+        $jql                      = 'assignee in ('.$assignee.') AND created >= '.$startDate.' AND created <= '.$endDate.' AND project = '.$projectKey.' AND status not in (DONE) order by created DESC';
+
+        $issueService             = new IssueService($this->jiraConfig);
+        $issuesRelatedToUserToday = $issueService->search($jql);
+
+        return $issuesRelatedToUserToday->getIssues();
+    }
+
+    public function deleteIssue($issueKey)
+    {
+        try {
+            $issueService = new IssueService($this->jiraConfig);
+            $ret          = $issueService->deleteIssue($issueKey);
+
+            return true;
+        } catch (JiraException $e) {
+            return false;
+        }
+    }
 }

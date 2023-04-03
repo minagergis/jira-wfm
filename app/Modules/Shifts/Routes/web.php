@@ -29,4 +29,10 @@ Route::prefix('schedule')->middleware('auth')->group(function () {
     Route::post('/add-schedule', 'ScheduleController@addSchedule')->middleware(['permission:list-teams|assign-team-schedule'])->name('post.schedule.add');
     Route::post('/edit-schedule', 'ScheduleController@editSchedule')->middleware(['permission:list-teams|edit-team-schedule'])->name('post.schedule.edit');
     Route::post('/delete-schedule', 'ScheduleController@deleteSchedule')->middleware(['permission:list-teams|delete-team-schedule'])->name('post.schedule.delete');
+    Route::prefix('shift-changer')->middleware(['auth','permission:manual-distribution'])->group(function () {
+        Route::get('/by-team/{id}', 'ForceScheduleController@listTodayShiftsForTeam')->name('get.schedule.shift-changer');
+        Route::put('/delete/{id}', 'ForceScheduleController@forceDeleteSchedule')->name('put.schedule.shift-changer.delete');
+        Route::get('/people-swapping/{id}', 'ForceScheduleController@getPeopleSwapping')->name('get.schedule.shift-changer.people-swap');
+        Route::post('/people-swapping/{id}', 'ForceScheduleController@postPeopleSwapping')->name('post.schedule.shift-changer.people-swap');
+    });
 });
