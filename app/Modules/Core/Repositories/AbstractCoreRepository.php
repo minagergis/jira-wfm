@@ -49,4 +49,9 @@ abstract class AbstractCoreRepository
     {
         return $this->model->find($id)->delete();
     }
+
+    public function query()
+    {
+        return $this->model->newQuery();
+    }
 }
