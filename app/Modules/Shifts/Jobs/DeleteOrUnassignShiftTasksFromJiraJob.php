@@ -11,7 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use App\Modules\TeamMembers\Entities\TeamMember;
 use Facades\App\Modules\Distribution\Facades\Integrations\JIRA;
 
-class DeleteShiftTasksFromJiraJob implements ShouldQueue
+class DeleteOrUnassignShiftTasksFromJiraJob implements ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -20,14 +20,17 @@ class DeleteShiftTasksFromJiraJob implements ShouldQueue
 
     private TeamMember $assignedDeletedShiftMember;
 
+    private array $scheduleZendeskTaskKeys;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(TeamMember $assignedDeletedShiftMember)
+    public function __construct(TeamMember $assignedDeletedShiftMember, array $scheduleZendeskTaskKeys)
     {
         $this->assignedDeletedShiftMember = $assignedDeletedShiftMember;
+        $this->scheduleZendeskTaskKeys    = $scheduleZendeskTaskKeys;
     }
 
     /**
@@ -45,7 +48,12 @@ class DeleteShiftTasksFromJiraJob implements ShouldQueue
         );
 
         foreach ($allTasksAssignedToOldMemberToday as $jiraTask) {
-            JIRA::deleteIssue($jiraTask->key);
+            dump($jiraTask->key);
+            if ($this->scheduleZendeskTaskKeys && in_array($jiraTask->key, $this->scheduleZendeskTaskKeys)) {
+                JIRA::assignIssue($jiraTask->key, null);
+            } else {
+                JIRA::deleteIssue($jiraTask->key);
+            }
         }
     }
 }
