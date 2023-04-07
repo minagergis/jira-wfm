@@ -9,10 +9,10 @@ use App\Modules\Shifts\Jobs\SwappingShiftJob;
 use App\Modules\Shifts\Entities\MemberSchedule;
 use App\Modules\TeamMembers\Entities\TeamMember;
 use App\Modules\Shifts\Services\MemberScheduleService;
-use App\Modules\Shifts\Jobs\DeleteShiftTasksFromJiraJob;
 use App\Modules\Core\Http\Controllers\AbstractCoreController;
 use App\Modules\Distribution\Services\TaskDistributionLogService;
 use App\Modules\Integration\Jobs\HRMS\EditScheduleIntegrationJob;
+use App\Modules\Shifts\Jobs\DeleteOrUnassignShiftTasksFromJiraJob;
 use App\Modules\Integration\Jobs\HRMS\DeleteScheduleIntegrationJob;
 
 class ForceScheduleController extends AbstractCoreController
@@ -53,12 +53,16 @@ class ForceScheduleController extends AbstractCoreController
 
     public function forceDeleteSchedule($id)
     {
-        $schedule = $this->memberScheduleService->read($id);
+        $schedule                   = $this->memberScheduleService->read($id);
+        $scheduleZendeskTaskKeys    = $this->distributionLogService->query()
+            ->where('schedule_id', $id)
+            ->whereNotNull('jira_issue_key')
+            ->get()->pluck('jira_issue_key')->toArray();
 
         if ($this->memberScheduleService->delete($id)) {
             $assignedDeletedShiftMember = $schedule->member;
             DeleteScheduleIntegrationJob::dispatch($id);
-            DeleteShiftTasksFromJiraJob::dispatch($assignedDeletedShiftMember);
+            DeleteOrUnassignShiftTasksFromJiraJob::dispatch($assignedDeletedShiftMember, $scheduleZendeskTaskKeys);
 
             return response()->json([
                 'message'=> 'Deleted',
