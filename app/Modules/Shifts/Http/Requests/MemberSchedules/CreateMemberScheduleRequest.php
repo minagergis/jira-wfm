@@ -58,10 +58,11 @@ class CreateMemberScheduleRequest extends FormRequest
 
     public function prepareForValidation()
     {
+
         $requestData = (array) json_decode($this->data);
 
-        $fromDate = Carbon::parse($requestData['start']->_date)->timezone('Africa/Cairo');
-        $toDate   = Carbon::parse($requestData['end']->_date)->timezone('Africa/Cairo');
+        $fromDate = Carbon::parse($requestData['start']->_date)->timezone(config('shifts.shifts_timezone'));
+        $toDate   = Carbon::parse($requestData['end']->_date)->timezone(config('shifts.shifts_timezone'));
 
         $shiftHours = $toDate->diffInHours($fromDate);
 
