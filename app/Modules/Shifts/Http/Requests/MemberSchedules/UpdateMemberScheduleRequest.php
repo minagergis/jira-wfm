@@ -68,15 +68,15 @@ class UpdateMemberScheduleRequest extends FormRequest
         ];
 
         if (isset($requestData['changes']->start)) {
-            $changes['start_date'] = Carbon::parse($requestData['changes']->start->_date)->timezone('Africa/Cairo')->toDateTimeString();
-            $changes['time_from']  = Carbon::parse($requestData['changes']->start->_date)->timezone('Africa/Cairo')->toTimeString();
-            $changes['date_from']  = Carbon::parse($requestData['changes']->start->_date)->timezone('Africa/Cairo')->toDateString();
+            $changes['start_date'] = Carbon::parse($requestData['changes']->start->_date)->timezone(config('shifts.shifts_timezone'))->toDateTimeString();
+            $changes['time_from']  = Carbon::parse($requestData['changes']->start->_date)->timezone(config('shifts.shifts_timezone'))->toTimeString();
+            $changes['date_from']  = Carbon::parse($requestData['changes']->start->_date)->timezone(config('shifts.shifts_timezone'))->toDateString();
         }
 
         if (isset($requestData['changes']->end)) {
-            $changes['end_date'] = Carbon::parse($requestData['changes']->end->_date)->timezone('Africa/Cairo')->toDateTimeString();
-            $changes['time_to']  = Carbon::parse($requestData['changes']->end->_date)->timezone('Africa/Cairo')->toTimeString();
-            $changes['date_to']  = Carbon::parse($requestData['changes']->end->_date)->timezone('Africa/Cairo')->toDateString();
+            $changes['end_date'] = Carbon::parse($requestData['changes']->end->_date)->timezone(config('shifts.shifts_timezone'))->toDateTimeString();
+            $changes['time_to']  = Carbon::parse($requestData['changes']->end->_date)->timezone(config('shifts.shifts_timezone'))->toTimeString();
+            $changes['date_to']  = Carbon::parse($requestData['changes']->end->_date)->timezone(config('shifts.shifts_timezone'))->toDateString();
         }
 
         $startDate = Carbon::parse($changes['start_date']);
