@@ -2,14 +2,14 @@
 
 namespace App\Modules\Shifts\Http\Controllers;
 
-use App\Modules\Integration\Jobs\HRMS\DeleteScheduleIntegrationJob;
-use App\Modules\Integration\Jobs\HRMS\EditScheduleIntegrationJob;
 use Carbon\Carbon;
 use Faker\Factory;
 use App\Modules\Teams\Services\TeamService;
 use App\Modules\Shifts\Services\MemberScheduleService;
 use App\Modules\Core\Http\Controllers\AbstractCoreController;
+use App\Modules\Integration\Jobs\HRMS\EditScheduleIntegrationJob;
 use App\Modules\Integration\Jobs\HRMS\CreateScheduleIntegrationJob;
+use App\Modules\Integration\Jobs\HRMS\DeleteScheduleIntegrationJob;
 use App\Modules\Shifts\Http\Requests\MemberSchedules\CreateMemberScheduleRequest;
 use App\Modules\Shifts\Http\Requests\MemberSchedules\DeleteMemberScheduleRequest;
 use App\Modules\Shifts\Http\Requests\MemberSchedules\UpdateMemberScheduleRequest;
@@ -35,14 +35,12 @@ class ScheduleController extends AbstractCoreController
             return $this->showErrorMessage('get.teams.list');
         }
 
-        $teamMembers = $team->teamMembers->map(function ($item, $key) use ($faker) {
+        $teamMembers = $team->teamMembers->where('is_active', true)->map(function ($item, $key) use ($faker) {
             $item['color']     = $item->color ?? $faker->hexColor;
             $item['schedules'] = $item->schedules;
 
             return $item;
         });
-
-
 
         return view('shifts::schedule_calendar', compact('teamMembers'));
     }
@@ -101,6 +99,7 @@ class ScheduleController extends AbstractCoreController
     {
         if ($this->memberScheduleService->delete($request->validated()['id'])) {
             DeleteScheduleIntegrationJob::dispatch($request->validated()['id']);
+
             return response()->json([
                 'message'  => 'success',
             ]);
