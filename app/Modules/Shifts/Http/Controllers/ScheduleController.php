@@ -35,11 +35,13 @@ class ScheduleController extends AbstractCoreController
             return $this->showErrorMessage('get.teams.list');
         }
 
-        $teamMembers = $team->teamMembers->where('is_active', true)->map(function ($item, $key) use ($faker) {
-            $item['color']     = $item->color ?? $faker->hexColor;
-            $item['schedules'] = $item->schedules;
+        $teamMembers = $team->teamMembers->map(function ($item, $key) use ($faker) {
+            if ($item->is_active == 1) {
+                $item['color']     = $item->color ?? $faker->hexColor;
+                $item['schedules'] = $item->schedules;
 
-            return $item;
+                return $item;
+            }
         });
 
         return view('shifts::schedule_calendar', compact('teamMembers'));
