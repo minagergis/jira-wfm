@@ -42,7 +42,10 @@ class ScheduleController extends AbstractCoreController
 
                 return $item;
             }
-        });
+        })->reject(function ($value) {
+            return is_null($value);
+        })->values();
+
 
         return view('shifts::schedule_calendar', compact('teamMembers'));
     }
