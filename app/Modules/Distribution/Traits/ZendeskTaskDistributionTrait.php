@@ -3,6 +3,7 @@
 namespace  App\Modules\Distribution\Traits;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Builder;
 use App\Modules\Shifts\Entities\MemberSchedule;
 use App\Modules\TeamMembers\Entities\TeamMember;
@@ -223,17 +224,27 @@ trait ZendeskTaskDistributionTrait
             $availableTeamMembersForTheShift = $this->getOrderedAvailableTeamMembersForNow($team);
         }
 
-        if (count($availableTeamMembersForTheShift) > 0) {
-            foreach ($availableTeamMembersForTheShift as $member) {
-                if ($this->tryToAssignTaskForMember($team, $member, $zendeskTask)) {
-                    return true;
+        try {
+            if (count($availableTeamMembersForTheShift) > 0) {
+                foreach ($availableTeamMembersForTheShift as $member) {
+                    if ($this->tryToAssignTaskForMember($team, $member, $zendeskTask)) {
+                        return true;
+                    }
                 }
+
+                return false;
             }
+        } catch (\Exception $exception) {
+            Log::debug(json_encode([
+                'team'   => $team->toJson(),
+                'member' => json_encode($member),
+                'task'   => $zendeskTask,
+                'error'  => $exception->getTraceAsString(),
+            ]));
 
             return false;
         }
-
-        return false;
+        return  false;
     }
 
     /**
