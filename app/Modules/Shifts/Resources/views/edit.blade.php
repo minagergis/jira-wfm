@@ -55,6 +55,10 @@
                             </div>
                         </div>
                         <div class="row">
+                            @if(auth()->user()->hasRole('team-leader'))
+                                <input type="hidden" name="teams[]" value="{{auth()->user()->managed_team_id}}">
+
+                            @else
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label" for="exampleFormControlSelect3">Teams</label>
@@ -76,6 +80,7 @@
                                 </div>
 
                             </div>
+                            @endif
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label" for="exampleFormControlSelect3">Working days</label>
