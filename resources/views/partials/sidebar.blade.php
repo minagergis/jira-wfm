@@ -107,6 +107,35 @@
                         </div>
                     </li>
                         @endif
+
+                        @if(auth()->user()->can('list-shift') || auth()->user()->can('create-shift'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="#navbar-components-tasks" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-components-tasks">
+                                    <i class="ni ni-ui-04 calendar"></i>
+                                    <span class="nav-link-text">Shifts</span>
+                                </a>
+                                <div class="collapse" id="navbar-components-tasks">
+                                    <ul class="nav nav-sm flex-column">
+                                        @can('create-shift')
+                                            <li class="nav-item">
+                                                <a href="{{route('get.shifts.create')}}" class="nav-link">Add Shift</a>
+                                            </li>
+                                        @endcan
+                                        @can('list-shifts')
+                                            <li class="nav-item">
+                                                <a href="{{route('get.shifts.list')}}" class="nav-link">List Shift</a>
+                                            </li>
+                                        @endcan
+
+                                            @can('schedule-shift-to-members')
+                                                <li class="nav-item">
+                                                    <a href="{{route('get.shifts.bulk.schedule.teams')}}" class="nav-link">Bulk Schedule</a>
+                                                </li>
+                                            @endcan
+                                    </ul>
+                                </div>
+                            </li>
+                        @endif
                     @if(auth()->user()->can('list-contact-type') || auth()->user()->can('create-contact-type'))
 
                     <li class="nav-item">

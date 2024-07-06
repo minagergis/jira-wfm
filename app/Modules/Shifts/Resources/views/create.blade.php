@@ -39,6 +39,15 @@
                 <div class="card-body">
                     <form role="form" method="POST" action="{{ route('post.shifts.create') }}">
                     @csrf
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                     <!-- Form groups used in grid -->
                         <div class="row">
                             <div class="col-md-6">
@@ -55,27 +64,36 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="exampleFormControlSelect3">Teams</label>
-                                    @foreach($teams as $team)
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <p class="text-gray">{{$team->name}}</p>
-                                        </div>
-                                        <div class="col-md-9">
-                                        <label class="custom-toggle">
-                                            <input name="teams[]" value="{{$team->id}}" type="checkbox">
-                                            <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
-                                        </label>
-                                        </div>
-                                    </div>
-                                    @endforeach
+                            @if(auth()->user()->hasRole('team-leader'))
+                                <input type="hidden" name="teams[]" value="{{auth()->user()->managed_team_id}}">
 
+                            @else
+
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="exampleFormControlSelect3">Teams</label>
+                                        @foreach($teams as $team)
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <p class="text-gray">{{$team->name}}</p>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <label class="custom-toggle">
+                                                        <input name="teams[]" value="{{$team->id}}" type="checkbox">
+                                                        <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        @endforeach
+
+
+                                    </div>
 
                                 </div>
 
-                            </div>
+
+                            @endif
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label" for="exampleFormControlSelect3">Working days</label>

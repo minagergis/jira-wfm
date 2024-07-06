@@ -40,11 +40,11 @@ class CreateShiftRequest extends FormRequest
             ],
             'time_from' => [
                 'required',
-                'date_format:H:i',
+                'date_format:H:i:s',
             ],
             'time_to' => [
                 'required',
-                'date_format:H:i',
+                'date_format:H:i:s',
             ],
         ];
     }
