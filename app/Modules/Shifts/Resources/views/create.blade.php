@@ -139,7 +139,7 @@
                                 <div class="form-group">
                                     <button class="btn btn-icon btn-primary" type="submit">
                                         <span class="btn-inner--icon"><i class="ni ni-bag-17"></i></span>
-                                        <span class="btn-inner--text">Add</span>
+                                        <span class="btn-inner--text">Create Shift</span>
                                     </button>
                                 </div>
                             </div>

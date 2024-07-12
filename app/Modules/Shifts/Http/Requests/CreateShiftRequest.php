@@ -49,13 +49,20 @@ class CreateShiftRequest extends FormRequest
         ];
     }
 
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
+    protected function prepareForValidation()
     {
-        return true;
+        $this->merge([
+            'time_from' => $this->formatTime($this->time_from),
+            'time_to'   => $this->formatTime($this->time_to),
+        ]);
+    }
+
+    public function formatTime($time)
+    {
+        if (count(explode(':', $time)) != 3) {
+            return $time.':00';
+        }
+
+        return $time;
     }
 }
