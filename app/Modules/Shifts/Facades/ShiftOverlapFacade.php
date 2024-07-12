@@ -23,22 +23,22 @@ class ShiftOverlapFacade
                     return $query->where(
                         DB::raw("CONCAT(`date_from`, ' ', `time_from`)"),
                         '<=',
-                        $startDate
+                        $endDate
                     )->where(
                         DB::raw("CONCAT(`date_to`, ' ', `time_to`)"),
                         '>=',
-                        $endDate
+                        $startDate
                     );
                 })
                     ->orWhere(function ($query2) use ($startDate, $endDate) {
                         return $query2->where(
                             DB::raw("CONCAT(`date_from`, ' ', `time_from`)"),
                             '<=',
-                            $startDate
+                            $endDate
                         )->where(
                             DB::raw("CONCAT(`date_to`, ' ', `time_to`)"),
                             '>=',
-                            $endDate
+                            $startDate
                         );
                     });
             })
@@ -61,26 +61,25 @@ class ShiftOverlapFacade
                     return $query->where(
                         DB::raw("CONCAT(`date_from`, ' ', `time_from`)"),
                         '<=',
-                        $startDate
+                        $endDate
                     )->where(
                         DB::raw("CONCAT(`date_to`, ' ', `time_to`)"),
                         '>=',
-                        $endDate
+                        $startDate
                     );
                 })
                     ->orWhere(function ($query2) use ($startDate, $endDate) {
                         return $query2->where(
                             DB::raw("CONCAT(`date_from`, ' ', `time_from`)"),
                             '<=',
-                            $startDate
+                            $endDate
                         )->where(
                             DB::raw("CONCAT(`date_to`, ' ', `time_to`)"),
                             '>=',
-                            $endDate
+                            $startDate
                         );
                     });
             })
-
             ->first();
     }
 }
