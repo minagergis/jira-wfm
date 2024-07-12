@@ -20,6 +20,8 @@ class BaseHRMSBulkIntegrationJob implements ShouldQueue
 
     public array $scheduleIds;
 
+    public array $deletedScheduleIds;
+
     public string $baseUrl;
 
     public string $id;
@@ -33,9 +35,10 @@ class BaseHRMSBulkIntegrationJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($scheduleIds)
+    public function __construct($scheduleIds,$deletedScheduleIds)
     {
         $this->scheduleIds    = $scheduleIds;
+        $this->deletedScheduleIds = $deletedScheduleIds;
         $this->baseUrl        = config('integration.hrms.host');
         $this->id             = config('integration.hrms.client_id');
         $this->secret         = config('integration.hrms.client_secret');
