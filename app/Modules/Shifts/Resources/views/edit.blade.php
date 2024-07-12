@@ -39,6 +39,15 @@
                 <div class="card-body">
                     <form role="form" method="POST" action="{{ route('post.shifts.edit',$shift->id) }}">
                     @csrf
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                    @endif
                     <!-- Form groups used in grid -->
                         <div class="row">
                             <div class="col-md-6">
@@ -126,7 +135,7 @@
                                 <div class="form-group">
                                     <button class="btn btn-icon btn-primary" type="submit">
                                         <span class="btn-inner--icon"><i class="ni ni-bag-17"></i></span>
-                                        <span class="btn-inner--text">Add</span>
+                                        <span class="btn-inner--text">Edit Shift</span>
                                     </button>
                                 </div>
                             </div>
