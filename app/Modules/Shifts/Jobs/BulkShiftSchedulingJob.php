@@ -51,8 +51,10 @@ class BulkShiftSchedulingJob implements ShouldQueue
     public function handle()
     {
         $createdScheduleIds  = [];
+        $deletedScheduleIds  = [];
         $shift               = Shift::find($this->shiftId);
         $workingShiftDays    = array_values(Arr::only(DaysEnum::DAYSValues, json_decode($shift->days)));
+
         $toOriginal          = Carbon::parse($this->recurringTo. ' '. $shift->time_to);
         foreach ($this->teamMemberIDs as $teamMemberID) {
             $from = Carbon::parse($this->recurringFrom. ' '. $shift->time_from);
@@ -63,7 +65,13 @@ class BulkShiftSchedulingJob implements ShouldQueue
             }
 
             while ($to <= $toOriginal) {
+                if ($oldShift = ShiftOverlapFacade::getOverlappedShift($teamMemberID, $from->toDateTimeString(), $to->toDateTimeString())) {
+                    if (MemberSchedule::where('id', $oldShift->id)->delete()){
+                        $deletedScheduleIds[] = $oldShift->id;
+                    }
+                }
                 if (in_array($from->format('l'), $workingShiftDays)) {
+
                     if (ShiftOverlapFacade::isShiftDoesnotOverlapped($teamMemberID, $from->toDateTimeString(), $to->toDateTimeString())) {
                         $memberSchedule = new MemberSchedule();
 
@@ -80,14 +88,14 @@ class BulkShiftSchedulingJob implements ShouldQueue
 
                 }
 
-
                 $from->addDay();
                 $to->addDay();
             }
+
         }
 
-        if (!empty($createdScheduleIds)) {
-            CreateBulkScheduleIntegrationJob::dispatch($createdScheduleIds);
+        if (!empty($createdScheduleIds) or !empty($deletedScheduleIds)) {
+            CreateBulkScheduleIntegrationJob::dispatch($createdScheduleIds,$deletedScheduleIds);
         }
     }
 }

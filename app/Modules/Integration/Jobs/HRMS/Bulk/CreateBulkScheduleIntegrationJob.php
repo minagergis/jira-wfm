@@ -51,6 +51,9 @@ class CreateBulkScheduleIntegrationJob extends BaseHRMSBulkIntegrationJob
             ];
         }
 
-        return $schedulesObject;
+        return [
+            'schedulesObject' => $schedulesObject,
+            'deletedSchedulesObject' => $this->deletedScheduleIds,
+        ];
     }
 }
