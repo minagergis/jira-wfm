@@ -2,6 +2,7 @@
 
 namespace App\Scopes;
 
+use App\Modules\Shifts\Entities\Shift;
 use App\Modules\Tasks\Entities\Task;
 use App\Modules\Teams\Entities\Team;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +29,13 @@ class AuthUserScope implements Scope
 
             if ($model instanceof Task) {
                 $builder->where('tasks.team_id', auth()->user()->managed_team_id);
+            }
+
+            if ($model instanceof Shift) {
+                $builder->whereHas('teams', function (Builder $query) {
+                    $query->where('teams.id', auth()->user()->managed_team_id);
+                });
+
             }
 
             if ($model instanceof TaskDistributionLog) {

@@ -3,6 +3,7 @@
 namespace App\Modules\Shifts\Entities;
 
 use App\Modules\Teams\Entities\Team;
+use App\Scopes\AuthUserScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use App\Modules\TeamMembers\Entities\TeamMember;
@@ -22,6 +23,11 @@ class Shift extends Model
         'time_from',
         'time_to',
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new AuthUserScope());
+    }
 
     public function teams(): BelongsToMany
     {
