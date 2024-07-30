@@ -39,7 +39,7 @@ class BulkShiftController extends AbstractCoreController
         }
 
         $shifts      = $this->shiftService->getShiftsByTeam($teamId);
-        $teamMembers = $this->teamMemberService->getTeamMembersByTeamId($teamId);
+        $teamMembers = $this->teamMemberService->getActiveTeamMemberByTeamId($teamId);
 
         return view('shifts::bulk.schedule', compact('shifts', 'teamMembers', 'teamId'));
     }
