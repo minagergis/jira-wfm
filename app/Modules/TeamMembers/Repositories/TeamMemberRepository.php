@@ -44,6 +44,15 @@ class TeamMemberRepository extends AbstractCoreRepository
         })->get();
     }
 
+    public function getActiveTeamMemberByTeamId($teamId)
+    {
+        return $this->model
+            ->where('is_active', 1)
+            ->whereHas('teams', function (Builder $query) use ($teamId) {
+                $query->where('teams.id', $teamId);
+            })->get();
+    }
+
     public function getTeamMemberWithScheduleInDay($dayDate)
     {
         return $this->model->whereHas('schedules', function (Builder $query) use ($dayDate) {
