@@ -1,73 +1,89 @@
 @extends('layouts.master')
+
 @section('title')
     {!! config('tasks.name') !!}
 @endsection
-@section('content')
-    <div class="main-content" id="panel">
 
-        <div class="header bg-primary pb-6">
-            <div class="container-fluid">
-                <div class="header-body">
-                    <div class="row align-items-center py-4">
-                        <div class="col-lg-6 col-7">
-                            <h6 class="h2 text-white d-inline-block mb-0">Tasks</h6>
-                            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                                    <li class="breadcrumb-item"><a href="{{route('home')}}"><i class="fas fa-home"></i></a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Tasks</li>
-                                </ol>
-                            </nav>
-                        </div>
-                        <div class="col-lg-6 col-5 text-right">
-                            @can('create-task')
-                            <a href="{{route('get.tasks.create')}}" class="btn btn-sm btn-neutral">New</a>
-                            @endcan
-                        </div>
-                    </div>
+@section('styles')
+<link rel="stylesheet" href="{{asset('new-style-assets/dashboard/css/dashboard.css')}}" type="text/css">
+<link rel="stylesheet" href="{{asset('new-style-assets/lists/css/lists.css')}}" type="text/css">
+@endsection
+
+@section('content')
+    <!-- Header Section -->
+    <div class="header-modern">
+        <div class="container-fluid">
+            <div class="row align-items-center mb-4">
+                <div class="col-lg-6 col-7">
+                    <h1 class="h2 text-white mb-2">Tasks</h1>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark mb-0">
+                            <li class="breadcrumb-item"><a href="{{route('home')}}"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item active text-white" aria-current="page">Tasks</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    @can('create-task')
+                    <a href="{{route('get.tasks.create')}}" class="btn btn-sm btn-white">
+                        <i class="fas fa-plus mr-1"></i>New Task
+                    </a>
+                    @endcan
                 </div>
             </div>
         </div>
-        <!-- Page content -->
-        <div class="container-fluid mt--6">
-            <!-- Table -->
-            <div class="row">
-                <div class="col">
-                    <div class="card">
-                        <!-- Card header -->
-                        <div class="card-header">
-                            <h3 class="mb-0">Tasks</h3>
-                        </div>
-                        <div class="table-responsive py-4">
-                            <table class="table table-flush" id="datatable-basic">
-                                <thead class="thead-light">
+    </div>
+
+    <!-- Page content -->
+    <div class="container-fluid mt-5">
+        <div class="row">
+            <div class="col">
+                <div class="chart-card card">
+                    <div class="chart-body">
+                        <div class="table-responsive">
+                            <table class="table modern-list-table" id="datatable-basic">
+                                <thead>
                                 <tr>
                                     <th>Name</th>
                                     <th>Points</th>
                                     <th>Team Name</th>
-                                    <th>Controls ⌘</th>
+                                    <th>Actions</th>
                                 </tr>
                                 </thead>
-
                                 <tbody>
-                                @foreach($tasks as $task)
+                                    @foreach($tasks as $task)
                                     <tr>
-                                        <td>{{$task->name}}</td>
-                                        <td>{{$task->points}}</td>
-                                        <td>{{$task->team->name ?? 'N/A'}}</td>
                                         <td>
-                                            @can('edit-task')
-                                            <a href="{{route('get.tasks.edit',$task->id)}}" class="btn btn-icon btn-dribbble" type="button">
-                                                <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
-                                                <span class="btn-inner--text">Update</span>
-                                            </a>
-                                            @endcan
+                                            <div class="list-item-name">{{$task->name}}</div>
+                                        </td>
+                                        <td>
+                                            <span class="list-item-badge">{{$task->points}}</span>
+                                        </td>
+                                        <td>
+                                            <div class="list-item-description">{{$task->team->name ?? 'N/A'}}</div>
+                                        </td>
+                                        <td>
+                                            <div class="list-actions">
+                                                @can('edit-task')
+                                                <a href="{{route('get.tasks.edit',$task->id)}}" class="list-action-btn btn-primary-gradient">
+                                                    <i class="fa fa-edit"></i>
+                                                    <span>Update</span>
+                                                </a>
+                                                @endcan
+                                            </div>
                                         </td>
                                     </tr>
-                                @endforeach
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+@endsection
+
+@section('scripts')
+<script src="{{asset('new-style-assets/lists/js/lists.js')}}"></script>
 @endsection

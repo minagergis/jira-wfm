@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [6.0.1] 2024-11-27
 ### Changed
 - Some changes in the UI.
+- Some changes in lists.
 
 
 ## [5.1.2] 2024-07-30
