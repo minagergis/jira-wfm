@@ -1,0 +1,603 @@
+/* Generic Form Styles - Applied to all form pages */
+
+/* Form Card Styles */
+.modern-form-card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    background: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.modern-form-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.12), 0 4px 8px -2px rgba(0, 0, 0, 0.08);
+}
+
+.modern-form-card-header {
+    border-bottom: 1px solid #e2e8f0;
+    padding: 1.5rem;
+    background: linear-gradient(to right, #f8f9fa, #ffffff);
+}
+
+.modern-form-card-header h3 {
+    color: #1a202c;
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+.modern-form-card-body {
+    padding: 2rem;
+}
+
+/* Form Group Styles */
+.modern-form-group {
+    margin-bottom: 1.5rem;
+}
+
+.modern-form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.025em;
+}
+
+.modern-form-control {
+    width: 100%;
+    padding: 0.875rem 1.25rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: #1a202c;
+    background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    position: relative;
+}
+
+.modern-form-control::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 12px 12px 0 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modern-form-control:focus {
+    outline: none;
+    border-color: #667eea;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15), 0 4px 16px rgba(102, 126, 234, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    transform: translateY(-1px);
+}
+
+.modern-form-control:focus::before {
+    opacity: 1;
+}
+
+.modern-form-control:hover:not(:focus):not(:disabled) {
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    transform: translateY(-1px);
+}
+
+.modern-form-control::placeholder {
+    color: #a0aec0;
+    opacity: 1;
+}
+
+.modern-form-control:disabled,
+.modern-form-control[readonly] {
+    background-color: #f8f9fa;
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Textarea Styles */
+.modern-form-control textarea,
+textarea.modern-form-control {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Select Styles */
+select.modern-form-control {
+    background: #ffffff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23667eea' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") no-repeat right 1rem center;
+    background-size: 18px 14px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 3rem;
+    cursor: pointer;
+}
+
+/* Form Button Styles */
+.modern-form-btn {
+    padding: 0.75rem 2rem;
+    border-radius: 10px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    border: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.modern-form-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.modern-form-btn:hover::before {
+    width: 400px;
+    height: 400px;
+}
+
+.modern-form-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+}
+
+.modern-form-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.modern-form-btn i {
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease;
+}
+
+.modern-form-btn:hover i {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.modern-form-btn span {
+    position: relative;
+    z-index: 1;
+}
+
+.modern-form-btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+}
+
+.modern-form-btn-primary:hover {
+    background: linear-gradient(135deg, #5568d3 0%, #6a3d91 100%);
+    color: #ffffff;
+}
+
+.modern-form-btn-secondary {
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    color: #475569;
+}
+
+.modern-form-btn-secondary:hover {
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+    color: #1e293b;
+}
+
+/* Form Actions */
+.modern-form-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* Error Messages */
+.modern-form-error {
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.modern-form-error::before {
+    content: '⚠️';
+    font-size: 1rem;
+}
+
+.modern-form-control.is-invalid {
+    border-color: #dc2626;
+    box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1);
+}
+
+.modern-form-control.is-invalid:focus {
+    border-color: #dc2626;
+    box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.15);
+}
+
+/* Success Messages */
+.modern-form-success {
+    color: #059669;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.modern-form-success::before {
+    content: '✓';
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* Help Text */
+.modern-form-help {
+    font-size: 0.8125rem;
+    color: #718096;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.modern-form-help::before {
+    content: 'ℹ️';
+    font-size: 0.875rem;
+}
+
+/* Required Field Indicator */
+.modern-form-label.required::after {
+    content: ' *';
+    color: #dc2626;
+    font-weight: 700;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .modern-form-card-body {
+        padding: 1.5rem;
+    }
+    
+    .modern-form-group {
+        margin-bottom: 1.25rem;
+    }
+    
+    .modern-form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .modern-form-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .modern-form-card-body {
+        padding: 1.25rem;
+    }
+    
+    .modern-form-card-header {
+        padding: 1.25rem;
+    }
+    
+    .modern-form-card-header h3 {
+        font-size: 1.125rem;
+    }
+}
+
+/* Range Slider Input Styles - Compatible with modern-form-control */
+input[type="range"].modern-form-control {
+    padding: 0.5rem 0;
+    height: auto;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+input[type="range"].modern-form-control:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+    transform: none;
+}
+
+input[type="range"].modern-form-control:hover {
+    border: none;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Range Track */
+input[type="range"].modern-form-control::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(to right, #e2e8f0 0%, #cbd5e1 50%, #e2e8f0 100%);
+    border-radius: 4px;
+    border: none;
+}
+
+input[type="range"].modern-form-control::-moz-range-track {
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(to right, #e2e8f0 0%, #cbd5e1 50%, #e2e8f0 100%);
+    border-radius: 4px;
+    border: none;
+}
+
+/* Range Thumb */
+input[type="range"].modern-form-control::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3), 0 0 0 3px rgba(102, 126, 234, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid #ffffff;
+    margin-top: -6px;
+}
+
+input[type="range"].modern-form-control::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.4), 0 0 0 4px rgba(102, 126, 234, 0.15);
+}
+
+input[type="range"].modern-form-control::-webkit-slider-thumb:active {
+    transform: scale(1.05);
+    box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3), 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+input[type="range"].modern-form-control::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3), 0 0 0 3px rgba(102, 126, 234, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid #ffffff;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+input[type="range"].modern-form-control::-moz-range-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.4), 0 0 0 4px rgba(102, 126, 234, 0.15);
+}
+
+input[type="range"].modern-form-control::-moz-range-thumb:active {
+    transform: scale(1.05);
+}
+
+/* Range Slider Wrapper */
+.range-slider-wrapper {
+    position: relative;
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.range-slider-wrapper input[type="range"] {
+    flex: 1;
+}
+
+.range-value-display {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.25);
+    min-width: 60px;
+    text-align: center;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.range-value-display:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.35);
+}
+
+/* Centered Range Slider (Tasks Module Only) */
+.range-slider-centered {
+    justify-content: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Enhanced Select Hover State */
+select.modern-form-control:hover {
+    background: #ffffff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%235568d3' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") no-repeat right 1rem center;
+    background-size: 18px 14px;
+}
+
+select.modern-form-control:focus {
+    background: #ffffff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23667eea' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") no-repeat right 1rem center;
+    background-size: 18px 14px;
+}
+
+/* Enhanced Color Input */
+input[type="text"].modern-form-control#demo-input {
+    cursor: pointer;
+    position: relative;
+}
+
+input[type="text"].modern-form-control#demo-input::after {
+    content: '🎨';
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* Time Input Styling */
+input[type="time"].modern-form-control {
+    cursor: pointer;
+}
+
+/* Date Input Styling */
+input[type="date"].modern-form-control {
+    cursor: pointer;
+}
+
+/* Date/Time Display - Enhanced Visibility */
+.date-time-display {
+    padding: 1.25rem 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.25);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.date-time-display::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.date-time-display:hover::before {
+    left: 100%;
+}
+
+.date-time-display:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35);
+}
+
+.date-time-value {
+    display: flex;
+    align-items: center;
+    color: #ffffff;
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.date-time-value i {
+    font-size: 1.25rem;
+    opacity: 0.9;
+}
+
+.date-part {
+    margin-right: 0.75rem;
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.time-part {
+    padding: 0.375rem 0.75rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+}
+
+.highlight-label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 0.75rem;
+}
+
+.highlight-label i {
+    color: #667eea;
+}
+
+/* Ensure equal height for date-time fields */
+.modern-form-group.h-100 {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.modern-form-group.h-100 .date-time-display {
+    flex: 1;
+    min-height: 80px;
+}
+
+/* Checkbox Toggle Styling */
+.modern-checkbox-group {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.modern-checkbox-group:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.modern-checkbox-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.modern-checkbox-item:last-child {
+    border-bottom: none;
+}
+
+.modern-checkbox-item label {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: #4a5568;
+    font-weight: 500;
+    flex: 1;
+}
+
+.modern-checkbox-group .custom-toggle {
+    margin: 0;
+}
+
