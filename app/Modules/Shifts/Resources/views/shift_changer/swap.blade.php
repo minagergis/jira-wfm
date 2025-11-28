@@ -1,98 +1,140 @@
 @extends('layouts.master')
+
 @section('title')
-    {!! config('shifts.name') !!}
+    {!! config('shifts.name') !!} - People Swapping
 @endsection
-@section('content')
 
-    <div class="main-content" id="panel">
+@section('styles')
+@include('partials.modern-form-wrapper', ['includeStyles' => true])
+@stack('custom-styles')
+@endsection
 
-        <!-- Header -->
-        <div class="header bg-primary pb-6">
-            <div class="container-fluid">
-                <div class="header-body">
-                    <div class="row align-items-center py-4">
-                        <div class="col-lg-6 col-7">
-                            <h6 class="h2 text-white d-inline-block mb-0">Shifts </h6>
-                            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                                    <li class="breadcrumb-item"><a href="{{route('home')}}"><i class="fas fa-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="{{ url()->previous() }}">Shift Changer</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Swapping People</li>
-                                </ol>
-                            </nav>
-                        </div>
-                        <div class="col-lg-6 col-5 text-right">
-                        </div>
+@php
+ob_start();
+@endphp
+<form role="form" method="POST" action="{{route('post.schedule.shift-changer.people-swap', $memberSchedule->id)}}">
+    @csrf
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="modern-form-group">
+                <label class="modern-form-label" for="name">Shift Name</label>
+                <input 
+                    type="text" 
+                    class="modern-form-control" 
+                    id="name" 
+                    value="{{$memberSchedule->name}}" 
+                    placeholder="Name of shift"
+                    disabled
+                >
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="modern-form-group h-100">
+                <label class="modern-form-label highlight-label" for="date_from">
+                    <i class="fas fa-calendar-alt mr-2"></i>From
+                </label>
+                <div class="date-time-display">
+                    <div class="date-time-value">
+                        <i class="fas fa-clock mr-2"></i>
+                        <span class="date-part">{{\Carbon\Carbon::parse($memberSchedule->date_from)->format('M d, Y')}}</span>
+                        <span class="time-part">{{\Carbon\Carbon::createFromTimeString($memberSchedule->time_from)->format('g:i A')}}</span>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Page content -->
-        <div class="container-fluid mt--6">
-            <div class="card mb-4">
-                <!-- Card header -->
-                <div class="card-header">
-                    <h3 class="mb-0">People swapping form</h3>
-                </div>
-                <!-- Card body -->
-                <div class="card-body">
-                    <form role="form" method="POST" action="{{route('post.schedule.shift-changer.people-swap',$memberSchedule->id)}}">
-                    @csrf
-                    <!-- Form groups used in grid -->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="name">Name</label>
-                                    <input disabled type="text" class="form-control" value="{{$memberSchedule->name}}" placeholder="Name of shift">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="name">From</label>
-                                    <input disabled type="text" class="form-control" placeholder="description of shift" value="{{$memberSchedule->date_from}} {{$memberSchedule->time_from}}">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="name">To</label>
-                                    <input disabled type="text" class="form-control" value="{{$memberSchedule->date_to}} {{$memberSchedule->time_to}}" placeholder="description of shift">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="name">Assigned To</label>
-                                    <input disabled type="text" class="form-control" value="{{$memberSchedule->member->name}}" placeholder="Name of shift">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="team_id">Should Swap with</label>
-                                    <select required class="form-control" name="new_member_id" data-toggle="select">
-                                        @foreach ($members as $member)
-                                            <option value="{{$member->id}}">{{$member->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <button class="btn btn-icon btn-primary" type="submit">
-                                        <span class="btn-inner--icon"><i class="ni ni-bag-17"></i></span>
-                                        <span class="btn-inner--text">Swap</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+        <div class="col-md-6">
+            <div class="modern-form-group h-100">
+                <label class="modern-form-label highlight-label" for="date_to">
+                    <i class="fas fa-calendar-check mr-2"></i>To
+                </label>
+                <div class="date-time-display">
+                    <div class="date-time-value">
+                        <i class="fas fa-clock mr-2"></i>
+                        <span class="date-part">{{\Carbon\Carbon::parse($memberSchedule->date_to)->format('M d, Y')}}</span>
+                        <span class="time-part">{{\Carbon\Carbon::createFromTimeString($memberSchedule->time_to)->format('g:i A')}}</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="modern-form-group">
+                <label class="modern-form-label" for="assigned_to">Currently Assigned To</label>
+                <input 
+                    type="text" 
+                    class="modern-form-control" 
+                    id="assigned_to" 
+                    value="{{$memberSchedule->member->name}}" 
+                    placeholder="Assigned team member"
+                    disabled
+                >
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="modern-form-group">
+                <label class="modern-form-label required" for="new_member_id">Swap With</label>
+                <select 
+                    class="modern-form-control @error('new_member_id') is-invalid @enderror" 
+                    id="new_member_id" 
+                    name="new_member_id" 
+                    required
+                >
+                    @foreach ($members as $member)
+                        <option value="{{ $member->id }}" {{ old('new_member_id') == $member->id ? 'selected' : '' }}>{{ $member->name }}</option>
+                    @endforeach
+                </select>
+                @error('new_member_id')
+                    <div class="modern-form-error">{{ $message }}</div>
+                @enderror
+                <div class="modern-form-help">Select the team member to swap with</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modern-form-actions">
+        <button type="submit" class="modern-form-btn modern-form-btn-primary">
+            <i class="fas fa-exchange-alt"></i>
+            <span>Swap People</span>
+        </button>
+        <a href="{{ url()->previous() }}" class="modern-form-btn modern-form-btn-secondary">
+            <i class="fas fa-times"></i>
+            <span>Cancel</span>
+        </a>
+    </div>
+</form>
+@php
+$formContent = ob_get_clean();
+@endphp
+
+@section('content')
+@include('partials.modern-form-wrapper', [
+    'title' => 'People Swapping',
+    'breadcrumbs' => [
+        ['label' => 'Home', 'url' => route('home'), 'icon' => 'fas fa-home'],
+        ['label' => 'Shift Changer', 'url' => url()->previous()],
+        ['label' => 'People Swapping', 'url' => null]
+    ],
+    'headerButtons' => [
+        [
+            'label' => 'Back', 
+            'url' => url()->previous(), 
+            'icon' => 'fas fa-arrow-left',
+            'spacing' => ''
+        ]
+    ],
+    'formTitle' => 'People Swapping Form',
+    'formIcon' => 'fas fa-exchange-alt',
+    'formContent' => $formContent,
+])
+@endsection
+
+@section('scripts')
+<script src="{{asset('new-style-assets/forms/js/forms.js')}}"></script>
+@stack('custom-scripts')
 @endsection

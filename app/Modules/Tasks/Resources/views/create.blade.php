@@ -1,96 +1,157 @@
 @extends('layouts.master')
+
 @section('title')
-    {!! config('tasks.name') !!}
+    {!! config('tasks.name') !!} - Create
 @endsection
-@section('content')
 
-    <div class="main-content" id="panel">
+@section('styles')
+@include('partials.modern-form-wrapper', ['includeStyles' => true])
+@stack('custom-styles')
+@endsection
 
-        <!-- Header -->
-        <div class="header bg-primary pb-6">
-            <div class="container-fluid">
-                <div class="header-body">
-                    <div class="row align-items-center py-4">
-                        <div class="col-lg-6 col-7">
-                            <h6 class="h2 text-white d-inline-block mb-0">Tasks </h6>
-                            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                                    <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="#">Tasks</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Add Task Item</li>
-                                </ol>
-                            </nav>
-                        </div>
-                        <div class="col-lg-6 col-5 text-right">
-                            <a href="{{route('get.tasks.create')}}" class="btn btn-sm btn-neutral">New</a>
-                        </div>
-                    </div>
-                </div>
+@php
+ob_start();
+@endphp
+<form role="form" method="POST" action="{{ route('post.tasks.create') }}">
+    @csrf
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="modern-form-group">
+                <label class="modern-form-label required" for="name">Name</label>
+                <input 
+                    type="text" 
+                    class="modern-form-control @error('name') is-invalid @enderror" 
+                    id="name" 
+                    name="name" 
+                    placeholder="Name of task"
+                    value="{{ old('name') }}"
+                    required
+                >
+                @error('name')
+                    <div class="modern-form-error">{{ $message }}</div>
+                @enderror
             </div>
         </div>
-        <!-- Page content -->
-        <div class="container-fluid mt--6">
-            <div class="card mb-4">
-                <!-- Card header -->
-                <div class="card-header">
-                    <h3 class="mb-0">Add Task Form</h3>
-                </div>
-                <!-- Card body -->
-                <div class="card-body">
-                    <form role="form" method="POST" action="{{ route('post.tasks.create') }}">
-                    @csrf
-                    <!-- Form groups used in grid -->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="name">Name</label>
-                                    <input required type="text" class="form-control" id="name"  name="name" placeholder="Name of task">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="description">Description</label>
-                                    <textarea required type="text" class="form-control" id="description"  name="description" placeholder="Description of task"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="team">Team</label>
-                                    <select required class="form-control" name="team_id" data-toggle="select">
-                                        @foreach ($teams as $team)
-                                            <option value="{{$team->id}}">{{$team->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="weight">Points</label>
-                                    <select required class="form-control" name="points" data-toggle="select">
-                                        @for ($i = 0; $i <= 1000; $i++)
-                                            <option value="{{$i}}">{{$i}}</option>
-                                        @endfor
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <button class="btn btn-icon btn-primary" type="submit">
-                                        <span class="btn-inner--icon"><i class="ni ni-bag-17"></i></span>
-                                        <span class="btn-inner--text">Add</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+        <div class="col-md-6">
+            <div class="modern-form-group">
+                <label class="modern-form-label required" for="team_id">Team</label>
+                <select 
+                    class="modern-form-control @error('team_id') is-invalid @enderror" 
+                    id="team_id" 
+                    name="team_id" 
+                    required
+                >
+                    @foreach ($teams as $team)
+                        <option value="{{ $team->id }}" {{ old('team_id') == $team->id ? 'selected' : '' }}>{{ $team->name }}</option>
+                    @endforeach
+                </select>
+                @error('team_id')
+                    <div class="modern-form-error">{{ $message }}</div>
+                @enderror
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="modern-form-group">
+                <label class="modern-form-label required" for="description">Description</label>
+                <textarea 
+                    class="modern-form-control @error('description') is-invalid @enderror" 
+                    id="description" 
+                    name="description" 
+                    placeholder="Description of task"
+                    rows="4"
+                    required
+                >{{ old('description') }}</textarea>
+                @error('description')
+                    <div class="modern-form-error">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="modern-form-group">
+                <label class="modern-form-label required" for="points">Points</label>
+                <div class="range-slider-wrapper range-slider-centered">
+                    <input 
+                        type="range" 
+                        class="modern-form-control @error('points') is-invalid @enderror" 
+                        id="points" 
+                        name="points" 
+                        min="0" 
+                        max="1000" 
+                        value="{{ old('points', 0) }}"
+                        required
+                    >
+                    <span class="range-value-display" id="points-display">{{ old('points', 0) }}</span>
+                </div>
+                @error('points')
+                    <div class="modern-form-error">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+    </div>
+
+    <div class="modern-form-actions">
+        <button type="submit" class="modern-form-btn modern-form-btn-primary">
+            <i class="fas fa-save"></i>
+            <span>Create Task</span>
+        </button>
+        <a href="{{route('get.tasks.list')}}" class="modern-form-btn modern-form-btn-secondary">
+            <i class="fas fa-times"></i>
+            <span>Cancel</span>
+        </a>
+    </div>
+</form>
+@php
+$formContent = ob_get_clean();
+@endphp
+
+@section('content')
+@include('partials.modern-form-wrapper', [
+    'title' => 'Create Task',
+    'breadcrumbs' => [
+        ['label' => 'Home', 'url' => '#', 'icon' => 'fas fa-home'],
+        ['label' => 'Tasks', 'url' => route('get.tasks.list')],
+        ['label' => 'Create Task', 'url' => null]
+    ],
+    'headerButtons' => [
+        [
+            'label' => 'Back to List', 
+            'url' => route('get.tasks.list'), 
+            'icon' => 'fas fa-arrow-left',
+            'spacing' => ''
+        ]
+    ],
+    'formTitle' => 'Add Task Form',
+    'formIcon' => 'fas fa-plus-circle',
+    'formContent' => $formContent,
+])
+@endsection
+
+@section('scripts')
+<script src="{{asset('new-style-assets/forms/js/forms.js')}}"></script>
+<script>
+    $(function () {
+        // Range slider for points
+        const pointsSlider = document.getElementById('points');
+        const pointsDisplay = document.getElementById('points-display');
+
+        function updatePoints(value) {
+            pointsDisplay.textContent = value;
+        }
+
+        pointsSlider.addEventListener('input', function() {
+            updatePoints(this.value);
+        });
+
+        // Initialize
+        updatePoints(pointsSlider.value);
+    });
+</script>
+@stack('custom-scripts')
 @endsection
