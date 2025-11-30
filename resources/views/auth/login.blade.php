@@ -16,91 +16,67 @@
     <link rel="stylesheet" href="{{asset('assets/vendor/@fortawesome/fontawesome-free/css/all.min.css')}}" type="text/css">
     <!-- Argon CSS -->
     <link rel="stylesheet" href="{{asset('assets/css/argon.css?v=1.1.0')}}" type="text/css">
+    <link rel="stylesheet" href="{{asset('new-style-assets/auth/css/login.css')}}" type="text/css">
 </head>
 
 <body class="bg-default">
 
 <!-- Main content -->
 <div class="main-content">
-    <!-- Header -->
-    <div class="header bg-gradient-primary py-6 py-lg-6 pt-lg-6">
-        <div class="container">
-            <div class="header-body text-center mb-7">
-                <div class="row justify-content-center">
-                    <div class="col-xl-5 col-lg-6 col-md-8 px-5">
-                        <h1 class="text-white">WORK FORCE MANAGEMENT</h1>
-                    </div>
-                </div>
+    <div class="card login-card bg-secondary border-0 mb-0">
+        <div class="card-header bg-transparent">
+            <div class="text-center">
+                <h2 class="welcome-text">WELCOME BACK</h2>
+                <div class="brand-text">WORK FORCE MANAGEMENT</div>
             </div>
         </div>
-        <div class="separator separator-bottom separator-skew zindex-100">
-            <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
-            </svg>
-        </div>
-    </div>
-    <!-- Page content -->
-    <div class="container mt--8 pb-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-7">
-                <div class="card bg-secondary border-0 mb-0">
-                    <div class="card-header bg-transparent pb-4">
-                        <div class="text-muted text-center mt-2 mb-3">WELCOME BACK</div>
+        <div class="card-body">
+            <form role="form" method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="form-group">
+                    <div class="input-group input-group-merge input-group-alternative">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                        </div>
+                        <input name="email" class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('Email Address') }}" type="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                     </div>
-                    <div class="card-body px-lg-5 py-lg-5">
-                        <form role="form" method="POST" action="{{ route('login') }}">
-                            @csrf
-                            <div class="form-group mb-3">
-                                <div class="input-group input-group-merge input-group-alternative">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                                    </div>
-                                    <input name="email" class="form-control @error('email') is-invalid @enderror" placeholder="{{ __('Email Address') }}" type="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group input-group-merge input-group-alternative">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                                    </div>
-                                    <input name="password" class="form-control @error('password') is-invalid @enderror" placeholder="{{ __('Password') }}" type="password" name="password" required autocomplete="current-password">
-                                </div>
-                            </div>
-                            <div class="custom-control custom-control-alternative custom-checkbox">
-                                <input class="custom-control-input" id=" customCheckLogin" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                <label class="custom-control-label" for=" customCheckLogin">
-                                    <span class="text-muted">{{ __('Remember Me') }}</span>
-                                </label>
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary my-4"> {{ __('Login') }}</button>
-                            </div>
-                        </form>
-                    </div>
+                    @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
-{{--                <div class="row mt-3">--}}
-{{--                    @if (Route::has('password.request'))--}}
-{{--                    <div class="col-6">--}}
-{{--                        <a href="{{ route('password.request') }}" class="text-light"><small> {{ __('Forgot Your Password?') }}</small></a>--}}
-{{--                    </div>--}}
-{{--                    @endif--}}
-{{--                    <div class="col-6 text-right">--}}
-{{--                        <a href="#" class="text-light"><small>Create new account</small></a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-            </div>
+                <div class="form-group">
+                    <div class="input-group input-group-merge input-group-alternative">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                        </div>
+                        <input name="password" class="form-control @error('password') is-invalid @enderror" placeholder="{{ __('Password') }}" type="password" required autocomplete="current-password">
+                    </div>
+                    @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="custom-control custom-control-alternative custom-checkbox">
+                    <input class="custom-control-input" id="customCheckLogin" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                    <label class="custom-control-label" for="customCheckLogin">
+                        <span>{{ __('Remember Me') }}</span>
+                    </label>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">{{ __('Login') }}</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 <!-- Footer -->
-<footer class="py-5" id="footer-main">
+<footer id="footer-main">
     <div class="container">
-        <div class="row align-items-center justify-content-xl-between">
-            <div class="col-xl-12">
-                <div class="copyright text-center text-xl-center text-muted">
-                    &copy; <?php echo date('Y')?> <a href="http://wfm.antipiracy.me" class="font-weight-bold ml-1" target="_blank">Made with love ❤️</a>
-                </div>
-            </div>
+        <div class="copyright text-center">
+            &copy; <?php echo date('Y')?> <a href="http://wfm.antipiracy.me" target="_blank">Made with love ❤️</a>
         </div>
     </div>
 </footer>

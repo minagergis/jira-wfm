@@ -110,11 +110,11 @@
 
                         @if(auth()->user()->can('list-shift') || auth()->user()->can('create-shift'))
                             <li class="nav-item">
-                                <a class="nav-link" href="#navbar-components-tasks" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-components-tasks">
-                                    <i class="ni ni-ui-04 calendar"></i>
+                                <a class="nav-link" href="#navbar-components-shifts" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-components-shifts">
+                                    <i class="ni ni-calendar-grid-58 text-warning"></i>
                                     <span class="nav-link-text">Shifts</span>
                                 </a>
-                                <div class="collapse" id="navbar-components-tasks">
+                                <div class="collapse" id="navbar-components-shifts">
                                     <ul class="nav nav-sm flex-column">
                                         @can('create-shift')
                                             <li class="nav-item">
