@@ -1,0 +1,271 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+}
+@media (max-width: 480px) {
+    html, body {
+        overflow-y: auto;
+    }
+}
+body.bg-default {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+.main-content {
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+}
+.login-card {
+    border-radius: 24px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    border: none;
+    overflow: hidden;
+    background: #ffffff;
+    backdrop-filter: blur(20px);
+}
+.login-card .card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    padding: 1.5rem 1.5rem 1.25rem;
+}
+.login-card .card-header .welcome-text {
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin: 0;
+    text-align: center;
+}
+.login-card .card-header .brand-text {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: center;
+    margin-top: 0.25rem;
+    letter-spacing: 1.5px;
+}
+.login-card .card-body {
+    padding: 2rem 2rem 1.5rem;
+}
+.input-group-alternative {
+    border-radius: 12px;
+    border: 1.5px solid #e2e8f0;
+    transition: all 0.2s ease;
+    background: #ffffff;
+}
+.input-group-alternative:focus-within {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    transform: translateY(-1px);
+}
+.input-group-text {
+    background: transparent;
+    border: none;
+    color: #667eea;
+    padding: 0.625rem 0.875rem;
+}
+.form-control {
+    border: none;
+    padding: 0.625rem 0.875rem;
+    font-size: 0.9375rem;
+    background: transparent;
+}
+.form-control:focus {
+    box-shadow: none;
+    background: transparent;
+}
+.form-control::placeholder {
+    color: #94a3b8;
+    font-weight: 400;
+}
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 12px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.35);
+    width: 100%;
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.45);
+}
+.btn-primary:active {
+    transform: translateY(0);
+}
+.custom-checkbox {
+    margin-bottom: 1rem;
+}
+.custom-checkbox .custom-control-label {
+    cursor: pointer;
+    color: #64748b;
+    font-size: 0.875rem;
+}
+.custom-checkbox .custom-control-label::before {
+    border-radius: 6px;
+    border: 1.5px solid #cbd5e1;
+    width: 1.125rem;
+    height: 1.125rem;
+}
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: #667eea;
+}
+.invalid-feedback {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.8125rem;
+    color: #ef4444;
+    font-weight: 500;
+}
+.form-group {
+    margin-bottom: 1.25rem;
+}
+.form-group:last-of-type {
+    margin-bottom: 1rem;
+}
+#footer-main {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.75rem 1rem;
+    background: transparent;
+    z-index: 10;
+}
+#footer-main .copyright {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+#footer-main .copyright a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+}
+#footer-main .copyright a:hover {
+    color: #ffffff;
+}
+@media (max-width: 768px) {
+    .login-card .card-body {
+        padding: 1.5rem 1.5rem 1.25rem;
+    }
+    .login-card .card-header {
+        padding: 1.25rem 1.5rem 1rem;
+    }
+    .login-card .card-header .welcome-text {
+        font-size: 1.125rem;
+    }
+    .login-card .card-header .brand-text {
+        font-size: 0.75rem;
+    }
+    body.bg-default {
+        padding: 0.75rem;
+    }
+    .main-content {
+        max-width: 100%;
+    }
+}
+@media (max-width: 480px) {
+    .login-card {
+        border-radius: 16px;
+    }
+    .login-card .card-body {
+        padding: 1.25rem 1.25rem 1rem;
+    }
+    .login-card .card-header {
+        padding: 1rem 1.25rem 0.875rem;
+    }
+    .login-card .card-header .welcome-text {
+        font-size: 1rem;
+    }
+    .login-card .card-header .brand-text {
+        font-size: 0.6875rem;
+        letter-spacing: 1px;
+    }
+    .form-control {
+        font-size: 0.875rem;
+        padding: 0.5rem 0.75rem;
+    }
+    .input-group-text {
+        padding: 0.5rem 0.75rem;
+    }
+    .btn-primary {
+        padding: 0.625rem 1.5rem;
+        font-size: 0.875rem;
+    }
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    body.bg-default {
+        padding: 0.5rem;
+    }
+    #footer-main {
+        padding: 0.5rem 0.75rem;
+    }
+    #footer-main .copyright {
+        font-size: 0.6875rem;
+    }
+}
+@media (max-height: 700px) {
+    .login-card .card-body {
+        padding: 1.5rem 1.5rem 1.25rem;
+    }
+    .login-card .card-header {
+        padding: 1rem 1.5rem 0.875rem;
+    }
+    .form-group {
+        margin-bottom: 1rem;
+    }
+}
+@media (max-height: 600px) {
+    .login-card .card-body {
+        padding: 1.25rem 1.5rem 1rem;
+    }
+    .login-card .card-header {
+        padding: 0.875rem 1.5rem 0.75rem;
+    }
+    .login-card .card-header .welcome-text {
+        font-size: 1rem;
+    }
+    .login-card .card-header .brand-text {
+        font-size: 0.75rem;
+        margin-top: 0.125rem;
+    }
+    .form-group {
+        margin-bottom: 0.875rem;
+    }
+    .custom-checkbox {
+        margin-bottom: 0.75rem;
+    }
+}
+@media (orientation: landscape) and (max-height: 500px) {
+    html, body {
+        overflow: auto;
+    }
+    body.bg-default {
+        padding: 0.5rem;
+    }
+    .login-card .card-body {
+        padding: 1rem 1.5rem 0.875rem;
+    }
+    .login-card .card-header {
+        padding: 0.75rem 1.5rem 0.625rem;
+    }
+    .form-group {
+        margin-bottom: 0.75rem;
+    }
+}

@@ -1,135 +1,218 @@
 @extends('layouts.master')
+
 @section('title')
     {!! config('teammembers.name') !!} - Edit {{$teamMember->name}}
 @endsection
-@section('scripts')
-    <script>
-        $(function () {
-            // Basic instantiation:
-            $('#demo-input').colorpicker();
 
-            // Example using an event, to change the color of the #demo div background:
-            $('#demo-input').on('colorpickerChange', function(event) {
-                $('#demo-input').css('background-color', event.color.toString());
-            });
-        });
-    </script>
+@section('styles')
+@include('partials.modern-form-wrapper', ['includeStyles' => true])
+@stack('custom-styles')
 @endsection
-@section('content')
 
-    <div class="main-content" id="panel">
-
-        <!-- Header -->
-        <div class="header bg-primary pb-6">
-            <div class="container-fluid">
-                <div class="header-body">
-                    <div class="row align-items-center py-4">
-                        <div class="col-lg-6 col-7">
-                            <h6 class="h2 text-white d-inline-block mb-0">Team Member </h6>
-                            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                                    <li class="breadcrumb-item"><a href="{{route('home')}}"><i class="fas fa-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="{{route('get.team-member.list')}}">Team Member</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Edit Team Member</li>
-                                </ol>
-                            </nav>
-                        </div>
-                        <div class="col-lg-6 col-5 text-right">
-                            <a href="{{route('get.team-member.create')}}" class="btn btn-sm btn-neutral">New</a>
-                        </div>
-                    </div>
-                </div>
+@php
+ob_start();
+@endphp
+<form role="form" method="POST" action="{{ route('post.team-member.edit', $teamMember->id) }}">
+    @csrf
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="modern-form-group">
+                <label class="modern-form-label required" for="name">Name</label>
+                <input 
+                    type="text" 
+                    class="modern-form-control @error('name') is-invalid @enderror" 
+                    id="name" 
+                    name="name" 
+                    placeholder="Name of team member"
+                    value="{{ old('name', $teamMember->name) }}"
+                    required
+                >
+                @error('name')
+                    <div class="modern-form-error">{{ $message }}</div>
+                @enderror
             </div>
         </div>
-        <!-- Page content -->
-        <div class="container-fluid mt--6">
-            <div class="card mb-4">
-                <!-- Card header -->
-                <div class="card-header">
-                    <h3 class="mb-0">Edit {{$teamMember->name}}'s data</h3>
-                </div>
-                <!-- Card body -->
-                <div class="card-body">
-                    <form role="form" method="POST" action="{{ route('post.team-member.edit',$teamMember->id) }}">
-                    @csrf
-                    <!-- Form groups used in grid -->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="name">Name</label>
-                                    <input required type="text" class="form-control" id="name"  name="name" value="{{$teamMember->name}}">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="iraIntegrationId">Jira Integration Id</label>
-                                    <input required type="text" class="form-control" id="jira_integration_id" name="jira_integration_id" value="{{$teamMember->jira_integration_id}}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="active">Active</label>
-                                    <select required class="form-control" name="is_active" data-toggle="select">
-                                        <option @if($teamMember->is_active == 1) selected @endif value="1">Yes</option>
-                                        <option @if($teamMember->is_active == 0) selected @endif value="0">No</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="weight">Weight</label>
-                                    <select required class="form-control" name="weight" data-toggle="select">
-                                        @for ($i = 0; $i <= 1000; $i++)
-                                        <option @if($teamMember->weight == $i) selected @endif value="{{$i}}">{{$i}}</option>
-                                        @endfor
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="shift">Color</label>
-                                    <input style="background-color: {{$teamMember->color ?? '#FFFFFF'}}" required type="text" class="form-control" name="color" value="{{$teamMember->color}}"  id="demo-input">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="team">Team</label>
-                                    <select required class="form-control" name="team" data-toggle="select">
-                                        @foreach ($teams as $team)
-                                        <option @if($teamMember->teams[0]->id == $team->id) selected @endif value="{{$team->id}}">{{$team->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="name">Email</label>
-                                    <input  type="email" class="form-control" id="email"  name="email" value="{{$teamMember->email}}">
-                                </div>
-                                @error('email')
-                                <div class="text-danger fs-7">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <button class="btn btn-icon btn-primary" type="submit">
-                                        <span class="btn-inner--icon"><i class="ni ni-bag-17"></i></span>
-                                        <span class="btn-inner--text">Edit</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+        <div class="col-md-6">
+            <div class="modern-form-group">
+                <label class="modern-form-label required" for="jira_integration_id">Jira Integration Id</label>
+                <input 
+                    type="text" 
+                    class="modern-form-control @error('jira_integration_id') is-invalid @enderror" 
+                    id="jira_integration_id" 
+                    name="jira_integration_id" 
+                    placeholder="Jira Integration Id of team member"
+                    value="{{ old('jira_integration_id', $teamMember->jira_integration_id) }}"
+                    required
+                >
+                @error('jira_integration_id')
+                    <div class="modern-form-error">{{ $message }}</div>
+                @enderror
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="modern-form-group">
+                <label class="modern-form-label required" for="is_active">Active</label>
+                <select 
+                    class="modern-form-control @error('is_active') is-invalid @enderror" 
+                    id="is_active" 
+                    name="is_active" 
+                    required
+                >
+                    <option value="1" {{ old('is_active', $teamMember->is_active) == 1 ? 'selected' : '' }}>Yes</option>
+                    <option value="0" {{ old('is_active', $teamMember->is_active) == 0 ? 'selected' : '' }}>No</option>
+                </select>
+                @error('is_active')
+                    <div class="modern-form-error">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="modern-form-group">
+                <label class="modern-form-label required" for="weight">Weight</label>
+                <div class="range-slider-wrapper">
+                    <input 
+                        type="range" 
+                        class="modern-form-control @error('weight') is-invalid @enderror" 
+                        id="weight" 
+                        name="weight" 
+                        min="0" 
+                        max="1000" 
+                        value="{{ old('weight', $teamMember->weight) }}"
+                        required
+                    >
+                    <span class="range-value-display" id="weight-display">{{ old('weight', $teamMember->weight) }}</span>
+                </div>
+                @error('weight')
+                    <div class="modern-form-error">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="modern-form-group">
+                <label class="modern-form-label required" for="color">Color</label>
+                <input 
+                    type="text" 
+                    class="modern-form-control @error('color') is-invalid @enderror" 
+                    id="demo-input" 
+                    name="color" 
+                    placeholder="Select color"
+                    value="{{ old('color', $teamMember->color ?? '#FFFFFF') }}"
+                    style="background-color: {{ old('color', $teamMember->color ?? '#FFFFFF') }}"
+                    required
+                >
+                @error('color')
+                    <div class="modern-form-error">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="modern-form-group">
+                <label class="modern-form-label required" for="team">Team</label>
+                <select 
+                    class="modern-form-control @error('team') is-invalid @enderror" 
+                    id="team" 
+                    name="team" 
+                    required
+                >
+                    @foreach ($teams as $team)
+                        <option value="{{ $team->id }}" {{ old('team', $teamMember->teams[0]->id ?? '') == $team->id ? 'selected' : '' }}>{{ $team->name }}</option>
+                    @endforeach
+                </select>
+                @error('team')
+                    <div class="modern-form-error">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="modern-form-group">
+                <label class="modern-form-label" for="email">Email</label>
+                <input 
+                    type="email" 
+                    class="modern-form-control @error('email') is-invalid @enderror" 
+                    id="email" 
+                    name="email" 
+                    placeholder="Email of team member"
+                    value="{{ old('email', $teamMember->email) }}"
+                >
+                @error('email')
+                    <div class="modern-form-error">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+    </div>
+
+    <div class="modern-form-actions">
+        <button type="submit" class="modern-form-btn modern-form-btn-primary">
+            <i class="fas fa-save"></i>
+            <span>Update Team Member</span>
+        </button>
+        <a href="{{route('get.team-member.list')}}" class="modern-form-btn modern-form-btn-secondary">
+            <i class="fas fa-times"></i>
+            <span>Cancel</span>
+        </a>
+    </div>
+</form>
+@php
+$formContent = ob_get_clean();
+@endphp
+
+@section('content')
+@include('partials.modern-form-wrapper', [
+    'title' => 'Edit Team Member',
+    'breadcrumbs' => [
+        ['label' => 'Home', 'url' => route('home'), 'icon' => 'fas fa-home'],
+        ['label' => 'Team Members', 'url' => route('get.team-member.list')],
+        ['label' => 'Edit ' . $teamMember->name, 'url' => null]
+    ],
+    'headerButtons' => [
+        [
+            'label' => 'Back to List', 
+            'url' => route('get.team-member.list'), 
+            'icon' => 'fas fa-arrow-left',
+            'spacing' => ''
+        ]
+    ],
+    'formTitle' => 'Edit ' . $teamMember->name . '\'s data',
+    'formIcon' => 'fas fa-edit',
+    'formContent' => $formContent,
+])
+@endsection
+
+@section('scripts')
+<script src="{{asset('new-style-assets/forms/js/forms.js')}}"></script>
+<script>
+    $(function () {
+        // Color picker
+        $('#demo-input').colorpicker();
+        $('#demo-input').on('colorpickerChange', function(event) {
+            $('#demo-input').css('background-color', event.color.toString());
+        });
+
+        // Range slider for weight
+        const weightSlider = document.getElementById('weight');
+        const weightDisplay = document.getElementById('weight-display');
+
+        function updateWeight(value) {
+            weightDisplay.textContent = value;
+        }
+
+        weightSlider.addEventListener('input', function() {
+            updateWeight(this.value);
+        });
+
+        // Initialize
+        updateWeight(weightSlider.value);
+    });
+</script>
+@stack('custom-scripts')
 @endsection

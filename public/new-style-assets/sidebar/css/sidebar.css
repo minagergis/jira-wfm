@@ -1,0 +1,361 @@
+/* Modern Sidebar Styles */
+#sidenav-main {
+    background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+    border-right: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+}
+
+#sidenav-main .sidenav-header {
+    padding: 1.5rem 1.25rem;
+    border-bottom: 1px solid #e2e8f0;
+    background: #ffffff;
+}
+
+#sidenav-main .navbar-brand {
+    padding: 0;
+    transition: transform 0.2s ease;
+}
+
+#sidenav-main .navbar-brand:hover {
+    transform: scale(1.05);
+}
+
+#sidenav-main .navbar-brand-img {
+    height: 40px;
+    width: auto;
+    transition: all 0.3s ease;
+}
+
+#sidenav-main .sidenav-toggler {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    z-index: 10;
+    pointer-events: auto;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#sidenav-main .sidenav-toggler:hover {
+    background: #e2e8f0;
+    transform: scale(1.05);
+}
+
+#sidenav-main .sidenav-toggler-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#sidenav-main .sidenav-toggler-line {
+    width: 18px;
+    height: 2px;
+    background: #64748b;
+    border-radius: 2px;
+    transition: all 0.2s ease;
+}
+
+/* Navigation Items */
+#sidenav-main .navbar-nav {
+    padding: 1rem 0.75rem;
+}
+
+#sidenav-main .nav-item {
+    margin-bottom: 0.25rem;
+}
+
+#sidenav-main .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    color: #64748b;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    transition: all 0.2s ease;
+    position: relative;
+    margin-bottom: 0.25rem;
+}
+
+#sidenav-main .nav-link:hover {
+    background: #f1f5f9;
+    color: #334155;
+    transform: translateX(4px);
+}
+
+#sidenav-main .nav-link.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+#sidenav-main .nav-link.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 60%;
+    background: #ffffff;
+    border-radius: 0 4px 4px 0;
+}
+
+#sidenav-main .nav-link i {
+    font-size: 1.25rem;
+    width: 24px;
+    margin-right: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+#sidenav-main .nav-link.active i {
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+#sidenav-main .nav-link-text {
+    flex: 1;
+    font-weight: 500;
+}
+
+/* Submenu Items */
+#sidenav-main .nav-sm {
+    padding-left: 0.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+#sidenav-main .nav-sm .nav-item {
+    margin-bottom: 0.125rem;
+}
+
+#sidenav-main .nav-sm .nav-link {
+    padding: 0.625rem 1rem 0.625rem 2.75rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: #64748b;
+    border-radius: 8px;
+    position: relative;
+}
+
+#sidenav-main .nav-sm .nav-link::before {
+    content: '';
+    position: absolute;
+    left: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #cbd5e1;
+    transition: all 0.2s ease;
+}
+
+#sidenav-main .nav-sm .nav-link:hover {
+    background: #f1f5f9;
+    color: #334155;
+    transform: translateX(4px);
+}
+
+#sidenav-main .nav-sm .nav-link:hover::before {
+    background: #667eea;
+    transform: translateY(-50%) scale(1.2);
+}
+
+#sidenav-main .nav-sm .nav-link.active,
+#sidenav-main .nav-sm .nav-link:focus {
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+    font-weight: 600;
+}
+
+#sidenav-main .nav-sm .nav-link.active::before,
+#sidenav-main .nav-sm .nav-link:focus::before {
+    background: #667eea;
+    transform: translateY(-50%) scale(1.3);
+}
+
+/* Collapse Animation */
+#sidenav-main .collapse {
+    transition: all 0.3s ease;
+}
+
+#sidenav-main .collapse.show {
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scrollbar Styling */
+#sidenav-main .scrollbar-inner {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+#sidenav-main .scrollbar-inner::-webkit-scrollbar {
+    width: 6px;
+}
+
+#sidenav-main .scrollbar-inner::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+#sidenav-main .scrollbar-inner::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+#sidenav-main .scrollbar-inner::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Icon Colors */
+#sidenav-main .nav-link i.text-primary {
+    color: #667eea;
+}
+
+#sidenav-main .nav-link.active i.text-primary {
+    color: #ffffff;
+}
+
+#sidenav-main .nav-link i.text-pink {
+    color: #ec4899;
+}
+
+#sidenav-main .nav-link.active i.text-pink {
+    color: #ffffff;
+}
+
+#sidenav-main .nav-link i.text-orange {
+    color: #f97316;
+}
+
+#sidenav-main .nav-link.active i.text-orange {
+    color: #ffffff;
+}
+
+#sidenav-main .nav-link i.text-info {
+    color: #3b82f6;
+}
+
+#sidenav-main .nav-link.active i.text-info {
+    color: #ffffff;
+}
+
+#sidenav-main .nav-link i.text-red {
+    color: #ef4444;
+}
+
+#sidenav-main .nav-link.active i.text-red {
+    color: #ffffff;
+}
+
+/* Responsive Design */
+@media (max-width: 1199px) {
+    #sidenav-main {
+        box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+    }
+}
+
+@media (max-width: 768px) {
+    #sidenav-main .sidenav-header {
+        padding: 1rem 0.875rem;
+    }
+    
+    #sidenav-main .navbar-brand-img {
+        height: 32px;
+    }
+    
+    #sidenav-main .nav-link {
+        padding: 0.625rem 0.875rem;
+        font-size: 0.875rem;
+    }
+    
+    #sidenav-main .nav-link i {
+        font-size: 1.125rem;
+        width: 20px;
+        margin-right: 0.625rem;
+    }
+    
+    #sidenav-main .nav-sm .nav-link {
+        padding: 0.5rem 0.875rem 0.5rem 2.5rem;
+    }
+}
+
+/* Smooth Transitions */
+#sidenav-main * {
+    transition: all 0.2s ease;
+}
+
+/* Focus States */
+#sidenav-main .nav-link:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+
+/* Toggler Active State */
+#sidenav-main .sidenav-toggler.active {
+    background: #667eea;
+}
+
+#sidenav-main .sidenav-toggler.active .sidenav-toggler-line {
+    background: #ffffff;
+}
+
+#sidenav-main .sidenav-toggler.active .sidenav-toggler-line:first-child {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+#sidenav-main .sidenav-toggler.active .sidenav-toggler-line:last-child {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+#sidenav-main .sidenav-toggler.active .sidenav-toggler-line:nth-child(2) {
+    opacity: 0;
+}
+
+/* Make sure toggle button is clickable */
+.sidenav-toggler[data-action] {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    z-index: 1000;
+    position: relative;
+}
+
+/* Ensure the toggle inner elements don't block clicks */
+.sidenav-toggler[data-action] * {
+    pointer-events: none;
+}
+
+/* Make sure the toggle button is visible and functional */
+.sidenav-toggler {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+

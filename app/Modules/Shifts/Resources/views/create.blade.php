@@ -1,152 +1,198 @@
 @extends('layouts.master')
+
 @section('title')
-    {!! config('shifts.name') !!}
+    {!! config('shifts.name') !!} - Create
 @endsection
-@section('content')
 
-    <div class="main-content" id="panel">
+@section('styles')
+@include('partials.modern-form-wrapper', ['includeStyles' => true])
+@stack('custom-styles')
+@endsection
 
-        <!-- Header -->
-        <div class="header bg-primary pb-6">
-            <div class="container-fluid">
-                <div class="header-body">
-                    <div class="row align-items-center py-4">
-                        <div class="col-lg-6 col-7">
-                            <h6 class="h2 text-white d-inline-block mb-0">Shifts </h6>
-                            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                                    <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="{{route('get.shifts.list')}}">Shifts</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Add Shift</li>
-                                </ol>
-                            </nav>
-                        </div>
-                        <div class="col-lg-6 col-5 text-right">
-                            <a href="{{route('get.shifts.create')}}" class="btn btn-sm btn-neutral">New</a>
-                        </div>
-                    </div>
-                </div>
+@php
+ob_start();
+@endphp
+<form role="form" method="POST" action="{{ route('post.shifts.create') }}">
+    @csrf
+    
+    @if ($errors->any())
+        <div class="alert alert-danger mb-4">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="modern-form-group">
+                <label class="modern-form-label required" for="name">Name</label>
+                <input 
+                    type="text" 
+                    class="modern-form-control @error('name') is-invalid @enderror" 
+                    id="name" 
+                    name="name" 
+                    placeholder="Name of shift"
+                    value="{{ old('name') }}"
+                    required
+                >
+                @error('name')
+                    <div class="modern-form-error">{{ $message }}</div>
+                @enderror
             </div>
         </div>
-        <!-- Page content -->
-        <div class="container-fluid mt--6">
-            <div class="card mb-4">
-                <!-- Card header -->
-                <div class="card-header">
-                    <h3 class="mb-0">Add Shift Form</h3>
-                </div>
-                <!-- Card body -->
-                <div class="card-body">
-                    <form role="form" method="POST" action="{{ route('post.shifts.create') }}">
-                    @csrf
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-                    <!-- Form groups used in grid -->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="name">Name</label>
-                                    <input required type="text" class="form-control" id="name"  name="name" placeholder="Name of shift">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="name">Description</label>
-                                    <input required type="text" class="form-control" id="description"  name="description" placeholder="description of shift">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            @if(auth()->user()->hasRole('team-leader'))
-                                <input type="hidden" name="teams[]" value="{{auth()->user()->managed_team_id}}">
-
-                            @else
-
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="exampleFormControlSelect3">Teams</label>
-                                        @foreach($teams as $team)
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <p class="text-gray">{{$team->name}}</p>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <label class="custom-toggle">
-                                                        <input name="teams[]" value="{{$team->id}}" type="checkbox">
-                                                        <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        @endforeach
-
-
-                                    </div>
-
-                                </div>
-
-
-                            @endif
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="exampleFormControlSelect3">Working days</label>
-                                    @foreach($days as $key => $day)
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <p class="text-gray">{{$day}}</p>
-                                            </div>
-                                            <div class="col-md-9">
-                                                <label class="custom-toggle custom-toggle-danger">
-                                                    <input name="days[]" value="{{$key}}" type="checkbox">
-                                                    <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    @endforeach
-
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="example-time-input" class="col-md-2 col-form-label form-control-label">Shift starts at</label>
-                                    <div class="col-md-10">
-                                        <input class="form-control" name="time_from" type="time" value="08:30:00">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="example-time-input" class="col-md-2 col-form-label form-control-label">Shift ends at</label>
-                                    <div class="col-md-10">
-                                        <input class="form-control" type="time"  name="time_to" value="16:30:00">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <button class="btn btn-icon btn-primary" type="submit">
-                                        <span class="btn-inner--icon"><i class="ni ni-bag-17"></i></span>
-                                        <span class="btn-inner--text">Create Shift</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+        <div class="col-md-6">
+            <div class="modern-form-group">
+                <label class="modern-form-label required" for="description">Description</label>
+                <input 
+                    type="text" 
+                    class="modern-form-control @error('description') is-invalid @enderror" 
+                    id="description" 
+                    name="description" 
+                    placeholder="Description of shift"
+                    value="{{ old('description') }}"
+                    required
+                >
+                @error('description')
+                    <div class="modern-form-error">{{ $message }}</div>
+                @enderror
             </div>
         </div>
     </div>
+
+    <div class="row">
+        @if(auth()->user()->hasRole('team-leader'))
+            <input type="hidden" name="teams[]" value="{{auth()->user()->managed_team_id}}">
+        @else
+            <div class="col-md-6">
+                <div class="modern-form-group">
+                    <label class="modern-form-label required">Teams</label>
+                    <div class="modern-checkbox-group">
+                        @foreach($teams as $team)
+                            <div class="modern-checkbox-item">
+                                <label for="team_{{ $team->id }}">{{ $team->name }}</label>
+                                <label class="custom-toggle">
+                                    <input 
+                                        name="teams[]" 
+                                        value="{{ $team->id }}" 
+                                        type="checkbox" 
+                                        id="team_{{ $team->id }}"
+                                        {{ old('teams') && in_array($team->id, old('teams')) ? 'checked' : '' }}
+                                    >
+                                    <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+                    @error('teams')
+                        <div class="modern-form-error">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+        @endif
+
+        <div class="col-md-6">
+            <div class="modern-form-group">
+                <label class="modern-form-label required">Working Days</label>
+                <div class="modern-checkbox-group">
+                    @foreach($days as $key => $day)
+                        <div class="modern-checkbox-item">
+                            <label for="day_{{ $key }}">{{ $day }}</label>
+                            <label class="custom-toggle custom-toggle-danger">
+                                <input 
+                                    name="days[]" 
+                                    value="{{ $key }}" 
+                                    type="checkbox" 
+                                    id="day_{{ $key }}"
+                                    {{ old('days') && in_array($key, old('days')) ? 'checked' : '' }}
+                                >
+                                <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
+                @error('days')
+                    <div class="modern-form-error">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="modern-form-group">
+                <label class="modern-form-label required" for="time_from">Shift Starts At</label>
+                <input 
+                    type="time" 
+                    class="modern-form-control @error('time_from') is-invalid @enderror" 
+                    id="time_from" 
+                    name="time_from" 
+                    value="{{ old('time_from', '08:30') }}"
+                    required
+                >
+                @error('time_from')
+                    <div class="modern-form-error">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="modern-form-group">
+                <label class="modern-form-label required" for="time_to">Shift Ends At</label>
+                <input 
+                    type="time" 
+                    class="modern-form-control @error('time_to') is-invalid @enderror" 
+                    id="time_to" 
+                    name="time_to" 
+                    value="{{ old('time_to', '16:30') }}"
+                    required
+                >
+                @error('time_to')
+                    <div class="modern-form-error">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+    </div>
+
+    <div class="modern-form-actions">
+        <button type="submit" class="modern-form-btn modern-form-btn-primary">
+            <i class="fas fa-save"></i>
+            <span>Create Shift</span>
+        </button>
+        <a href="{{route('get.shifts.list')}}" class="modern-form-btn modern-form-btn-secondary">
+            <i class="fas fa-times"></i>
+            <span>Cancel</span>
+        </a>
+    </div>
+</form>
+@php
+$formContent = ob_get_clean();
+@endphp
+
+@section('content')
+@include('partials.modern-form-wrapper', [
+    'title' => 'Create Shift',
+    'breadcrumbs' => [
+        ['label' => 'Home', 'url' => '#', 'icon' => 'fas fa-home'],
+        ['label' => 'Shifts', 'url' => route('get.shifts.list')],
+        ['label' => 'Create Shift', 'url' => null]
+    ],
+    'headerButtons' => [
+        [
+            'label' => 'Back to List', 
+            'url' => route('get.shifts.list'), 
+            'icon' => 'fas fa-arrow-left',
+            'spacing' => ''
+        ]
+    ],
+    'formTitle' => 'Add Shift Form',
+    'formIcon' => 'fas fa-plus-circle',
+    'formContent' => $formContent,
+])
+@endsection
+
+@section('scripts')
+<script src="{{asset('new-style-assets/forms/js/forms.js')}}"></script>
+@stack('custom-scripts')
 @endsection
