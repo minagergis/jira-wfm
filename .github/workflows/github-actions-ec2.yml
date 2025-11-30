@@ -1,6 +1,6 @@
-name: Push-to-EC2
+name: Push-to-PROD-ENV
 
-# Trigger deployment only on push to master branch
+# Trigger deployment only on push to main branch
 on:
   push:
     branches:
@@ -8,24 +8,30 @@ on:
 
 jobs:
   deploy:
-    name: Deploy to EC2 on master branch push
+    name: Deploy to production EC2 on main branch push
     runs-on: ubuntu-latest
 
     steps:
-      - name: Handling the files
+      - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          node-version: '16'
+
+      - name: Set up PHP 8.0
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
 
       - name: Deploy to AWS EC2
         uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          REMOTE_HOST: ${{ secrets.HOST_DNS }}
+          REMOTE_HOST: ${{ secrets.HOST_PROD_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
-
 
       - name: Run post deployment scripts
         run: |
           composer install --no-interaction && \
           composer require laravel/envoy --dev && \
-          php ./vendor/bin/envoy run deploy \
+          php ./vendor/bin/envoy run deploy
