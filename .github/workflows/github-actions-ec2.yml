@@ -1,6 +1,5 @@
 name: Push-to-PROD-ENV
 
-# Trigger deployment only on push to main branch
 on:
   push:
     branches:
@@ -24,11 +23,11 @@ jobs:
 
       - name: Deploy to AWS EC2
         uses: easingthemes/ssh-deploy@main
-        with:
-          sshPrivateKey: ${{ secrets.EC2_SSH_KEY }}
-          remoteHost: ${{ secrets.HOST_DNS }}
-          remoteUser: ${{ secrets.USERNAME }}
-          target: ${{ secrets.TARGET_DIR }}
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST_DNS }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          TARGET: ${{ secrets.TARGET_DIR }}
 
       - name: Run post deployment scripts
         run: |
