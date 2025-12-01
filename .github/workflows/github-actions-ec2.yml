@@ -24,13 +24,13 @@ jobs:
 
       - name: Deploy to AWS EC2
         uses: easingthemes/ssh-deploy@main
-        with:
-          sshPrivateKey: ${{ secrets.EC2_SSH_KEY }}
-          remoteHost: ${{ secrets.HOST_DNS }}
-          remoteUser: ${{ secrets.USERNAME }}
-          source: "./"
-          target: ${{ secrets.TARGET_DIR }}
-          rsyncOptions: "-rlDzvc --no-owner --no-group"
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST_DNS }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          SOURCE: "./"
+          TARGET: ${{ secrets.TARGET_DIR }}
+          ARGS: "-rlDzvc -i --no-owner --no-group"
 
       - name: Run post deployment scripts
         run: |
