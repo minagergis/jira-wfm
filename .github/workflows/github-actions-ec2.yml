@@ -1,6 +1,5 @@
 name: Push-to-PROD-ENV
 
-# Trigger deployment only on push to main branch
 on:
   push:
     branches:
@@ -31,6 +30,13 @@ jobs:
           SOURCE: "./"
           TARGET: ${{ secrets.TARGET_DIR }}
           ARGS: "-rlDzvc -i --no-owner --no-group"
+
+      - name: Fix ownership on EC2
+        run: |
+          ssh -i ${{ secrets.EC2_SSH_KEY }} \
+             -o StrictHostKeyChecking=no \
+             ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }} \
+             "sudo chown -R ubuntu:ubuntu ${{ secrets.TARGET_DIR }}"
 
       - name: Run post deployment scripts
         run: |
